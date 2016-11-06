@@ -156,6 +156,14 @@ def scale(maximum):
     return Scaler.factory(maximum)
     
 
+# class ReferenceImplementation(Test):
+#     def __init__(self, parent):
+#         super().__init__(parent)
+
+#     def score(self):
+
+
+
 # class ReferenceImplementation:
 #     def __init__(self, context, reference, tested):
 #         self.context = context
@@ -208,26 +216,10 @@ class TestBuilder:
     def __helpers(self, factories):
         return TestBuilder.HelperComposer( *[ self.__helper(factory) for factory in factories ] )
 
-    # def context(self, message, *args):
-    #     return self.__helper(ContextDecorator.factory(message.format(*args)))
-
     def group(self, *factories):
         return self.__helpers(factories)        
 
-    # def cumulative(self, **kwargs):
-    #     factories = []
-
-    #     if 'context' in kwargs:
-    #         factories.append( ContextDecorator.factory( kwargs['context'] ) )
-
-    #     if 'weight' in kwargs:
-    #         factories.append( Scaler.factory( kwargs['weight'] ) )
-
-    #     factories.append( CumulativeTestSuite.factory() )
-
-    #     return self.__helpers(factories)        
-    
-    def testFunction(self, function = None, context = None):
+    def testFunction(self, function = None):
         if function is None:
             # Used as decorator
             def wrapper(function):
@@ -237,11 +229,46 @@ class TestBuilder:
             return wrapper
         else:
             self.__current().addChild( FunctionTest(self.__current(), function) )
+
+    def fromReferenceImplementation(self, referenceImplementation, testedImplementation, contextString = None):
+        return TestBuilder.ReferenceImplementationHelper(self, self.__contextStack, referenceImplementation, testedImplementation, contextString=contextString)
         
     def runTests(self):
         self.tests()
         assert len(self.__contextStack) == 1, "Context stack bug"
         return self.__current().score()
+
+    class ReferenceImplementationHelper:
+        def __init__(self, parent, stack, referenceImplementation, testedImplementation, contextString):
+            self.__parent = parent
+            self.__stack = stack
+            self.__refImpl = referenceImplementation
+            self.__testedImpl = testedImplementation
+            self.__contextString = contextString or "Called function with arguments ({inputs})"
+                    
+
+        def __call__(self, *args, **kwargs):
+            expectedResult = self.__refImpl(*args, **kwargs)
+            positionalArgsStrings = list(map(str, args))
+            keywordArgsStrings = [ "{}={}".format(key, val) for key, val in kwargs ]
+            contextMessage = self.__contextString.format(inputs=",".join(positionalArgsStrings + keywordArgsStrings))
+            
+            def tester(ensure):
+                actualResult = self.__testedImpl(*args, **kwargs)
+                ensure.equals(expectedResult, actualResult)
+
+            with self.__parent.group(context(contextMessage)):
+                self.__parent.testFunction(function = tester)
+
+        def __enter__(self):
+            self.__stack.append( cumulative()( self.__stack[-1] ) )
+
+            return self
+
+        def __exit__(self, type, value, traceback):
+            top = self.__stack.pop()
+            self.__stack[-1].addChild(top)
+            
 
     class ContextStackHelper:
         def __init__(self, stack, factory):
