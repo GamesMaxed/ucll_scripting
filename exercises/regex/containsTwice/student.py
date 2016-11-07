@@ -8,4 +8,3 @@ def containsTwice(text, fragment):
     For example, "abcxyzabc" contains "abc" twice.
     """
 
-    return bool(re.search(fragment + '.*' + fragment, text))
