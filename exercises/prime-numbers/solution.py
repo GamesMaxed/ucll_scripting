@@ -11,7 +11,7 @@ def nthPrime(n):
 
     while n > 0:
         k += 1
-        if is_prime(k):
+        if isPrime(k):
             n -= 1
 
     return k
