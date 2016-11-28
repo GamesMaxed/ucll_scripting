@@ -27,14 +27,10 @@ class PrimeTests(TestBuilder):
                     for i in range(0, 100):
                         addCase(i)
 
-            with self.group(context("nthPrime"), scale(4), cumulative()):
-                def check(n, expected):
-                    with self.group(context('Computing nthPrime({})', n)):
-                        self.testFunction(lambda ensure: ensure.equals(expected, student.nthPrime(n)))
-
-                check(1, 2)
-                check(2, 3)
-                check(3, 5)
+            with self.group(context("isPrime"), scale(1)):
+                with self.fromReferenceImplementation(solution.nthPrime, student.nthPrime, contextString="While testing nthPrime({inputs})") as addCase:
+                    for i in range(1, 100):
+                        addCase(i)
 
 
 
