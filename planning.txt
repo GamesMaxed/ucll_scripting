@@ -1,0 +1,35 @@
+Basissyntax
+* Primitieve types
+* Conditionals
+* Loops
+* Functiedefinities
+* Oefeningen: omzetten van java -> python
+
+Datastructuren
+* Lists, dictionaries, tuples
+
+File IO
+
+Simpele klassen
+
+
+
+--- VPW ---
+
+
+List comprehensions, lambdas
+
+Regular Expressions
+* Apache logs parsen
+
+
+
+Databases
+
+Imaging
+
+Networking
+
+Google Maps
+
+
