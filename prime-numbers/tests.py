@@ -34,7 +34,7 @@ class PrimeTests(TestBuilder):
 
                 check(1, 2)
                 check(2, 3)
-                check(3, 6)
+                check(3, 5)
 
 
 
