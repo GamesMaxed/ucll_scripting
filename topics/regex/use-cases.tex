@@ -1,0 +1,138 @@
+\section{Probleemstelling}
+
+\frame{\tableofcontents[currentsection]}
+
+\begin{frame}
+  \frametitle{Probleem \#1}
+  \begin{quote}
+    Schrijf een functie \texttt{isValidUcllEmailAddress}
+    die nagaat of een gegeven string een geldig UCLL emailadres is.
+  \end{quote}
+  \vskip2mm
+  \structure{Patronen}
+  \begin{center}\tt
+    \nonterminal{letters}.\nonterminal{letters}@student.ucll.be \\
+    \nonterminal{letters}.\nonterminal{letters}@ucll.be \\
+  \end{center}
+  \vskip2mm
+  \structure{Voorbeelden}
+  \begin{itemize}
+    \item {\tt jan.janssens@student.ucll.be} is ok
+    \item {\tt peter.peters@gmail.com} is niet ok
+  \end{itemize}
+\end{frame}
+
+\begin{frame}
+  \frametitle{Probleem \#2}
+  \begin{quote}
+    Schrijf een functie \texttt{parseTime} die
+    de uren, minuten, seconden en milliseconden uit
+    een string kan halen.
+  \end{quote}
+  \vskip2mm
+  \structure{Patroon}
+  \begin{center}\tt
+    \nonterminal{2 cijfers}:\nonterminal{2 cijfers}:\nonterminal{2 cijfers}.\nonterminal{3 cijfers}
+  \end{center}
+  \vskip2mm
+  \structure{Voorbeeld}
+  \begin{center}
+    \texttt{"09:45:11.542"}
+  \end{center}
+  \begin{itemize}
+    \item Uur = \texttt{09}
+    \item Minuten = \texttt{45}
+    \item Seconden = \texttt{11}
+    \item Milliseconden = \texttt{542}
+  \end{itemize}
+\end{frame}
+
+\begin{frame}
+  \frametitle{Probleem \#3}
+  \begin{quote}
+    Schrijf een functie \texttt{scrapeHtml} die in een gegeven string HTML
+    zoekt naar alle hyperlinks.
+  \end{quote}
+  \vskip2mm
+  \structure{Patroon}
+  \begin{center}\tt
+    <a href="\nonterminal{url}">\nonterminal{tekst}</a>
+  \end{center}
+\end{frame}
+
+\begin{frame}
+  \frametitle{Probleem \#4}
+  \begin{quote}
+    Scjihrf een fnituce	\texttt{scramble} die de
+    lteetrs van elk worod door eklaar hlaat, maar de ersete
+    en laastte leettrs op hun paatls laat saatn.
+  \end{quote}
+  \vskip2mm
+  \structure{Patroon}
+  \[
+    \begin{array}{c}
+      \nonterminal{letter}_1\nonterminal{letters}_2\nonterminal{letter}_3 \\
+      \downarrow \\
+      \nonterminal{letter}_1\texttt{mix}(\nonterminal{letters}_2)\nonterminal{letter}_3
+    \end{array}
+  \]
+\end{frame}
+
+\begin{frame}
+  \frametitle{Wat Hebben Ze Gemeenschappelijk?}
+  \begin{center}\tt
+    \nonterminal{letters}.\nonterminal{letters}@student.ucll.be \\
+    \nonterminal{letters}.\nonterminal{letters}@ucll.be \\
+  \end{center}
+  \begin{center}
+    \nonterminal{2 cijfers}:\nonterminal{2 cijfers}:\nonterminal{2 cijfers}.\nonterminal{3 cijfers}
+  \end{center}
+  \begin{center}\tt
+    <a href="\nonterminal{url}">\nonterminal{tekst}</a>
+  \end{center}
+  \[
+    \nonterminal{letter}_1\nonterminal{letters}_2\nonterminal{letter}_3
+  \]
+  \vskip5mm
+  \begin{center}
+    \visible<2>{
+      \Large
+      Telkens zoeken naar tekstpatronen
+    }
+  \end{center}
+\end{frame}
+
+\begin{frame}
+  \frametitle{Wat Doet Deze Functie?}
+  \code[language=python,font=\tiny,width=.95\linewidth]{check.py}
+  \vskip2mm
+  \visible<2->{
+    \structure{Overeenkomstig Patroon}
+    \begin{center} \ttfamily
+      BE\it{nn} \it{nnnn} \it{nnnn} \it{nnnn}
+    \end{center}
+    met $n$ een cijfer.
+  }
+\end{frame}
+
+\begin{frame}
+  \frametitle{Tekstpatronen}
+  \begin{itemize}
+    \item Algoritme uitschrijven voor elk patroon: veel werk
+    \item Moet correct zijn
+    \item Moet effici\"ent zijn
+    \item Moet leesbaar zijn (intentioneel programmeren)
+  \end{itemize}
+  \vskip5mm
+  \structure{In een ideale wereld\dots}
+  \begin{itemize}
+    \item We willen enkel het patroon zelf neerschrijven
+    \item We willen geen lastige algoritmes implementeren
+    \item We willen dat het effici\"ent werkt
+  \end{itemize}
+\end{frame}
+
+%%% Local Variables:
+%%% mode: latex
+%%% TeX-master: "regular-expressions"
+%%% End:

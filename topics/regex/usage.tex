@@ -1,0 +1,118 @@
+\section{Gebruik}
+
+\frame{\tableofcontents[currentsection]}
+
+\begin{frame}
+  \frametitle{Voorbeeld: E-Mailadres Checken}
+  \begin{quote}
+    Schrijf een functie \texttt{isValidUcllEmailAddress}
+    die nagaat of een gegeven string een geldig UCLL emailadres is.
+  \end{quote}
+  \code[language=python,font=\small,width=.9\linewidth]{isValidUcllEmailAddress.py}
+\end{frame}
+
+\begin{frame}
+  \frametitle{Nagaan of String Voldoet Aan Patroon}
+  \structure{Volledige string moet voldoen}
+  \begin{center} \ttfamily
+    re.fullmatch(\itshape{regex}, \itshape{string})
+  \end{center}
+  \vskip5mm
+  \structure{Prefix moet voldoen}
+  \begin{center} \ttfamily
+    re.match(\itshape{regex}, \itshape{string})
+  \end{center}
+  \vskip5mm
+  \structure{Substring moet voldoen}
+  \begin{center} \ttfamily
+    re.search(\itshape{regex}, \itshape{string})
+  \end{center}
+\end{frame}
+
+\begin{frame}
+  \frametitle{Voorbeeld: Tijd Parsen}
+  \begin{quote}
+    Schrijf een functie \texttt{parseTime} die
+    de uren, minuten, seconden en milliseconden uit
+    een string kan halen.
+  \end{quote}
+  \code[language=python,width=.95\linewidth,font=\small]{parseTime.py}
+\end{frame}
+
+\begin{frame}
+  \frametitle{Strings Ontleden}
+  \begin{itemize}
+    \item \texttt{re.search}, \texttt{re.match}, \texttt{re.fullmatch} geven in geval van een match een object \texttt{m} terug
+    \item Elke \texttt{(...)} in de regex definieert een groep
+    \item Groepen worden van links naar rechts genummerd, beginnend met 1
+    \item Opvragen wat in groep staat met {\ttfamily m.groups($n$)}
+    \item Groep 0 komt overeen met volledige match
+  \end{itemize}
+\end{frame}
+
+\begin{frame}
+  \frametitle{Voorbeeld: Scrapen}
+  \begin{quote}
+    Schrijf een functie \texttt{scrapeHtml} die in een gegeven string HTML
+    zoekt naar alle hyperlinks.
+  \end{quote}
+  \code[language=python]{scrapeHtml.py}
+\end{frame}
+
+\begin{frame}
+  \frametitle{Alle Matches Opsommen}
+  \begin{center}
+    \texttt{re.findall(pattern, str)}
+  \end{center}
+  \begin{itemize}
+    \item Geeft lijst van alle matches
+    \item Geen overlappende matches
+    \item Geeft lijst van tuples indien meerdere groepen in \texttt{pattern}
+  \end{itemize}
+  \vskip5mm
+  \structure{Voorbeeld}
+  \begin{center} \ttfamily
+    re.findall("123, 324 3; 142, 21", r"\textbackslash d+")
+  \end{center}
+  geeft
+  \begin{center} \ttfamily
+    [ "123", "324", "3", "142", "21" ]
+  \end{center}
+\end{frame}
+
+\begin{frame}
+  \frametitle{Voorbeeld: Substituties}
+  \begin{quote}
+    Scjihrf een fnituce	\texttt{scramble} die de
+    lteetrs van elk worod door eklaar hlaat, maar de ersete
+    en laastte leettrs op hun paatls laat saatn.
+  \end{quote}
+  \code[language=python,font=\scriptsize,width=.95\linewidth]{scramble.py}
+\end{frame}
+
+\begin{frame}
+  \frametitle{Substituties}
+  \begin{center}
+    \texttt{re.sub(pattern, func, str)}
+  \end{center}
+  \begin{itemize}
+    \item Zoekt naar alle matches in \texttt{str}
+    \item Voor elke gevonden match, roept \texttt{func} op
+    \item Het resultaat van deze oproep vervangt de match in \texttt{str}
+  \end{itemize}
+  \vskip5mm
+  \begin{center} \ttfamily
+    re.sub(".", lambda m:\ m.group(0) * 2, "hello")
+  \end{center}
+  geeft
+  \begin{center} \ttfamily
+    hheelllloo
+  \end{center}
+\end{frame}
+
+
+
+%%% Local Variables:
+%%% mode: latex
+%%% TeX-master: "regular-expressions"
+%%% End:

@@ -1,0 +1,398 @@
+\section{Regular Expressions}
+
+\frame{\tableofcontents[currentsection]}
+
+\begin{frame}
+  \frametitle{Regular Expressions}
+  \begin{itemize}
+    \item Oplossing: \emph{Regular Expressions} (regexes) \vskip2mm
+    \item Een regex stelt een tekstpatroon voor \vskip2mm
+    \item Vormen een DSL (Domain Specific Language)
+          \begin{itemize}
+            \item Een ubergespecialiseerde mini-taal
+            \item Vergelijkbaar met SQL: DSL voor database queries
+          \end{itemize} \vskip2mm
+    \item Niet Python-specifiek
+          \begin{itemize}
+            \item Rechtstreeks ingebouwd in Perl, grep, Ruby, \dots
+            \item Als libraries in andere talen (Python, Java, C\#, \dots)
+            \item Soms lichte syntactische verschillen
+          \end{itemize}
+  \end{itemize}
+\end{frame}
+
+\begin{frame}
+  \frametitle{Voorbeeld: Literal Character}
+  \begin{quote}
+    Ga na of een gegeven string \texttt{str}
+    gelijk is aan \texttt{abc}.
+  \end{quote}
+  \vskip2mm
+  \structure{Regex}
+  \begin{center}
+    \texttt{abc}
+  \end{center}
+  \vskip2mm
+  \structure{Python Code}
+  \code{abc.py}
+  {\small De \texttt{r} vooraan in \texttt{r"abc"} wordt later uitgelegd.}
+\end{frame}
+
+\begin{frame}
+  \frametitle{Voorbeeld: Herhaling van Nul of Meer (Kleene Star)}
+  \begin{quote}
+    Ga na of een gegeven string \texttt{str}
+    een opeenvolging is van nul of meer \texttt{a}'s.
+  \end{quote}
+  \vskip2mm
+  \structure{Regex}
+  \begin{center}
+    \texttt{a*}
+  \end{center}
+  \vskip2mm
+  \structure{Python Code}
+  \code{zero-plus-as.py}
+  \vskip2mm
+  \structure{Voorbeelden}
+  \begin{matchexamples}
+    \match{}
+    \match{a}
+    \match{aaa}
+    \\[2mm]
+    \mismatch{b}
+  \end{matchexamples}
+\end{frame}
+
+\begin{frame}
+  \frametitle{Voorbeeld}
+  \begin{quote}
+    Ga na of een gegeven string \texttt{str}
+    een opeenvolging is van nul of meer \texttt{a}'s gevolgd door nul of meer \texttt{b}'s.
+  \end{quote}
+  \vskip2mm
+  \structure{Regex}
+  \begin{center}
+    \texttt{a*b*}
+  \end{center}
+  \vskip2mm
+  \structure{Voorbeelden}
+  \begin{matchexamples}
+    \match{}
+    \match{a}
+    \match{aaa}
+    \match{aaaabbbb}
+    \match{bbbb}
+    \\[2mm]
+    \mismatch{x}
+    \mismatch{abba}
+  \end{matchexamples}
+\end{frame}
+
+\begin{frame}
+  \frametitle{Voorbeeld: Herhaling van E\'en of Meer}
+  \begin{quote}
+    Ga na of een gegeven string \texttt{str}
+    een opeenvolging is van \'e\'en of meer \texttt{a}'s.
+  \end{quote}
+  \vskip2mm
+  \structure{Regex}
+  \begin{center}
+    \texttt{aa*} \hspace{2mm} of \hspace{2mm} \texttt{a+}
+  \end{center}
+  \vskip2mm
+  \structure{Voorbeelden}
+  \begin{matchexamples}
+    \match{a}
+    \match{aaa}
+    \match{aaaaaaaa}
+    \\[2mm]
+    \mismatch{}
+    \mismatch{b}
+    \mismatch{abba}
+  \end{matchexamples}
+\end{frame}
+
+\begin{frame}
+  \frametitle{Voorbeeld: Groeperen}
+  \begin{quote}
+    Ga na of een gegeven string \texttt{str}
+    een herhaling is \'e\'en of meer keer \texttt{abc}.
+  \end{quote}
+  \vskip2mm
+  \structure{Regex}
+  \begin{center}
+    \texttt{(abc)+}
+  \end{center}
+  \structure{Voorbeelden}
+  \begin{matchexamples}
+    \match{abc}
+    \match{abcabc}
+    \match{abcabcabc}
+    \\[2mm]
+    \mismatch{}
+    \mismatch{abca}
+    \mismatch{abcabjabc}
+  \end{matchexamples}
+\end{frame}
+
+\begin{frame}
+  \frametitle{Voorbeeld: Alternatieven}
+  \begin{quote}
+    Ga na of een gegeven string \texttt{str}
+    gelijk is aan \texttt{abc}, \texttt{xyz} of \texttt{123}.
+  \end{quote}
+  \vskip2mm
+  \structure{Regex}
+  \begin{center}
+    \texttt{abc|xyz|123}
+  \end{center}
+  \structure{Voorbeelden}
+  \begin{matchexamples}
+    \match{abc}
+    \match{xyz}
+    \match{123}
+    \\[2mm]
+    \mismatch{ayz}
+    \mismatch{abcxyz}
+  \end{matchexamples}
+\end{frame}
+
+\begin{frame}
+  \frametitle{Voorbeeld}
+  \begin{quote}
+    Is de string een opeenvolging van nul of meer keer \texttt{abc}, \texttt{xyz} of \texttt{123}?
+  \end{quote}
+  \vskip2mm
+  \structure{Regex}
+  \begin{center}
+    \texttt{(abc|xyz|123)*}
+  \end{center}
+  \structure{Voorbeelden}
+  \begin{matchexamples}
+    \match{}
+    \match{abc}
+    \match{123123123}
+    \match{abcxyzabc123}
+    \\[2mm]
+    \mismatch{abca}
+    \mismatch{12312}
+  \end{matchexamples}
+\end{frame}
+
+\begin{frame}
+  \frametitle{Overzicht}
+  \begin{center}
+    \begin{tabular}{ll}
+      \toprule
+      \textbf{Beschrijving} & \textbf{Regex} \\
+      \midrule
+      Nul of meer & \texttt{{\itshape x}*} \\
+      Nul of \'e\'en keer & \texttt{{\itshape x}?} \\
+      E\'en of meer & \texttt{{\itshape x}+} \\
+      $n$ keer & \texttt{{\itshape x}\{$n$\}} \\
+      Minimaal $n$ keer & \texttt{{\itshape x}\{$n$,\}} \\
+      Maximaal $n$ keer & \texttt{{\itshape x}\{,$n$\}} \\
+      $n$ tot $m$ keer & \texttt{{\itshape x}\{$n$,$m$\}} \\
+      Alternatieven & \texttt{{\itshape x}|{\itshape y}} \\
+      Willekeurig teken & \texttt{.} \\
+      \bottomrule
+    \end{tabular}
+  \end{center}
+\end{frame}
+
+\begin{frame}
+  \frametitle{Escaping}
+  \begin{itemize}
+    \item De meeste tekens staan voor zichzelf
+          \begin{itemize}
+            \item Regex \texttt{"a"} staat voor ``de letter a''
+          \end{itemize}
+          \vskip2mm
+    \item Sommige tekens hebben speciale betekenis
+          \begin{itemize}
+            \item \texttt{*} staat voor herhaling (0+)
+            \item \texttt{+} staat voor herhaling (1+)
+            \item \texttt{(} en \texttt{)} groeperen
+          \end{itemize}
+          \vskip2mm
+    \item Indien men een speciaal teken zelf bedoelt, moet men het escapen
+  \end{itemize}
+\end{frame}
+
+\begin{frame}
+  \frametitle{Voorbeeld: Escaping}
+  \begin{quote}
+    Is de string gelijk aan 3 of meer vraagtekens na elkaar?
+  \end{quote}
+  \vskip2mm
+  \structure{Foute Regex}
+  \begin{center} \ttfamily
+    ????*
+  \end{center}
+  \vskip2mm
+  \structure{Juiste Regex}
+  \begin{center} \ttfamily
+    \textbackslash?\textbackslash?\textbackslash?\textbackslash?*
+  \end{center}
+\end{frame}
+
+\begin{frame}
+  \frametitle{Hulpnotaties: Character Class}
+  \begin{quote}
+    Is de string een enkele lowercase klinker?
+  \end{quote}
+  \vskip2mm
+  \structure{Regex}
+  \begin{center} \ttfamily
+    (a|e|i|o|u)
+  \end{center}
+  \vskip2mm
+  \structure{Verkorte Notatie}
+  \begin{center} \ttfamily
+    [aeiou]
+  \end{center}
+\end{frame}
+
+\begin{frame}
+  \frametitle{Hulpnotaties: Range}
+  \begin{quote}
+    Is de string een lowercase letter?
+  \end{quote}
+  \vskip2mm
+  \structure{Regex}
+  \begin{center} \ttfamily
+    [abcdefghijklmnopqrstuvwxyz]
+  \end{center}
+  \vskip2mm
+  \structure{Verkorte Notatie}
+  \begin{center} \ttfamily
+    [a-z]
+  \end{center}
+\end{frame}
+
+\begin{frame}
+  \frametitle{Hulpnotaties: Combinatie van Ranges}
+  \begin{quote}
+    Is de string een letter of cijfer?
+  \end{quote}
+  \vskip2mm
+  \structure{Regex}
+  \begin{center} \ttfamily\scriptsize
+    [abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789]
+  \end{center}
+  \vskip2mm
+  \structure{Verkorte Notatie}
+  \begin{center} \ttfamily
+    [a-zA-Z0-9]
+  \end{center}
+\end{frame}
+
+\begin{frame}
+  \frametitle{Hulpnotaties: Negatie}
+  \begin{quote}
+    Bevat de string \'e\'en teken dat dan \emph{geen} klinker is?
+  \end{quote}
+  \vskip2mm
+  \structure{Regex}
+  \begin{center} \ttfamily\scriptsize
+    [0-9bcdfghjklmnpqrstvwxyzBCDFGHJKLMNPQRSTVWXYZ+-?/\dots]
+  \end{center}
+  \vskip2mm
+  \structure{Verkorte Notatie}
+  \begin{center} \ttfamily
+    [\^{}aeiou]
+  \end{center}
+\end{frame}
+
+\begin{frame}
+  \frametitle{Overzicht}
+  \begin{center}
+    \begin{tabular}{ll}
+      \toprule
+      \textbf{Regex} & \textbf{Korte notatie} \\
+      \midrule
+      \texttt{a|b|c} & \texttt{[abc]} \\
+      \texttt{0|1|2|3|4|5} & \texttt{[0-5]} \\
+      Geen cijfer & \texttt{[\^{}0-9]} \\
+      \texttt{[a-zA-Z\_]} & \texttt{\textbackslash w} \\
+      \texttt{[\^{}a-zA-Z\_]} & \texttt{\textbackslash W} \\
+      \texttt{[0-9]} & \texttt{\textbackslash d} \\
+      \texttt{[\^{}0-9]} & \texttt{\textbackslash D} \\ 
+      Spaties & \texttt{\textbackslash s} \\
+      Geen spatie & \texttt{\textbackslash S} \\
+      \bottomrule
+    \end{tabular}
+  \end{center}
+\end{frame}
+
+\begin{frame}
+  \frametitle{Waarom de \texttt{r"..."}?}
+  \begin{quote}
+    Ga na of de gegeven string gelijk aan een backslash gevolgd door een n is.
+  \end{quote}
+  \vskip5mm
+  \begin{overprint}
+    \onslide<1>
+    \structure{Poging \#1}
+    \begin{center} \ttfamily
+      re.fullmatch("\textbackslash n", str)
+    \end{center}
+    \begin{enumerate}
+      \item Python ziet de string \texttt{"\textbackslash n"}
+      \item \texttt{\textbackslash n} herkent Python als symbool voor newline (ASCII: \fbox{10})
+      \item De string \texttt{"\textbackslash n"} wordt omgezet naar \texttt{"\fbox{10}"}
+      \item De \texttt{search} functie krijgt \texttt{"\fbox{10}"} binnen
+      \item \texttt{search} zoekt dus naar een newline, niet naar \texttt{\textbackslash n}
+    \end{enumerate}
+
+    \onslide<2>
+    \structure{Poging \#2}
+    \begin{center} \ttfamily
+      re.fullmatch("\textbackslash\textbackslash n", str)
+    \end{center}
+    \begin{enumerate}
+      \item Python ziet de string \texttt{"\textbackslash\textbackslash n"}
+      \item De string \texttt{"\textbackslash\textbackslash n"} wordt omgezet naar \texttt{"\textbackslash n"}
+      \item De \texttt{search} functie krijgt \texttt{"\textbackslash n"} binnen
+      \item In regex-speak staat \texttt{\textbackslash n} voor newline
+      \item Intern wordt \texttt{\textbackslash n} dus weer omgezet naar \fbox{10}
+      \item Patroon zal weer zoeken naar een newline i.p.v.~\texttt{\textbackslash n}
+    \end{enumerate}
+
+    \onslide<3>
+    \structure{Poging \#3}
+    \begin{center} \ttfamily
+      re.fullmatch("\textbackslash\textbackslash\textbackslash\textbackslash n", str)
+    \end{center}
+    \begin{enumerate}
+      \item Python ziet de string \texttt{"\textbackslash\textbackslash\textbackslash\textbackslash n"}
+      \item De string \texttt{"\textbackslash\textbackslash\textbackslash\textbackslash n"} wordt omgezet naar \texttt{"\textbackslash\textbackslash n"}
+      \item De \texttt{search} functie krijgt \texttt{"\textbackslash\textbackslash n"} binnen
+      \item In regex-speak staat \texttt{\textbackslash\textbackslash} voor \texttt{\textbackslash}
+      \item Intern wordt \texttt{\textbackslash\textbackslash n} omgezet naar \texttt{\textbackslash n}
+      \item Patroon zal nu zoeken naar \texttt{\textbackslash n}, zoals gewenst
+    \end{enumerate}
+  \end{overprint}
+\end{frame}
+
+\begin{frame}
+  \frametitle{Raw strings}
+  \begin{itemize}
+    \item \texttt{\textbackslash\textbackslash\textbackslash\textbackslash n} is wat te veel van het goede
+    \item Meeste talen ondersteunen ``rauwe strings''
+    \item Zijn strings waarbij elk teken letterlijk wordt opgevat
+    \item Bv.~\texttt{\textbackslash n} blijft \texttt{\textbackslash n}
+    \item In Python: \texttt{r"..."}
+  \end{itemize}
+  \begin{center} \ttfamily
+    re.search("\textbackslash\textbackslash n", str)
+  \end{center}
+  \begin{itemize}
+    \item Dubbele escape is toch nog nodig: binnen regex-speak betekent \texttt{"\textbackslash n"} nog steeds \fbox{10}
+  \end{itemize}
+\end{frame}
+
+%%% Local Variables:
+%%% mode: latex
+%%% TeX-master: "regular-expressions"
+%%% End:
