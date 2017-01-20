@@ -1,3 +1,5 @@
+from contextlib import contextmanager
+import argparse
 import inspect
 import copy
 import sys
@@ -11,7 +13,12 @@ def checkPythonVersion():
         sys.exit("You need at least Python 3.5")
 
 checkPythonVersion()
-        
+
+
+
+#
+# Test exception classes
+#
 class TestError(Exception):
     def __init__(self, message):
         super().__init__(message)
@@ -23,7 +30,11 @@ class TestFailure(TestError):
 class InvalidTestCallError(TestError):
     def __init__(self):
         super().__init__("Calling test functions is disallowed")
-        
+
+
+#
+# Score
+#
 class Score:
     """
     Represents a score.
@@ -57,6 +68,43 @@ class Score:
         return "{}/{}".format(self.value, self.maximum)
 
 
+class _TestPredicate:
+    """
+    Used to determine whether to run a test or not.
+    """
+    def __init__(self, name, predicate):
+        self._name = name
+        self._predicate = predicate
+        
+    def __call__(self):
+        return self._predicate()
+
+    def __and__(self, other):
+        def check():
+            return self() & other()
+        return _TestPredicate( "{} & {}".format(str(self), str(other)), check )
+
+    def __str__(self):
+        return self._name
+
+
+runAlways = _TestPredicate("always", lambda: True)
+runNever = _TestPredicate("never", lambda: False)
+
+def runIfFunctionExists(functionName):
+    if not _testenv.isBound('testedModule'):
+        raise TestError("No tested module set")
+    else:
+        def check():
+            return functionName in dir(_testenv.testedModule)
+        
+        return _TestPredicate("run if {} exists".format(functionName), check)
+
+
+#
+# Test classes
+#
+
 class _Test:
     """
     Superclass for all test classes.
@@ -87,24 +135,52 @@ class _TestFunction(_Test):
         self._environment = _testenv.copy()
 
     def run(self):
+        def testCount():
+            """
+            Counts the number of tests ran prior to this test.
+            """
+            return len(_testenv.passedTests) + len(_testenv.failedTests) + len(_testenv.skippedTests)
+        
         global _testenv
 
-        if self._environment.skip:
-            self._environment.skippedTests.append(self._name)
-        else:
+        try:
+            # Take snapshot of current test environment
             oldTestEnv = _testenv
-            try:
-                _testenv = self._environment
-                _testenv.push(testName = self._name)
-                self._function()
-                self._environment.passedTests.append(self._name)
-                return Score(1, 1)
-            except TestFailure:
-                self._environment.failedTests.append(self._name)
-                return Score(0, 1)
-            finally:
-                _testenv = oldTestEnv
 
+            # Overwrite test environment
+            _testenv = self._environment
+
+            if (not _testenv.condition()) or _testenv.skip or testCount() >= _settings.maxTests:
+                # Add current test to skip list
+                _testenv.skippedTests.append(self._name)
+
+                # Return 0/1
+                return Score(0, 1)
+            else:
+                try:
+                    # Set test name
+                    _testenv.push(testName = self._name)
+
+                    # Run test
+                    self._function()
+
+                    # Add test to pass list
+                    _testenv.passedTests.append(self._name)
+
+                    # Return 1/1
+                    return Score(1, 1)
+
+                except TestFailure:
+                    # Add test to fail list
+                    _testenv.failedTests.append(self._name)
+
+                    # Return 0/1
+                    return Score(0, 1)
+
+            
+        finally:
+            # Restore test environment
+            _testenv = oldTestEnv
 
 class _TestSuite(_Test):
     def __init__(self):
@@ -129,15 +205,32 @@ class _Scaler(_SingleChildTest):
         return self._child.run().rescale(self._maximum)
 
 
+#
+# Printer
+#
+
+class _Printer:
+    def log(self, verbosity, message, *args, **kwargs):
+        if _settings.verbosity >= verbosity:
+            print(message.format(*args, **kwargs))
+        
+
+
+
 # Create root test
 _rootTest = _RootTest()
 
-# Create separate dynamic environment for tests
+# Create dynamic environment for tests
 _testenv = dyn.create()
+
+# Create dynamic environment for settings
+_settings = dyn.create()
+
+
 
 # Push a fresh frame with the root test in it
 # (necessary due to the root frame not being modifiable)
-_testenv.push(top=_rootTest, context=[], passedTests=[], failedTests=[], skippedTests=[], skip=False)
+_testenv.push(top=_rootTest, context=[], passedTests=[], failedTests=[], skippedTests=[], skip=False, path="", condition = runAlways)
 
 
 def _dummy():
@@ -201,37 +294,38 @@ def referenceModule(module = None):
         return _testenv.referenceModule
     
 def testedFunctionName(functionName = None):
-    """
-    If an argument is given, sets the dynamic variables testedFunctionName
-    to the given argument. It also sets testedFunction and referenceFunction by looking
-    it up in the current testedModule and referenceModule, respectively.
-    If no referenceModule is set, referenceFunction remains unmodified.
-
-    If no argument is given, returns the
-    current value of testedFunctionName.
-    """
     if functionName:
-        bindings = { "testedFunctionName": functionName }
-        
-        assert _testenv.testedModule, "No testedModule set!"
-        bindings["testedFunction"] = getattr(_testenv.testedModule, functionName)
-        
-        # Only set referenceFunction if referenceModule is set
-        if _testenv.isBound("referenceModule"):
-            bindings["referenceFunction"] = getattr(_testenv.referenceModule, functionName)
+        @contextmanager
+        def context():
+            with _testenv.let(testedFunctionName = functionName), condition(runIfFunctionExists(functionName)):
+                yield
 
-        return _testenv.let(**bindings)
+        return context()
     else:
         return _testenv.testedFunctionName
 
 def testedFunction():
-    return _testenv.testedFunction
+    """
+    Fetches the tested function.
+    """
+    return getattr(_testenv.testedModule, _testenv.testedFunctionName)
 
 def referenceFunction():
-    return _testenv.referenceFunction
+    """
+    Fetches the reference function.
+    """
+    return getattr(_testenv.referenceModule, _testenv.testedFunctionName)
 
 def context(message, *args, **kwargs):
     return _testenv.let(context = _testenv.context + [ message.format(*args, **kwargs) ])
+
+def path(name, *args, **kwargs):
+    return _testenv.let(path = _testenv.path + "/" + name.format(*args, **kwargs))
+
+def condition(predicate):
+    conjunction = _testenv.condition & predicate
+    print("->", conjunction)
+    return _testenv.let(condition = conjunction)
 
 def test(name, *args, **kwargs):
     """
@@ -246,31 +340,51 @@ def test(name, *args, **kwargs):
     return wrapper
 
 
+#
+# Assertions
+#
+
 def fail():
-    errorStackFrame = _firstExternalStackFrame()
-
-    print("FAIL: {}".format(_testenv.testName))
+    """
+    When called within a test, aborts the test immediately.
+    The test is considered to have failed.
+    """
+    printer = _settings.printer
     
+    printer.log(1, "FAIL: {}", _testenv.testName)
+
+    errorStackFrame = _firstExternalStackFrame()
+    kwargs = { 'file': errorStackFrame.filename, 'line': errorStackFrame.lineno, 'function': errorStackFrame.function }
+
     if len(errorStackFrame.code_context) > 1:
-        print("FAIL: {}".format(_testenv.testName))
-        print("In function {function} ({file}, line {line}):".format(file = errorStackFrame.filename, line = errorStackFrame.lineno, function = errorStackFrame.function))
-        print("\n".join([ "  " + line.strip() for line in errorStackFrame.code_context ]))
+        printer.log(2, "FAIL: {}", _testenv.testName)
+        printer.log(2, "In function {function} ({file}, line {line}):", **kwargs)
+        printer.log(2, "\n".join([ "  " + line.strip() for line in errorStackFrame.code_context ]))
     else:
-        print("In function {function} ({file}, line {line}): {code}".format(file = errorStackFrame.filename, line = errorStackFrame.lineno, function = errorStackFrame.function, code = errorStackFrame.code_context[0].strip()))
+        printer.log(2, "In function {function} ({file}, line {line}): {code}", code=errorStackFrame.code_context[0].strip(), **kwargs)
 
-    print("Additional information:")
+    printer.log(2, "Additional information:")
     for item in _testenv.context:
-        print("  " + item)
+        printer.log(2, "  " + item)
 
-    print("")
+    printer.log(2, "")
+
     raise TestFailure()
 
 def mustBeEqual(expected, actual):
+    """
+    Assert that the given values must be equal to each other.
+    If they are not, failure ensues.
+    """
     with context("Expected value: {}", expected), context("Actual value: {}", actual):
         if expected != actual:
             fail()
 
 def mustBeSameTruthiness(expected, actual):
+    """
+    Assert that both values represent the same truthiness.
+    If they do not, failure ensues.
+    """
     if expected:
         with context("Expected {} to be truthy", actual):
             if not actual:
@@ -281,55 +395,82 @@ def mustBeSameTruthiness(expected, actual):
                 fail()
             
 def mustBeTruthy(actual):
+    """
+    Assert that the given value must be truthy.
+    If it is not, failure ensues.
+    """
     with context("Value that should be true: {}", actual):
         if not actual:
             fail()
 
 def mustBeFalsey(actual):
+    """
+    Assert that the given value must be falsey.
+    If it is not, failure ensues.
+    """
     with context("Value that should be false: {}", actual):
         if actual:
             fail()
 
 def ignore(*args, **kwargs):
+    """
+    Does nothing.
+    """
     pass
 
-            
 def reftest(name, result = None, arguments = None):
     compareResults = result or mustBeEqual
     compareArguments = arguments or ignore
     
     def testFunction(*args, **kwargs):
-        assert _testenv.isBound("testedFunction"), "No test function set. Use testedModule and testedFunctionName."
-        assert _testenv.isBound("referenceFunction"), "No reference function set. Use referenceModule and testedFunctionName."
-    
         @test(name)
         def referenceImplementationTest():
+            # Make copies of the arguments (they might be modified by the calls)
             testargs = copy.deepcopy(args)
             testkwargs = copy.deepcopy(kwargs)
             refargs = copy.deepcopy(args)
             refkwargs = copy.deepcopy(kwargs)
 
-            refretval = _testenv.referenceFunction(*refargs, **refkwargs)
-            testretval = _testenv.testedFunction(*testargs, **testkwargs)
+            # Call reference implementation
+            refretval = referenceFunction()(*refargs, **refkwargs)
 
+            # Call test implementation
+            testretval = testedFunction()(*testargs, **testkwargs)
+
+            # Compare return values
             with context("Comparing return values"):
                 compareResults(refretval, testretval)
 
+            # Compare positional arguments
             for i in range(0, len(args)):
                 with context("Comparing positional argument #{}", i):
                     compareArguments(refargs[i], testargs[i])
 
+            # Compare keyword arguments
             for key in kwargs:
                 with context("Comparing keyword argument {}", key):
                     compareArguments(refkwargs[key], testkwargs[i])
 
     return testFunction
-            
-            
-def runTests():
-    score = _testenv.top.run()
-    print("Passed tests: {}".format(len(_testenv.passedTests)))
-    print("Failed tests: {}".format(len(_testenv.failedTests)))
-    print("Skipped tests: {}".format(len(_testenv.skippedTests)))
-    print("Score: {}".format(score))
 
+
+
+def runTests():
+    parser = argparse.ArgumentParser()
+    parser.add_argument('-v', '--verbosity', help='Verbosity level (0=silent, 1=default)', default=1, type=int)
+    parser.add_argument('-s', '--statistics', help='Statistics verbosity level (0=silent, 1=default)', default=1, type=int)
+    parser.add_argument('-n', '--count', help='Number of tests to run', default=float('inf'), type=int)
+    args = parser.parse_args()
+        
+    with _settings.let(printer=_Printer(), verbosity=args.verbosity, maxTests=args.count):
+        printer = _settings.printer
+        score = _rootTest.run()
+
+        with _settings.let(verbosity=args.statistics):
+            printer.log(1, "Passed tests: {}", len(_testenv.passedTests))
+            printer.log(1, "Failed tests: {}", len(_testenv.failedTests))
+            printer.log(1, "Skipped tests: {}", len(_testenv.skippedTests))
+
+            printer.log(1, "Score: {}", format(score))
+        
+        
