@@ -1,0 +1,51 @@
+\documentclass[dutch]{ucll-slides}
+\usepackage{pxfonts}
+\usepackage{tikz}
+\usepackage{calc}
+\usepackage{ucll-code}
+\usepackage{siunitx}
+
+
+\usetikzlibrary{calc,shadows,tikzmark,shapes.multipart}
+
+\coursename{Scripttalen}
+\title{Lambda's}
+
+\newcommand{\nonterminal}[1]{{\color{red} \ensuremath{\langle}#1\ensuremath{\rangle}}}
+
+\newenvironment{matchexamples}{
+  \begin{center}
+  \newcommand{\sep}{\hspace{5mm}}
+  \newcommand{\match}[1]{\sep{\color{green!50!black} "##1"}}
+  \newcommand{\mismatch}[1]{\sep{\color{red} "##1"}}
+}{\end{center}}
+
+
+
+
+\begin{document}
+
+\maketitle
+
+\begin{frame}
+  \frametitle{Werkvoorbeeld}
+  \code[language=python]{person.py}
+\end{frame}
+
+% \input{selecties.tex}
+% \input{projecties.tex}
+% \input{andere-lussen.tex}
+\input{first-class-functions.tex}
+% \input{lambdas-section.tex}
+
+
+
+\end{document}
+
+
+
+
+%%% Local Variables: 
+%%% mode: latex
+%%% TeX-master: t
+%%% End: 

@@ -1,0 +1,123 @@
+\section{Selecties}
+
+\frame{\tableofcontents[currentsection]}
+
+\begin{frame}
+  \frametitle{Volwassenen Selecteren}
+  \begin{quote}
+    Gegeven een lijst \texttt{Person}s, selecteer
+    alle meerderjaardigen ($18 \leq \mathrm{age}$).
+  \end{quote}
+  \code[language=python]{selectAdults.py}
+\end{frame}
+
+\begin{frame}
+  \frametitle{Honderdjarigen Selecteren}
+  \begin{quote}
+    Gegeven een lijst \texttt{Person}s, selecteer
+    alle \texttt{Person}s die ouder zijn dan 100 ($100 \leq \mathrm{age}$).
+  \end{quote}
+  \code[language=python]{selectCentennials.py}
+\end{frame}
+
+\begin{frame}
+  \frametitle{Veralgemening: \texttt{selectOlderThan}}
+  \begin{itemize}
+    \item \texttt{selectAdults} selecteert $\mathrm{age} \geq 18$
+    \item \texttt{selectCentennials} selecteert $\mathrm{age} \geq 100$
+    \item Twee verschillende functies met quasi zelfde implementatie
+    \item Samenvoegen in \'e\'en veralgemeende functie
+  \end{itemize}
+  \code[language=python]{selectOlderThan.py}
+\end{frame}
+
+\begin{frame}
+  \frametitle{Jonge Volwassenen Selecteren}
+  \begin{quote}
+    Gegeven een lijst \texttt{Person}s, selecteer
+    alle jonge volwassenen ($18 \leq \mathrm{age} \leq 25$).
+  \end{quote}
+  \vskip5mm
+  \begin{overprint}
+    \onslide<1>
+    \code[language=python,font=\small,width=.9\linewidth]{selectYoungAdults.py}
+
+    \onslide<2>
+    \code[language=python,font=\small,width=.9\linewidth]{selectYoungAdults2.py}
+  \end{overprint}
+  \vskip5mm
+  \begin{overprint}
+    \onslide<1>
+    \begin{center}
+      Zeer gelijkaardig aan \texttt{selectAdults}\dots \\
+      Kunnen we misschien \texttt{selectOlderThan} herbruiken?
+    \end{center}
+
+    \onslide<2>
+    \begin{center}
+      Klungelig
+    \end{center}
+  \end{overprint}
+\end{frame}
+
+\begin{frame}
+  \frametitle{Veralgemening: \texttt{selectWithAgeBetween}}
+  \begin{itemize}
+    \item Wat als we $18 \leq \mathrm{age} \leq 65$ willen selecteren?
+    \item We veralgemenen weeral
+    \item \texttt{selectOlderThan} ontving minimale leeftijd
+    \item We voegen maximale leeftijd parameter toe
+  \end{itemize}
+  \vskip5mm
+  \code[language=python,font=\small,width=.9\linewidth]{selectWithAgeBetween.py}
+\end{frame}
+
+\begin{frame}
+  \frametitle{Andere Selecties}
+  \structure{Andere Mogelijke Selecties}
+  \begin{itemize}
+    \item Selecteer alle Jannen
+    \item Selecteer zij die meer dan \SI{80}{\kilogram} wegen
+    \item Selecteer zij die groter zijn dan \SI{2}{\meter}
+    \item Selecteer zij die een BMI hoger dan 30 hebben
+  \end{itemize}
+  \vskip5mm
+  \structure{Implementatie}
+  \begin{itemize}
+    \item Allemaal selectie-opdrachten
+    \item Hoe dit veralgemenen naar \'e\'en functie?
+  \end{itemize}
+\end{frame}
+
+\begin{frame}
+  \frametitle{Poging Tot Veralgemening}
+  \code[language=python,font=\tiny]{selectPersons.py}
+\end{frame}
+
+\begin{frame}
+  \frametitle{Evaluatie \texttt{selectPersons}}
+  \begin{itemize}
+    \item \emph{Verschrikkelijk} onhandig
+    \item Veel typwerk $\rightarrow$ veel kans op bugs
+    \item Moet herhaald worden voor elke klasse
+    \item Kan nog altijd niet willekeurige selecties aan
+          \begin{itemize}
+            \item Selecteer namen die beginnen op F
+            \item Selecteer zij die jonger zijn dan 18 \emph{of} lichter zijn dan \SI{50}{\kilogram}
+            \item Selecteer zij die \emph{niet} Jan heten
+          \end{itemize}
+    \item Is absoluut geen aanvaardbare oplossing
+  \end{itemize}
+\end{frame}
+
+\begin{frame}
+  \frametitle{Wat Als\dots}
+  \begin{itemize}
+    \item Zou handig zijn indien Python een {\tt filter} lus aanbood
+  \end{itemize}
+  \code[language=python,font=\small,width=.9\linewidth,extra keywords={filter}]{filter-loop.py}
+  \begin{itemize}
+    \item Werkt met willekeurige selectie-condities
+    \item Werkt op willekeurige objecten (niet enkel \texttt{Person}s)
+  \end{itemize}
+\end{frame}

@@ -1,0 +1,52 @@
+\section{Projecties}
+
+\frame{\tableofcontents[currentsection]}
+
+\begin{frame}
+  \frametitle{Opvragen Namen}
+  \begin{quote}
+    Gegeven een lijst \texttt{Person}s, wat zijn hun namen?
+  \end{quote}
+  \code[language=python]{getNames.py}
+\end{frame}
+
+\begin{frame}
+  \frametitle{Opvragen Leeftijden}
+  \begin{quote}
+    Gegeven een lijst \texttt{Person}s, wat zijn hun leeftijden?
+  \end{quote}
+  \code[language=python]{getAges.py}
+\end{frame}
+
+\begin{frame}
+  \frametitle{Veralgemening: \texttt{getFields}}
+  \code[language=python,font=\small,width=.9\linewidth]{getFields.py}
+  \begin{itemize}
+    \item \texttt{getattr} kan gebruikt worden om waarde veld op te vragen
+    \item \texttt{getFields} werkt op alle types objecten
+    \item \texttt{getFields} werkt voor alle veldnamen
+  \end{itemize}
+\end{frame}
+
+\begin{frame}
+  \frametitle{Opvragen BMIs}
+  \begin{quote}
+    Gegeven een lijst \texttt{Person}s, wat zijn hun BMI's?
+  \end{quote}
+  \code[language=python,font=\small,width=.9\linewidth]{getBMIs.py}
+  \begin{itemize}
+    \item \texttt{getFields} werkt \emph{enkel} op velden
+    \item Bewerkingen nodig $\rightarrow$ weer terugvallen op manuele lus
+  \end{itemize}
+\end{frame}
+
+\begin{frame}
+  \frametitle{Wat Als\dots}
+  \begin{itemize}
+    \item Zou handig zijn indien Python een {\tt map} lus aanbood
+  \end{itemize}
+  \code[language=python,font=\small,width=.9\linewidth,extra keywords={map}]{map-loop.py}
+  \begin{itemize}
+    \item Willekeurige bewerkingen op willekeurige objecten
+  \end{itemize}
+\end{frame}

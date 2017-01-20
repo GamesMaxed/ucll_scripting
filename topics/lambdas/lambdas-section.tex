@@ -1,0 +1,143 @@
+\section{Lambda's}
+
+\frame{\tableofcontents[currentsection]}
+
+\begin{frame}
+  \frametitle{Opvragen Velden van \texttt{Person}-objecten}
+  \begin{overprint}
+    \onslide<1>
+    \code[language=python]{map-names.py}
+    \onslide<2>
+    \code[language=python]{map-ages.py}
+    \onslide<3>
+    \code[language=python]{map-heights.py}
+  \end{overprint}
+  \vskip4mm
+  \begin{center}
+    \begin{tikzpicture}[scale=0.75,transform shape,
+                        person/.style={draw,rectangle split,rectangle split parts=2,minimum width=4cm,drop shadow,fill=white},
+                        value/.style={draw,minimum width=4cm,fill=white,drop shadow}]
+      \pgfdeclarelayer{background}
+      \pgfsetlayers{background,main}
+
+      \node[person] (jan) at (0,0) {
+        \textbf{Person}
+        \nodepart{two}
+        \begin{tabular}{r@{$\;=\;$}l}
+          name & Jan \\
+          age & 18 \\
+          height & 186 \\
+          weight & 92 \\
+        \end{tabular}
+      };
+      \node[person,anchor=south west] (piet) at ($ (jan.south east) + (1,0) $)  {
+        \textbf{Person}
+        \nodepart{two}
+        \begin{tabular}{r@{$\;=\;$}l}
+          name & Piet \\
+          age & 19 \\
+          height & 173 \\
+          weight & 69 \\
+        \end{tabular}
+      };
+      \node[person,anchor=south west] (tom) at ($ (piet.south east) + (1,0) $)  {
+        \textbf{Person}
+        \nodepart{two}
+        \begin{tabular}{r@{$\;=\;$}l}
+          name & Tom \\
+          age & 23 \\
+          height & 182 \\
+          weight & 75 \\
+        \end{tabular}
+      };
+
+      \node[value,anchor=north] (jan value) at ($ (jan.south) + (0,-1) $) {%
+        \only<1>{Jan}%
+        \only<2>{18}%
+        \only<3>{186}%
+      };
+      \node[value,anchor=north] (piet value) at ($ (piet.south) + (0,-1) $) {%
+        \only<1>{Piet}%
+        \only<2>{19}%
+        \only<3>{173}%
+      };
+      \node[value,anchor=north] (tom value) at ($ (tom.south) + (0,-1) $) {%
+        \only<1>{Tom}%
+        \only<2>{23}%
+        \only<3>{182}%
+      };
+
+      \draw[-latex] (jan.south) -- (jan value.north);
+      \draw[-latex] (piet.south) -- (piet value.north);
+      \draw[-latex] (tom.south) -- (tom value.north);
+
+      \begin{pgfonlayer}{background}
+        \path[fill=red!25] ($ (jan.north west) + (-0.2,0.2) $) rectangle ($ (tom.south east) + (0.2,-0.2) $);
+        \path[fill=red!25] ($ (jan value.north west) + (-0.2,0.2) $) rectangle ($ (tom value.south east) + (0.2,-0.2) $);
+      \end{pgfonlayer}
+    \end{tikzpicture}
+  \end{center}
+\end{frame}
+
+\begin{frame}
+  \frametitle{Hulpfuncties}
+  \begin{itemize}
+    \item Opvragen naam: functie \texttt{getName}
+    \item Opvragen leeftijd: functie \texttt{getAge}
+    \item Opvragen lengte: functie \texttt{getHeight}
+    \item Opvragen gewicht: functie \texttt{getWeight}
+    \item Telkens nieuwe functie nodig per veld
+    \item Veel typwerk (boilerplate code)
+  \end{itemize}
+\end{frame}
+
+\begin{frame}
+  \frametitle{Lambda's}
+  \begin{itemize}
+    \item Zulke kleine hulpfuncties vaak nodig
+    \item Kortere notatie mogelijk
+    \item ``Inline functie''
+  \end{itemize}
+  \vskip5mm
+  \begin{overprint}
+    \onslide<1-3>
+    \code[language=python]{map-names-lambda.py}
+    \only<2>{
+      \codeunderline[name center=getName p center,stroke/.style={thick,red}]{getName:p:start}{getName:p:end}
+      \codeoverline[name center=lambda p center,stroke/.style={thick,red}]{lambda:p:start}{lambda:p:end}
+      \begin{tikzpicture}[remember picture,overlay]
+        \draw[thick,red,latex-] (getName p center) -- ++(0,-1) -| (lambda p center);
+      \end{tikzpicture}
+    }
+    \only<3>{
+      \codeunderline[name center=getName body center,stroke/.style={thick,red}]{getName:body:start}{getName:body:end}
+      \codeoverline[name center=lambda body center,stroke/.style={thick,red}]{lambda:body:start}{lambda:body:end}
+      \begin{tikzpicture}[remember picture,overlay]
+        \draw[thick,red,latex-] (getName body center) -- ++(0,-1) -| (lambda body center);
+      \end{tikzpicture}
+    }
+
+    \onslide<4>
+    \code[language=python]{map-ages-lambda.py}
+
+    \onslide<5>
+    \code[language=python]{map-heights-lambda.py}
+  \end{overprint}
+\end{frame}
+
+\begin{frame}
+  \frametitle{Lambda's}
+  \begin{center}
+    \ttfamily {\bfseries lambda} \nonterminal{args}:\ \nonterminal{body}
+  \end{center}
+  \begin{itemize}
+    \item Body moet \'e\'en expressie zijn
+    \item Impliciete \texttt{return}
+    \item Stelt een anonieme functie voor
+  \end{itemize}
+\end{frame}
+
+%%% Local Variables:
+%%% mode: latex
+%%% TeX-master: "lambdas"
+%%% End:
