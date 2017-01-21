@@ -14,9 +14,6 @@ class _Frame:
         else:
             return self.parent.__getattr__(id)
 
-    def __setattr__(self, id, val):
-        self._map[id] = val
-
     def isBound(self, id):
         return id in self._map or self.parent.isBound(id)
 

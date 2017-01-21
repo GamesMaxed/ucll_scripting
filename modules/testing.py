@@ -101,6 +101,13 @@ def runIfFunctionExists(functionName):
         return _TestPredicate("run if {} exists".format(functionName), check)
 
 
+def limitTestCount():
+    def check():
+        return len(_environment.run.passed) + len(_environment.run.failed) < _environment.settings.maxTests
+
+    return _TestPredicate("limit test count", check)
+
+
 #
 # Test classes
 #
@@ -135,19 +142,10 @@ class _TestFunction(_Test):
         self._testenvironment = _environment.tests.copy()
 
     def run(self):
-        def testCount():
-            """
-            Counts the number of tests ran prior to this test.
-            """
-            return \
-                len(_environment.tests.passedTests) + \
-                len(_environment.tests.failedTests) + \
-                len(_environment.tests.skippedTests)
-        
         with _environment.let(tests = self._testenvironment):
-            if (not _environment.tests.condition()) or _environment.tests.skip or testCount() >= _environment.settings.maxTests:
+            if not _environment.tests.condition():
                 # Add current test to skip list
-                _environment.tests.skippedTests.append(self._name)
+                _environment.run.skipped.append(self._name)
 
                 # Return 0/1
                 return Score(0, 1)
@@ -160,14 +158,14 @@ class _TestFunction(_Test):
                     self._function()
 
                     # Add test to pass list
-                    _environment.tests.passedTests.append(self._name)
+                    _environment.run.passed.append(self._name)
 
                     # Return 1/1
                     return Score(1, 1)
 
                 except TestFailure:
                     # Add test to fail list
-                    _environment.tests.failedTests.append(self._name)
+                    _environment.run.failed.append(self._name)
 
                     # Return 0/1
                     return Score(0, 1)
@@ -212,16 +210,8 @@ class _Printer:
 _rootTest = _RootTest()
 
 _environment = dyn.create()
-_environment.push(tests = dyn.create(), settings = dyn.create())
-
-_environment.tests.push(top=_rootTest,         \
-                        context=[],            \
-                        passedTests=[],        \
-                        failedTests=[],        \
-                        skippedTests=[],       \
-                        skip=False,            \
-                        path="",               \
-                        condition = runAlways)
+_environment.push(tests = dyn.create(), settings = dyn.create(), run = dyn.create())
+_environment.tests.push(top=_rootTest, context=[], path="", condition = limitTestCount())
 
 
 def _dummy():
@@ -460,14 +450,15 @@ def runTests():
     parser.add_argument('-n', '--count', help='Number of tests to run', default=float('inf'), type=int)
     args = parser.parse_args()
         
-    with _environment.settings.let(printer=_Printer(), verbosity=args.verbosity, maxTests=args.count):
+    with _environment.settings.let(printer=_Printer(), verbosity=args.verbosity, maxTests=args.count), \
+         _environment.run.let(skipped=[], passed=[], failed=[]):
         printer = _environment.settings.printer
         score = _rootTest.run()
 
         with _environment.settings.let(verbosity=args.statistics):
-            printer.log(1, "Passed tests: {}", len(_environment.tests.passedTests))
-            printer.log(1, "Failed tests: {}", len(_environment.tests.failedTests))
-            printer.log(1, "Skipped tests: {}", len(_environment.tests.skippedTests))
+            printer.log(1, "Passed tests: {}", len(_environment.run.passed))
+            printer.log(1, "Failed tests: {}", len(_environment.run.failed))
+            printer.log(1, "Skipped tests: {}", len(_environment.run.skipped))
 
             printer.log(1, "Score: {}", format(score))
         
