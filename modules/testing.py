@@ -92,11 +92,11 @@ runAlways = _TestPredicate("always", lambda: True)
 runNever = _TestPredicate("never", lambda: False)
 
 def runIfFunctionExists(functionName):
-    if not _testenv.isBound('testedModule'):
+    if not _environment.tests.isBound('testedModule'):
         raise TestError("No tested module set")
     else:
         def check():
-            return functionName in dir(_testenv.testedModule)
+            return functionName in dir(_environment.tests.testedModule)
         
         return _TestPredicate("run if {} exists".format(functionName), check)
 
@@ -132,55 +132,46 @@ class _TestFunction(_Test):
     def __init__(self, name, function):
         self._name = name
         self._function = function
-        self._environment = _testenv.copy()
+        self._testenvironment = _environment.tests.copy()
 
     def run(self):
         def testCount():
             """
             Counts the number of tests ran prior to this test.
             """
-            return len(_testenv.passedTests) + len(_testenv.failedTests) + len(_testenv.skippedTests)
+            return \
+                len(_environment.tests.passedTests) + \
+                len(_environment.tests.failedTests) + \
+                len(_environment.tests.skippedTests)
         
-        global _testenv
-
-        try:
-            # Take snapshot of current test environment
-            oldTestEnv = _testenv
-
-            # Overwrite test environment
-            _testenv = self._environment
-
-            if (not _testenv.condition()) or _testenv.skip or testCount() >= _settings.maxTests:
+        with _environment.let(tests = self._testenvironment):
+            if (not _environment.tests.condition()) or _environment.tests.skip or testCount() >= _environment.settings.maxTests:
                 # Add current test to skip list
-                _testenv.skippedTests.append(self._name)
+                _environment.tests.skippedTests.append(self._name)
 
                 # Return 0/1
                 return Score(0, 1)
             else:
                 try:
                     # Set test name
-                    _testenv.push(testName = self._name)
+                    _environment.tests.push(testName = self._name)
 
                     # Run test
                     self._function()
 
                     # Add test to pass list
-                    _testenv.passedTests.append(self._name)
+                    _environment.tests.passedTests.append(self._name)
 
                     # Return 1/1
                     return Score(1, 1)
 
                 except TestFailure:
                     # Add test to fail list
-                    _testenv.failedTests.append(self._name)
+                    _environment.tests.failedTests.append(self._name)
 
                     # Return 0/1
                     return Score(0, 1)
-
             
-        finally:
-            # Restore test environment
-            _testenv = oldTestEnv
 
 class _TestSuite(_Test):
     def __init__(self):
@@ -211,7 +202,7 @@ class _Scaler(_SingleChildTest):
 
 class _Printer:
     def log(self, verbosity, message, *args, **kwargs):
-        if _settings.verbosity >= verbosity:
+        if _environment.settings.verbosity >= verbosity:
             print(message.format(*args, **kwargs))
         
 
@@ -220,17 +211,17 @@ class _Printer:
 # Create root test
 _rootTest = _RootTest()
 
-# Create dynamic environment for tests
-_testenv = dyn.create()
+_environment = dyn.create()
+_environment.push(tests = dyn.create(), settings = dyn.create())
 
-# Create dynamic environment for settings
-_settings = dyn.create()
-
-
-
-# Push a fresh frame with the root test in it
-# (necessary due to the root frame not being modifiable)
-_testenv.push(top=_rootTest, context=[], passedTests=[], failedTests=[], skippedTests=[], skip=False, path="", condition = runAlways)
+_environment.tests.push(top=_rootTest,         \
+                        context=[],            \
+                        passedTests=[],        \
+                        failedTests=[],        \
+                        skippedTests=[],       \
+                        skip=False,            \
+                        path="",               \
+                        condition = runAlways)
 
 
 def _dummy():
@@ -244,12 +235,12 @@ class _TestContextManager:
         
     def __enter__(self):
         for test in self._tests:
-            _testenv.top.addChild(test)
-            _testenv.push(top=test)
+            _environment.tests.top.addChild(test)
+            _environment.tests.push(top=test)
 
     def __exit__(self, *args):
         for test in self._tests:
-            _testenv.pop()
+            _environment.tests.pop()
 
 
 def findFirst(xs, predicate):
@@ -278,9 +269,9 @@ def testedModule(module = None):
     current value of testedModule.
     """
     if module:
-        return _testenv.let(testedModule = module)
+        return _environment.tests.let(testedModule = module)
     else:
-        return _testenv.testedModule
+        return _environment.tests.testedModule
 
 def referenceModule(module = None):
     """
@@ -289,43 +280,50 @@ def referenceModule(module = None):
     current value of referenceModule.
     """
     if module:
-        return _testenv.let(referenceModule = module)
+        return _environment.tests.let(referenceModule = module)
     else:
-        return _testenv.referenceModule
+        return _environment.tests.referenceModule
     
 def testedFunctionName(functionName = None):
     if functionName:
         @contextmanager
         def context():
-            with _testenv.let(testedFunctionName = functionName), condition(runIfFunctionExists(functionName)):
+            with _environment.tests.let(testedFunctionName = functionName), condition(runIfFunctionExists(functionName)):
                 yield
 
         return context()
     else:
-        return _testenv.testedFunctionName
+        return _environment.tests.testedFunctionName
 
 def testedFunction():
     """
     Fetches the tested function.
     """
-    return getattr(_testenv.testedModule, _testenv.testedFunctionName)
+    return getattr(_environment.tests.testedModule, _environment.tests.testedFunctionName)
 
 def referenceFunction():
     """
     Fetches the reference function.
     """
-    return getattr(_testenv.referenceModule, _testenv.testedFunctionName)
+    return getattr(_environment.tests.referenceModule, _environment.tests.testedFunctionName)
 
 def context(message, *args, **kwargs):
-    return _testenv.let(context = _testenv.context + [ message.format(*args, **kwargs) ])
+    return _environment.tests.let(context = _environment.tests.context + [ message.format(*args, **kwargs) ])
 
 def path(name, *args, **kwargs):
-    return _testenv.let(path = _testenv.path + "/" + name.format(*args, **kwargs))
+    return _environment.tests.let(path = _environment.tests.path + "/" + name.format(*args, **kwargs))
 
 def condition(predicate):
-    conjunction = _testenv.condition & predicate
-    print("->", conjunction)
-    return _testenv.let(condition = conjunction)
+    """
+    Adds an extra condition which needs to hold true
+    for tests to be ran.
+    """
+    
+    # Create conjunction of existing condition with new condition
+    conjunction = _environment.tests.condition & predicate
+
+    # Update condition dynamic variable
+    return _environment.tests.let(condition = conjunction)
 
 def test(name, *args, **kwargs):
     """
@@ -334,7 +332,7 @@ def test(name, *args, **kwargs):
     """
     def wrapper(function):
         # Add test function as child to top test
-        _testenv.top.addChild(_TestFunction(name.format(*args, **kwargs), function))
+        _environment.tests.top.addChild(_TestFunction(name.format(*args, **kwargs), function))
         return _dummy
 
     return wrapper
@@ -349,22 +347,22 @@ def fail():
     When called within a test, aborts the test immediately.
     The test is considered to have failed.
     """
-    printer = _settings.printer
+    printer = _environment.settings.printer
     
-    printer.log(1, "FAIL: {}", _testenv.testName)
+    printer.log(1, "FAIL: {}", _environment.tests.testName)
 
     errorStackFrame = _firstExternalStackFrame()
     kwargs = { 'file': errorStackFrame.filename, 'line': errorStackFrame.lineno, 'function': errorStackFrame.function }
 
     if len(errorStackFrame.code_context) > 1:
-        printer.log(2, "FAIL: {}", _testenv.testName)
+        printer.log(2, "FAIL: {}", _environment.tests.testName)
         printer.log(2, "In function {function} ({file}, line {line}):", **kwargs)
         printer.log(2, "\n".join([ "  " + line.strip() for line in errorStackFrame.code_context ]))
     else:
         printer.log(2, "In function {function} ({file}, line {line}): {code}", code=errorStackFrame.code_context[0].strip(), **kwargs)
 
     printer.log(2, "Additional information:")
-    for item in _testenv.context:
+    for item in _environment.tests.context:
         printer.log(2, "  " + item)
 
     printer.log(2, "")
@@ -462,14 +460,14 @@ def runTests():
     parser.add_argument('-n', '--count', help='Number of tests to run', default=float('inf'), type=int)
     args = parser.parse_args()
         
-    with _settings.let(printer=_Printer(), verbosity=args.verbosity, maxTests=args.count):
-        printer = _settings.printer
+    with _environment.settings.let(printer=_Printer(), verbosity=args.verbosity, maxTests=args.count):
+        printer = _environment.settings.printer
         score = _rootTest.run()
 
-        with _settings.let(verbosity=args.statistics):
-            printer.log(1, "Passed tests: {}", len(_testenv.passedTests))
-            printer.log(1, "Failed tests: {}", len(_testenv.failedTests))
-            printer.log(1, "Skipped tests: {}", len(_testenv.skippedTests))
+        with _environment.settings.let(verbosity=args.statistics):
+            printer.log(1, "Passed tests: {}", len(_environment.tests.passedTests))
+            printer.log(1, "Failed tests: {}", len(_environment.tests.failedTests))
+            printer.log(1, "Skipped tests: {}", len(_environment.tests.skippedTests))
 
             printer.log(1, "Score: {}", format(score))
         
