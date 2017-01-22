@@ -1,9 +1,10 @@
 from contextlib import contextmanager
+import importlib
 import argparse
-import inspect
 import copy
 import sys
 import dyn
+import os
 
 
 def checkPythonVersion():
@@ -244,7 +245,16 @@ def _firstExternalStackFrame():
     first stack frame whose function does not reside
     in this file.
     """
-    return findFirst(inspect.stack(), lambda frame: frame.filename != __file__)
+    # Fetch call stack
+    callStack = inspect.stack()
+
+    print([(frame.filename, frame.lineno) for frame in callStack])
+
+    # Look for first stack frame belonging to code
+    # that does not reside in this file
+    externalStackFrame = findFirst(callStack, lambda frame: frame.filename != __file__)
+
+    return externalStackFrame
         
 
 cumulative = _TestContextManager(_CumulativeTestSuite())
@@ -278,7 +288,8 @@ def testedFunctionName(functionName = None):
     if functionName:
         @contextmanager
         def context():
-            with _environment.tests.let(testedFunctionName = functionName), condition(runIfFunctionExists(functionName)):
+            with _environment.tests.let(testedFunctionName = functionName), \
+                 condition(runIfFunctionExists(functionName)):
                 yield
 
         return context()
@@ -341,15 +352,10 @@ def fail():
     
     printer.log(1, "FAIL: {}", _environment.tests.testName)
 
-    errorStackFrame = _firstExternalStackFrame()
-    kwargs = { 'file': errorStackFrame.filename, 'line': errorStackFrame.lineno, 'function': errorStackFrame.function }
+#    errorStackFrame = _firstExternalStackFrame()
+#    kwargs = { 'file': errorStackFrame.filename, 'line': errorStackFrame.lineno, 'function': errorStackFrame.function }
 
-    if len(errorStackFrame.code_context) > 1:
-        printer.log(2, "FAIL: {}", _environment.tests.testName)
-        printer.log(2, "In function {function} ({file}, line {line}):", **kwargs)
-        printer.log(2, "\n".join([ "  " + line.strip() for line in errorStackFrame.code_context ]))
-    else:
-        printer.log(2, "In function {function} ({file}, line {line}): {code}", code=errorStackFrame.code_context[0].strip(), **kwargs)
+#    printer.log(2, "In function {function} ({file}, line {line}): {code}", code='<unknown>', **kwargs)
 
     printer.log(2, "Additional information:")
     for item in _environment.tests.context:
@@ -413,34 +419,55 @@ def reftest(name, result = None, arguments = None):
     def testFunction(*args, **kwargs):
         @test(name)
         def referenceImplementationTest():
-            # Make copies of the arguments (they might be modified by the calls)
-            testargs = copy.deepcopy(args)
-            testkwargs = copy.deepcopy(kwargs)
-            refargs = copy.deepcopy(args)
-            refkwargs = copy.deepcopy(kwargs)
+            argumentStrings = [ repr(arg) for arg in args ] + [ "{} = {}".format(key, repr(val)) for key, val in kwargs ]
+            argumentString = "({})".format(", ".join(argumentStrings))
+            
+            with context('Comparing with reference implementation'), context('Called with arguments {}', argumentString):
+                # Make copies of the arguments (they might be modified by the calls)
+                testargs = copy.deepcopy(args)
+                testkwargs = copy.deepcopy(kwargs)
+                refargs = copy.deepcopy(args)
+                refkwargs = copy.deepcopy(kwargs)
 
-            # Call reference implementation
-            refretval = referenceFunction()(*refargs, **refkwargs)
+                # Call reference implementation
+                refretval = referenceFunction()(*refargs, **refkwargs)
 
-            # Call test implementation
-            testretval = testedFunction()(*testargs, **testkwargs)
+                # Call test implementation
+                testretval = testedFunction()(*testargs, **testkwargs)
 
-            # Compare return values
-            with context("Comparing return values"):
-                compareResults(refretval, testretval)
+                # Compare return values
+                with context("While comparing return values"):
+                    compareResults(refretval, testretval)
 
-            # Compare positional arguments
-            for i in range(0, len(args)):
-                with context("Comparing positional argument #{}", i):
-                    compareArguments(refargs[i], testargs[i])
+                # Compare positional arguments
+                for i in range(0, len(args)):
+                    with context("While comparing positional argument #{}", i):
+                        compareArguments(refargs[i], testargs[i])
 
-            # Compare keyword arguments
-            for key in kwargs:
-                with context("Comparing keyword argument {}", key):
-                    compareArguments(refkwargs[key], testkwargs[i])
+                # Compare keyword arguments
+                for key in kwargs:
+                    with context("While comparing keyword argument {}", key):
+                        compareArguments(refkwargs[key], testkwargs[i])
 
     return testFunction
 
+
+@contextmanager
+def inside_directory(path):
+    currentDirectory = os.getcwd()
+    try:
+        os.chdir(path)
+        yield
+    finally:
+        os.chdir(currentDirectory)
+
+
+def loadTests(path):
+    with open(path, 'r') as file:
+        code = file.read()
+        exec(code)
+
+    
 
 
 def runTests():
@@ -461,5 +488,5 @@ def runTests():
             printer.log(1, "Skipped tests: {}", len(_environment.run.skipped))
 
             printer.log(1, "Score: {}", format(score))
-        
-        
+
+
