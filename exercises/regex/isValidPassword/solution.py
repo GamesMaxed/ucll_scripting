@@ -3,8 +3,8 @@ import re
 
 def isValidPassword(password):
     """
-    Returns True if the given password is valid,
-    False otherwise.
+    Returns a truthy value if the given password is valid,
+    a falsey value otherwise.
 
     A password is valid if it is at least
     8 characters long, contains a lowercase letter,

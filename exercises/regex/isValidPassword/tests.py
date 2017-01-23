@@ -10,15 +10,14 @@ with cumulative:
         valid_passwords = [ '7aT!ffff', '7 aA!         ', 'aBc123!!' ]
 
         for invalid_password in invalid_passwords:
-            @test("\"{}\" must be an invalid password", invalid_password)
+            @test('isValidPassword({}) should return falsey value', repr(invalid_password))
             def checkInvalidPassword(invalid_password=invalid_password):
                 mustBeFalsey(testedFunction(invalid_password))
 
         for valid_password in valid_passwords:
-            @test("\"{}\" must be a valid password", valid_password)
+            @test('isValidPassword({}) must return truthy value', repr(valid_password))
             def checkValidPassword(valid_password=valid_password):
                 mustBeTruthy(testedFunction(valid_password))
-
 
         for password in [ 'jf7!fjifjid',        \
                           'jfF!fjifjidd',       \
@@ -28,4 +27,4 @@ with cumulative:
                           'ffjlHJLKHffwq',      \
                           '16!ffJKLJdd ',       \
                           'ab7!D' ]:
-            reftest('Verifying isValidPassword("{}")'.format(password), result=mustBeSameTruthiness)(password)
+            reftest(result=mustBeSameTruthiness)(password)
