@@ -1,0 +1,1 @@
+python -c 'from testing.shell import main; main()' $@
