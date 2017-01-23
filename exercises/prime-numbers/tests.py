@@ -1,42 +1,52 @@
-import solution
-import student
 from testing import *
+from testing.tests import *
+from testing.assertions import *
 
 
-class PrimeTests(TestBuilder):
-    def __init__(self):
-        super().__init__(student)
+with cumulative:
+    with testedFunctionName("isPrime"):
+        def checkPrimality(n):
+            if referenceFunction(n):
+                @test("isPrime({}) should return truthy value", n)
+                def check():
+                    mustBeTruthy(testedFunction(n))
+            else:
+                @test("isPrime({}) should return falsey value", n)
+                def check():
+                    mustBeFalsey(testedFunction(n))
 
-    def tests(self):
-        with self.group(cumulative()):
-            # with self.group(context("isPrime"), scale(1), cumulative()):
-            #     def mustBePrime(n):
-            #         with self.group(context('{} should be considered prime', n)):
-            #             self.testFunction(lambda ensure: ensure.true(student.isPrime(n)))
-                    
-            #     def mustNotBePrime(n):
-            #         with self.group(context('{} should not be considered prime', n)):
-            #             self.testFunction(lambda ensure: ensure.false(student.isPrime(n)))
+        for n in range(0, 100):
+            checkPrimality(n)
+
+    with testedFunctionName("nthPrime"):
+        def checkNthPrime(n):
+            expected = referenceFunction(n)
             
-            #     mustNotBePrime(0)
-            #     mustNotBePrime(1)
-            #     mustBePrime(2)
+            @test("nthPrime({}) should return {}", n, expected)
+            def check():
+                mustBeEqual(expected, testedFunction(n))
 
-            with self.group(context("isPrime"), scale(1)):
-                with self.fromReferenceImplementation(solution.isPrime, student.isPrime, contextString="While testing isPrime({inputs})") as addCase:
-                    for i in range(0, 100):
-                        addCase(i)
+        for n in range(1,50):
+            checkNthPrime(n)
 
-            with self.group(context("isPrime"), scale(1)):
-                with self.fromReferenceImplementation(solution.nthPrime, student.nthPrime, contextString="While testing nthPrime({inputs})") as addCase:
-                    for i in range(1, 100):
-                        addCase(i)
+    with testedFunctionName("primesUpTo"):
+        def listPrimes(n):
+            expected = referenceFunction(n)
+            
+            @test("primesUpTo({}) should return {}", n, expected)
+            def check():
+                mustBeEqual(expected, testedFunction(n))
 
+        for n in range(1, 50):
+            listPrimes(n)
+            
+    with testedFunctionName("factorInteger"):
+        def factor(n):
+            expected = referenceFunction(n)
+            
+            @test("factorInteger({}) should return {}", n, expected)
+            def check():
+                mustBeEqual(expected, testedFunction(n))
 
-
-def main():
-    finalGrade = PrimeTests().runTests()
-    print("Final grade: {0:.1f}/{1:2}".format(finalGrade.value, finalGrade.maximum))
-
-
-main()
+        for n in range(1,50):
+            factor(n)

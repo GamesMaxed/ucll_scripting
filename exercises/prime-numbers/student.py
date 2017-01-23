@@ -2,23 +2,33 @@ def isPrime(n):
     """
     Returns True if n is prime, False otherwise.
     """
-    for i in range(2, n):
-        if n % i == 0:
-            return False
 
-    return n > 1
+    raise RuntimeError("Not yet implemented")
 
 
 def nthPrime(n):
     """
-    Computes the n-th prime.
-    Example: nthPrime(1) == 2.
+    Computes the n-th prime. The first prime (n=1) is 2.
     """
-    k = 0
 
-    while n > 0:
-        k += 1
-        if isPrime(k):
-            n -= 1
+    raise RuntimeError("Not yet implemented")
 
-    return k
+
+def primesUpTo(n):
+    """
+    Returns all primes less than or equal to n in a
+    list. Its elements must be sorted in increasing order.
+    """
+
+    raise RuntimeError("Not yet implemented")
+
+
+def factorInteger(n):
+    """
+    Factorizes the given integer into prime factors.
+    These are grouped in a list sorted in increasing order.
+
+    For example, factorInteger(12) = [2, 2, 3].
+    """
+
+    raise RuntimeError("Not yet implemented")
