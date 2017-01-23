@@ -23,7 +23,7 @@ def mustBeEqual(expected, actual):
     Assert that the given values must be equal to each other.
     If they are not, failure ensues.
     """
-    with testing.tests.context("Expected value: {}", expected), context("Actual value: {}", actual):
+    with testing.tests.context("Expected value: {}", expected), testing.tests.context("Actual value: {}", actual):
         if expected != actual:
             fail()
 
@@ -33,11 +33,11 @@ def mustBeSameTruthiness(expected, actual):
     If they do not, failure ensues.
     """
     if expected:
-        with testing.tests.context("Expected {} to be truthy", actual):
+        with testing.tests.context("Expected truthy value; got {}", actual):
             if not actual:
                 fail()
     else:
-        with testing.tests.context("Expected {} to be falsey", actual):
+        with testing.tests.context("Expected falsey value; got {}", actual):
             if actual:
                 fail()
             

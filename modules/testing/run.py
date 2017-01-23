@@ -66,11 +66,10 @@ def loadTestsRecursively():
 
             
 def runTests():
-    with testing.environment.run.let(skipped=[], passed=[], failed=[]):
-        root = testing.environment.tests.top
+    root = testing.environment.tests.top
 
-        if root.childCount() > 0:
-            return root.run()
-        else:
-            print("No tests found!")
-            sys.exit(-1)
+    if root.childCount() > 0:
+        return root.run()
+    else:
+        print("No tests found!")
+        sys.exit(-1)

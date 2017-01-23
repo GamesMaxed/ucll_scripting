@@ -90,7 +90,15 @@ class _TestFunction(_Test):
                     testing.environment.tests.push(testName = self._name)
 
                     # Run test
-                    self._function()
+                    try:
+                        self._function()
+                    except TestFailure as e:
+                        # If a regular test failure was raised, deal with it below
+                        raise e
+                    except Exception as e:
+                        # If a different exception was raised, convert it to a TestFailure exception
+                        with context("Exception raised: {}", e):
+                            testing.assertions.fail()
 
                     # Add test to pass list
                     testing.environment.run.passed.append(self._name)
@@ -170,17 +178,29 @@ def testedFunctionName(functionName = None):
     else:
         return testing.environment.tests.testedFunctionName
 
+def _getTestedFunction():
+    """
+    Fetches the test function.
+    """
+    return getattr(testing.environment.tests.testedModule, testing.environment.tests.testedFunctionName)
+
+def _getReferenceFunction():
+    """
+    Fetches the test function.
+    """
+    return getattr(testing.environment.tests.referenceModule, testing.environment.tests.testedFunctionName)
+
 def testedFunction(*args, **kwargs):
     """
-    Fetches the tested function.
+    Calls the tested function with the provided arguments.
     """
-    return getattr(testing.environment.tests.testedModule, testing.environment.tests.testedFunctionName)(*args, **kwargs)
+    return _getTestedFunction()(*args, **kwargs)
 
 def referenceFunction(*args, **kwargs):
     """
-    Fetches the reference function.
+    Calls the reference function with the provided arguments.
     """
-    return getattr(testing.environment.tests.referenceModule, testing.environment.tests.testedFunctionName)(*args, **kwargs)
+    return _getReferenceFunction()(*args, **kwargs)
 
 def context(message, *args, **kwargs):
     return testing.environment.tests.let(context = testing.environment.tests.context + [ message.format(*args, **kwargs) ])
@@ -215,41 +235,41 @@ def test(name, *args, **kwargs):
 
     return wrapper
     
-def reftest(name, result = None, arguments = None):
+def reftest(result = None, arguments = None):
     compareResults = result or testing.assertions.mustBeEqual
     compareArguments = arguments or testing.assertions.ignore
     
     def testFunction(*args, **kwargs):
+        argumentStrings = [ repr(arg) for arg in args ] + [ "{} = {}".format(key, repr(val)) for key, val in kwargs ]
+        argumentString = "{}".format(", ".join(argumentStrings))
+
+        # Call reference function
+        refargs = copy.deepcopy(args)
+        refkwargs = copy.deepcopy(kwargs)
+        refretval = referenceFunction(*refargs, **refkwargs)
+
+        name = "{}({}), refimpl returned {}".format(testedFunctionName(), argumentString, refretval)
+        
         @test(name)
         def referenceImplementationTest():
-            argumentStrings = [ repr(arg) for arg in args ] + [ "{} = {}".format(key, repr(val)) for key, val in kwargs ]
-            argumentString = "({})".format(", ".join(argumentStrings))
-            
-            with context('Comparing with reference implementation'), context('Called with arguments {}', argumentString):
-                # Make copies of the arguments (they might be modified by the calls)
+            with context('Comparing {}({}) with reference solution', testedFunctionName(), argumentString):
+                # Call test implementation
                 testargs = copy.deepcopy(args)
                 testkwargs = copy.deepcopy(kwargs)
-                refargs = copy.deepcopy(args)
-                refkwargs = copy.deepcopy(kwargs)
-
-                # Call reference implementation
-                refretval = referenceFunction(*refargs, **refkwargs)
-
-                # Call test implementation
                 testretval = testedFunction(*testargs, **testkwargs)
 
                 # Compare return values
-                with context("While comparing return values"):
+                with context("Comparing return values: expected {}, received {}", refretval, testretval):
                     compareResults(refretval, testretval)
 
                 # Compare positional arguments
                 for i in range(0, len(args)):
-                    with context("While comparing positional argument #{}", i):
+                    with context("Comparing positional argument #{}: expected {}, received {}", i, repr(refargs[i]), repr(testargs[i])):
                         compareArguments(refargs[i], testargs[i])
 
                 # Compare keyword arguments
                 for key in kwargs:
-                    with context("While comparing keyword argument {}", key):
+                    with context("Comparing keyword argument {}: expected {}, received {}", key, repr(refkwargs[key]), repr(testkwargs[i])):
                         compareArguments(refkwargs[key], testkwargs[i])
 
     return testFunction
