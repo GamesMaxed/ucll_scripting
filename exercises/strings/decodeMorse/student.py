@@ -2,18 +2,20 @@ import re
 from functools import reduce
 
 
-def readMorse():
-    def parse(line):
-        return tuple(reversed(line.strip().split(' ')))
-        
-    with open('morse.txt', 'r') as lines:
-        return dict([ parse(line) for line in lines ])
-
 
 def decodeMorse(code):
     """
-    Decodes the given code.
+    Decodes the given code to plaintext.
     """
-    morse = readMorse()
 
-    return "".join([ morse[token] for token in code.split(' ') ]) if code != '' else ''
+    raise RuntimeError("Not yet implemented")
+
+
+def encodeMorse(plaintext):
+    """
+    Translates given plaintext to morse.
+    """
+
+    raise RuntimeError("Not yet implemented")
+    
+

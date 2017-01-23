@@ -1,27 +1,26 @@
-import solution
-import student
 from testing import *
+from testing.tests import *
+from testing.assertions import *
 
 
-class PrimeTests(TestBuilder):
-    def __init__(self):
-        super().__init__(student)
+with cumulative:
+    def testcase(plaintext):
+        morseCode = referenceModule().encodeMorse(plaintext)
 
-    def tests(self):
-        with self.group(cumulative()):
-            def decodesTo(code, text):
-                with self.group(context('{} should decode to {}', code, text)):
-                    self.testFunction(lambda ensure: ensure.equals(text, student.decodeMorse(code)))
+        with testedFunctionName("decodeMorse"):
+            @test("decodeMorse({}) should return {}", repr(morseCode), repr(plaintext))
+            def testFunction():
+                mustBeEqual(plaintext, testedFunction(morseCode))
 
-            decodesTo('', '')
-            decodesTo('.-', 'A')
-            decodesTo('... --- ...', 'SOS')
-            decodesTo('.--. -.-- - .... --- -.', 'PYTHON')
+        with testedFunctionName("encodeMorse"):
+            @test("encodeMorse({}) should return {}", repr(plaintext), repr(morseCode))
+            def testFunction():
+                mustBeEqual(morseCode, testedFunction(plaintext))
+            
+    testcase('')
 
+    for char in 'ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789':
+        testcase(str(char))
 
-def main():
-    finalGrade = PrimeTests().runTests()
-    print("Final grade: {0:.1f}/{1:2}".format(finalGrade.value, finalGrade.maximum))
-
-
-main()
+    for plaintext in [ 'SOS', 'PYTHON', '12345' ]:
+        testcase(plaintext)
