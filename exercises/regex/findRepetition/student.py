@@ -11,4 +11,4 @@ def findRepetition(string):
     For example, "abcd,abcd" contains "abcd" twice.
     """
 
-    raise RuntimeError("Not yet implemented")
+    raise NotImplementedError()
