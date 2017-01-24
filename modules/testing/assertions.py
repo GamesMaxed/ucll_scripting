@@ -18,14 +18,22 @@ def fail():
 
     raise testing.tests.TestFailure()
 
-def mustBeEqual(expected, actual):
+def mustBeEqual(expected, actual, epsilon = None):
     """
     Assert that the given values must be equal to each other.
     If they are not, failure ensues.
     """
-    with testing.tests.context("Expected value: {}", expected), testing.tests.context("Actual value: {}", actual):
-        if expected != actual:
-            fail()
+    if epsilon:
+        with testing.tests.context("Expected value: {}", expected), \
+             testing.tests.context("Actual value: {}", actual), \
+             testing.tests.context("Epsilon: {}", epsilon):
+            if abs(expected - actual) > epsilon:
+                fail()
+    else:
+        with testing.tests.context("Expected value: {}", expected), \
+             testing.tests.context("Actual value: {}", actual):
+            if expected != actual:
+                fail()
 
 def mustBeSameTruthiness(expected, actual):
     """

@@ -101,7 +101,12 @@ class _TestFunction(_Test):
                         raise e
                     except Exception as e:
                         # If a different exception was raised, convert it to a TestFailure exception
-                        with context("Exception raised: {}", e):
+                        if str(e):
+                            contextString = "Exception {} raised: {}".format(type(e).__name__, str(e))
+                        else:
+                            contextString = "Exception {} raised".format(type(e).__name__)
+                            
+                        with context(contextString):
                             testing.assertions.fail()
 
                     # Add test to pass list
@@ -254,7 +259,13 @@ def test(name, *args, **kwargs):
         return _dummy
 
     return wrapper
-    
+
+def _limitStringLength(string, maxLength = 60):
+    if len(string) > maxLength:
+        return string[0:maxLength-3] + "..."
+    else:
+        return string
+
 def reftest(result = None, arguments = None):
     compareResults = result or testing.assertions.mustBeEqual
     compareArguments = arguments or testing.assertions.ignore
@@ -268,7 +279,7 @@ def reftest(result = None, arguments = None):
         refkwargs = copy.deepcopy(kwargs)
         refretval = referenceFunction(*refargs, **refkwargs)
 
-        name = "{}({}), refimpl returned {}".format(testedFunctionName(), argumentString, refretval)
+        name = "{}({}), refimpl returned {}".format(testedFunctionName(), argumentString, _limitStringLength(str(refretval)))
         
         @test(name)
         def referenceImplementationTest():
