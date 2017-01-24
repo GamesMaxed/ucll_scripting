@@ -1,14 +1,14 @@
 class Counter:
     # Constructor
     def __init__(self):
-        raise RuntimeError("Not yet implemented")
+        raise NotImplementedError()
 
     def current(self):
-        raise RuntimeError("Not yet implemented")
+        raise NotImplementedError()
 
     def increment(self):
-        raise RuntimeError("Not yet implemented")
+        raise NotImplementedError()
 
     def reset(self):
-        raise RuntimeError("Not yet implemented")
+        raise NotImplementedError()
         
