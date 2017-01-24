@@ -4,4 +4,4 @@
 #    for ( ... : ... ) { ... }
 # Python biedt enkel de 2de versie
 def sumUpTo(n):
-    raise StandardError("Not yet implemented")
+    raise NotImplementedError()
