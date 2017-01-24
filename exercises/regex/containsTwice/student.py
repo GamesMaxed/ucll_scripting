@@ -8,4 +8,4 @@ def containsTwice(text, fragment):
     For example, "abcxyzabc" contains "abc" twice.
     """
 
-    raise RuntimeError("Not yet implemented")
+    raise NotImplementedError()

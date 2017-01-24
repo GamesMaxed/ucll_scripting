@@ -27,4 +27,3 @@ with cumulative, testedFunctionName("containsTwice"):
 
     for string, fragment in [ ('abcxabc', 'abc'), ('xyzabcxyz', 'xyz'), ('abxyzabc', 'abc'), ('', '') ]:
         reftest(result=mustBeSameTruthiness)(string, fragment)
-    
