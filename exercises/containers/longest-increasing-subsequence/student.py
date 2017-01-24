@@ -4,4 +4,4 @@ def longestIncreasingSubsequence(xs):
     In case of a tie, returns the leftmost one.
     """
     
-    raise RuntimeError("Not yet implemented")
+    raise NotImplementedError()
