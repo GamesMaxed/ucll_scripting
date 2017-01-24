@@ -13,4 +13,4 @@ def isValidPassword(password):
     Special characters are !?.()-*+
     """
 
-    raise RuntimeError("Not yet implemented")
+    raise NotImplementedError()
