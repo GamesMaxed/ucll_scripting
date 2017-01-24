@@ -5,4 +5,4 @@
 def square(x):
     # Vervang onderstaande lijn door de vertaling
     # van de Java-code
-    raise RuntimeError("Not yet implemented")
+    raise NotImplementedError()
