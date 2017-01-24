@@ -6,4 +6,4 @@ def balancedParentheses(string):
     Other characters should be ignored.
     """
 
-    raise RuntimeError("Not yet implemented")
+    raise NotImplementedError()
