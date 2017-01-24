@@ -3,7 +3,7 @@ def isPrime(n):
     Returns True if n is prime, False otherwise.
     """
 
-    raise RuntimeError("Not yet implemented")
+    raise NotImplementedError()
 
 
 def nthPrime(n):
@@ -11,7 +11,7 @@ def nthPrime(n):
     Computes the n-th prime. The first prime (n=1) is 2.
     """
 
-    raise RuntimeError("Not yet implemented")
+    raise NotImplementedError()
 
 
 def primesUpTo(n):
@@ -20,7 +20,7 @@ def primesUpTo(n):
     list. Its elements must be sorted in increasing order.
     """
 
-    raise RuntimeError("Not yet implemented")
+    raise NotImplementedError()
 
 
 def factorInteger(n):
@@ -31,4 +31,4 @@ def factorInteger(n):
     For example, factorInteger(12) = [2, 2, 3].
     """
 
-    raise RuntimeError("Not yet implemented")
+    raise NotImplementedError()
