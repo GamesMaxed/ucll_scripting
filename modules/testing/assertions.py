@@ -59,6 +59,20 @@ def mustBeFalsey(actual):
         if actual:
             fail()
 
+def mustRaise(exceptionType, code):
+    """
+    Assert that the execution of the given code
+    leads to an exception of the given type.
+    """    
+    try:
+        code()
+        with testing.tests.context("No exception thrown; expected exception {}", exceptionType):
+            fail()
+    except Exception as e:
+        if type(e) != exceptionType:
+            with testing.tests.context("Wrong exception thrown, expected {}, got {}", exceptionType.__name__, type(e).__name__):
+                fail()
+            
 def ignore(*args, **kwargs):
     """
     Does nothing.

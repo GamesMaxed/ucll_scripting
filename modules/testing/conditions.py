@@ -14,7 +14,7 @@ class _TestCondition:
 
     def __and__(self, other):
         def check():
-            return self() & other()
+            return self() and other()
         return _TestCondition( "{} & {}".format(str(self), str(other)), check )
 
     def __str__(self):

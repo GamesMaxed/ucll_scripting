@@ -82,6 +82,10 @@ class _TestFunction(_Test):
                 # Add current test to skip list
                 testing.environment.run.skipped.append(self._name)
 
+                printer = testing.environment.settings.printer
+
+                printer.log(2, "SKIP: {} (in {})", self._name, testing.environment.tests.path)
+
                 # Return 0/1
                 return testing.score.Score(0, 1)
             else:
@@ -127,8 +131,22 @@ class _TestSuite(_Test):
 
 
 class CumulativeTestSuite(_TestSuite):
+    """
+    Runs all child tests and adds their scores together.
+    """
     def run(self):
         return sum( [ child.run() for child in self._children ], testing.score.Score(0, 0) )
+
+class AllOrNothingTestSuite(_TestSuite):
+    """
+    Runs all child tests. If all child tests pass with a perfect
+    score, returns 1/1. Otherwise, 0/1.
+    """
+    def run(self):
+        if all([ child.run().isMaxScore() for child in self._children ]):
+            return testing.score.Score(1, 1)
+        else:
+            return testing.score.Score(0, 1)
 
     
 class _Scaler(_SingleChildTest):
@@ -140,6 +158,8 @@ class _Scaler(_SingleChildTest):
         return self._child.run().rescale(self._maximum)
 
 cumulative = _TestContextManager(CumulativeTestSuite())
+
+allOrNothing = _TestContextManager(AllOrNothingTestSuite())
 
 def scale(maximum):
     return _TestContextManager(_Scaler(maximum))
