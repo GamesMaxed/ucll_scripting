@@ -8,7 +8,7 @@ def decodeMorse(code):
     Decodes the given code to plaintext.
     """
 
-    raise RuntimeError("Not yet implemented")
+    raise NotImplementedError()
 
 
 def encodeMorse(plaintext):
@@ -16,6 +16,6 @@ def encodeMorse(plaintext):
     Translates given plaintext to morse.
     """
 
-    raise RuntimeError("Not yet implemented")
+    raise NotImplementedError()
     
 
