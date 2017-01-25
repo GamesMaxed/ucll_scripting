@@ -183,4 +183,27 @@ with cumulative():
         noMatch('7575')
         noMatch(' aba')
         noMatch('aba ')
-        
+
+    with riddle(10):
+        match('1')
+        match('319')
+        match('1+1')
+        match('2-1')
+        match('4*7')
+        match('6/5')
+        match('12+23')
+        match('1+2+3+4+5')
+        match('1*2*3*4*5')
+        match('1-2-3-4-5')
+        match('7/3/7/8/9')
+        match('178+54-45*787+31/2')
+
+        noMatch('')
+        noMatch('x')
+        noMatch('7+')
+        noMatch(' 1')
+        noMatch('1 ')
+        noMatch('1 + 2')
+        noMatch('-8')
+        noMatch('7-5*')
+        noMatch('(1+2)*3')
