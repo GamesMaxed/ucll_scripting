@@ -162,9 +162,11 @@ class _Scaler(_SingleChildTest):
     def run(self):
         return self._child.run().rescale(self._maximum)
 
-cumulative = _TestContextManager(CumulativeTestSuite())
+def cumulative():
+    return _TestContextManager(CumulativeTestSuite())
 
-allOrNothing = _TestContextManager(AllOrNothingTestSuite())
+def allOrNothing():
+    return _TestContextManager(AllOrNothingTestSuite())
 
 def scale(maximum):
     return _TestContextManager(_Scaler(maximum))

@@ -10,10 +10,17 @@ def parseSettings():
     parser = argparse.ArgumentParser()
     parser.add_argument('-v', '--verbosity', help='Verbosity level (0=silent, 1=default)', default=1, type=int)
     parser.add_argument('-s', '--statistics', help='Statistics verbosity level (0=silent, 1=default)', default=1, type=int)
-    parser.add_argument('-n', '--count', help='Number of tests to run', default=float('inf'), type=int)
+    parser.add_argument('-n', '--count', help='Number of tests to run (default=all tests)', default=float('inf'), type=int)
+    parser.add_argument('--test', help='File to be tested (default=student.py)', default='student.py')
+    parser.add_argument('--reference', help='Reference implementation file (default=solution.py)', default='solution.py')
     args = parser.parse_args()
 
-    return dict(printer=testing.printers.Printer(), verbosity=args.verbosity, maxTests=args.count, statistics=args.statistics)
+    return dict(printer=testing.printers.Printer(), \
+                verbosity=args.verbosity, \
+                maxTests=args.count, \
+                statistics=args.statistics, \
+                testedFile=args.test, \
+                referenceFile=args.reference)
 
 
 def printStatistics(score):
@@ -21,8 +28,11 @@ def printStatistics(score):
 
     with testing.environment.settings.let(verbosity=testing.environment.settings.statistics):
         printer.log(1, "Passed tests: {}", len(testing.environment.run.passed))
+        printer.log(2, "\n".join("  " + test for test in testing.environment.run.passed))
         printer.log(1, "Failed tests: {}", len(testing.environment.run.failed))
+        printer.log(2, "\n".join("  " + test for test in testing.environment.run.failed))
         printer.log(1, "Skipped tests: {}", len(testing.environment.run.skipped))
+        printer.log(2, "\n".join("  " + test for test in testing.environment.run.skipped))
         
         printer.log(1, "Score: {}", format(score))
 

@@ -44,10 +44,10 @@ def _readAndExecuteSourceFile(moduleName, filename):
 def loadTestsInCurrentDirectory():
     bindings = {}
     
-    bindings['testedModule'] = _readAndExecuteSourceFile('student', 'student.py')
+    bindings['testedModule'] = _readAndExecuteSourceFile('student', testing.environment.settings.testedFile)
     
-    if os.path.isfile('solution.py'):
-        bindings['referenceModule'] =_readAndExecuteSourceFile('solution', 'solution.py')
+    if os.path.isfile(testing.environment.settings.referenceFile):
+        bindings['referenceModule'] =_readAndExecuteSourceFile('solution', testing.environment.settings.referenceFile)
 
     testModule = types.ModuleType('tests')
     with open('tests.py', 'r') as file, testing.tests.path('tests.py'):
