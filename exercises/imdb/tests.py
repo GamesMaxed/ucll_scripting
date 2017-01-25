@@ -3,7 +3,7 @@ from testing.tests import *
 from testing.assertions import *
 
 
-with allOrNothing, testedFunctionName("findEpisodeTitles"):
+with allOrNothing(), testedFunctionName("findEpisodeTitles"):
     check = reftest()
 
     check('Breaking Bad')
@@ -12,7 +12,7 @@ with allOrNothing, testedFunctionName("findEpisodeTitles"):
     check('The Wire')
 
     
-with allOrNothing, testedFunctionName("bestMovieFromYear"):
+with allOrNothing(), testedFunctionName("bestMovieFromYear"):
     check = reftest()
 
     check(1968)
@@ -20,11 +20,11 @@ with allOrNothing, testedFunctionName("bestMovieFromYear"):
     check(2016)
 
     
-with allOrNothing, testedFunctionName("episodeCount"):
+with allOrNothing(), testedFunctionName("episodeCount"):
     reftest()()
     
     
-with allOrNothing, testedFunctionName("seriesAverageRatings"):
+with allOrNothing(), testedFunctionName("seriesAverageRatings"):
     reftest()()
 
 
