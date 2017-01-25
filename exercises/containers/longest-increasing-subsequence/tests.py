@@ -3,7 +3,7 @@ from testing.tests import *
 from testing.assertions import *
 
 
-with cumulative, testedFunctionName("longestIncreasingSubsequence"):
+with allOrNothing(), testedFunctionName("longestIncreasingSubsequence"):
     check = reftest()
 
     check([])
