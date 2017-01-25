@@ -3,7 +3,7 @@ from testing.tests import *
 from testing.assertions import *
 
 
-with cumulative, testedFunctionName("balancedParentheses"):
+with allOrNothing(), testedFunctionName("balancedParentheses"):
     check = reftest()
     
     check('')
