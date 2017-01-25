@@ -3,7 +3,7 @@ from testing.tests import *
 from testing.assertions import *
 
 
-with cumulative:
+with allOrNothing():
     def testcase(plaintext):
         morseCode = referenceModule().encodeMorse(plaintext)
 
