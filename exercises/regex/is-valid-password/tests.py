@@ -4,7 +4,7 @@ from testing.assertions import *
 
 
 
-with cumulative:
+with cumulative():
     with testedFunctionName("isValidPassword"):
         invalid_passwords = [ 'a', 'aaaaaaaa', '7aTkffff', '7a!kqfpoifpo', 'a!kJFLoifpo' ]    
         valid_passwords = [ '7aT!ffff', '7 aA!         ', 'aBc123!!' ]
