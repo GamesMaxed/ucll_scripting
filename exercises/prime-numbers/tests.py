@@ -3,7 +3,7 @@ from testing.tests import *
 from testing.assertions import *
 
 
-with cumulative:
+with cumulative():
     with testedFunctionName("isPrime"):
         def checkPrimality(n):
             if referenceFunction(n):
@@ -15,8 +15,9 @@ with cumulative:
                 def check():
                     mustBeFalsey(testedFunction(n))
 
-        for n in range(0, 100):
-            checkPrimality(n)
+        with allOrNothing():
+            for n in range(0, 100):
+                checkPrimality(n)
 
     with testedFunctionName("nthPrime"):
         def checkNthPrime(n):
@@ -26,8 +27,9 @@ with cumulative:
             def check():
                 mustBeEqual(expected, testedFunction(n))
 
-        for n in range(1,50):
-            checkNthPrime(n)
+        with allOrNothing():
+            for n in range(1,50):
+                checkNthPrime(n)
 
     with testedFunctionName("primesUpTo"):
         def listPrimes(n):
@@ -37,8 +39,9 @@ with cumulative:
             def check():
                 mustBeEqual(expected, testedFunction(n))
 
-        for n in range(1, 50):
-            listPrimes(n)
+        with allOrNothing():
+            for n in range(1, 50):
+                listPrimes(n)
             
     with testedFunctionName("factorInteger"):
         def factor(n):
@@ -48,5 +51,6 @@ with cumulative:
             def check():
                 mustBeEqual(expected, testedFunction(n))
 
-        for n in range(1,50):
-            factor(n)
+        with allOrNothing():
+            for n in range(1,50):
+                factor(n)
