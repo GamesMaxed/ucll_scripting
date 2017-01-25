@@ -3,7 +3,7 @@ from testing.tests import *
 from testing.assertions import *
 
 
-with allOrNothing, testedFunctionName("monotone"):
+with allOrNothing(), testedFunctionName("monotone"):
     check = reftest()
 
     for x in [-100, -4, 6, 14, 100]:
