@@ -24,3 +24,6 @@ def riddle7(string):
 
 def riddle8(string):
     return re.fullmatch(r'a?b?c?', string)
+
+def riddle9(string):
+    return re.fullmatch(r'(.)(.)(\1\2)*\1', string)

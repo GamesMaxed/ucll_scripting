@@ -164,3 +164,23 @@ with cumulative():
         noMatch('cba')
         noMatch(' a')
         noMatch(' a')
+
+    with riddle(9):
+        match('aba')
+        match('ktk')
+        match('bob')
+        match('121')
+        match('ababa')
+        match('58585')
+        match('6d6d6d6')
+        match('10101010101')
+        match(' a a a a a ')
+
+        noMatch('')
+        noMatch('a')
+        noMatch('ab')
+        noMatch('abab')
+        noMatch('7575')
+        noMatch(' aba')
+        noMatch('aba ')
+        
