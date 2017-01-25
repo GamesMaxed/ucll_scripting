@@ -3,7 +3,7 @@ from testing.tests import *
 from testing.assertions import *
 
 
-with cumulative:
+with cumulative():
     Counter = testedModule().Counter
     
     @test("Counter() initialized to 0")
