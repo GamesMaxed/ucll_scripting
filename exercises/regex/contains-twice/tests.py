@@ -3,7 +3,7 @@ from testing.tests import *
 from testing.assertions import *
 
 
-with cumulative, testedFunctionName("containsTwice"):
+with cumulative(), testedFunctionName("containsTwice"):
     def yes(string, fragment):
         @test("containsTwice({}, {}) should return truthy value", repr(string), repr(fragment))
         def checkContainsTwice():
