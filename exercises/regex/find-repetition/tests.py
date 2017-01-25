@@ -4,7 +4,7 @@ from testing.assertions import *
 
 
 
-with cumulative, testedFunctionName("findRepetition"):
+with cumulative(), testedFunctionName("findRepetition"):
     def repetition(string, repetition):
         @test('findRepetition({}) should return {}', repr(string), repr(repetition))
         def checkRepetition():
