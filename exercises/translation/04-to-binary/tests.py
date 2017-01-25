@@ -3,7 +3,7 @@ from testing.tests import *
 from testing.assertions import *
 
 
-with allOrNothing, testedFunctionName("toBinary"):
+with allOrNothing(), testedFunctionName("toBinary"):
     check = reftest()
 
     for i in range(0,32):
