@@ -142,8 +142,3 @@ def parse(strings):
 def loadFromFile(filename):
     with open(filename, 'r') as file:
         return parse(file)
-
-
-s = loadFromFile('evil.txt')
-
-print(s.solve())
