@@ -32,9 +32,19 @@ def mustBeEqual(expected, actual, epsilon = None):
     else:
         with testing.tests.context("Expected value: {}", expected), \
              testing.tests.context("Actual value: {}", actual):
-            if expected != actual:
+            if (not expected == actual) or (expected != actual):
                 fail()
 
+def mustNotBeEqual(forbidden, actual):
+    """
+    Assert that the given values must not be equal to each other.
+    If they are equal, failure ensues.
+    """
+    with testing.tests.context("Forbidden alue: {}", forbidden), \
+         testing.tests.context("Actual value: {}", actual):
+        if not (forbidden != actual) or (forbidden == actual):
+            fail()
+                
 def mustBeSameTruthiness(expected, actual):
     """
     Assert that both values represent the same truthiness.

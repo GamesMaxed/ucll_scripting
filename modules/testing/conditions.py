@@ -1,7 +1,7 @@
 import testing
 
 
-class _TestCondition:
+class TestCondition:
     """
     Used to determine whether to run a test or not.
     """
@@ -15,15 +15,15 @@ class _TestCondition:
     def __and__(self, other):
         def check():
             return self() and other()
-        return _TestCondition( "{} & {}".format(str(self), str(other)), check )
+        return TestCondition( "{} & {}".format(str(self), str(other)), check )
 
     def __str__(self):
         return self._name
 
 
-runAlways = _TestCondition("always", lambda: True)
+runAlways = TestCondition("always", lambda: True)
 
-runNever = _TestCondition("never", lambda: False)
+runNever = TestCondition("never", lambda: False)
 
 def runIfFunctionExists(functionName):
     if not testing.environment.tests.isBound('testedModule'):
@@ -32,11 +32,14 @@ def runIfFunctionExists(functionName):
         def check():
             return functionName in dir(testing.environment.tests.testedModule)
         
-        return _TestCondition("run if {} exists".format(functionName), check)
+        return TestCondition("run if {} exists".format(functionName), check)
 
 
 def limitTestCount():
     def check():
         return len(testing.environment.run.passed) + len(testing.environment.run.failed) < testing.environment.settings.maxTests
 
-    return _TestCondition("limit test count", check)
+    return TestCondition("limit test count", check)
+
+def fromLambda(name, function):
+    return TestCondition(name, function)

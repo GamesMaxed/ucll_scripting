@@ -76,9 +76,12 @@ class _TestFunction(_Test):
         self._function = function
         self._testenvironment = testing.environment.tests.copy()
 
+    def __str__(self):
+        return 'TestFunction(name={})'.format(self._name)
+        
     def run(self):
         with testing.environment.let(tests = self._testenvironment):
-            if not testing.environment.tests.condition():
+            if not condition():
                 # Add current test to skip list
                 testing.environment.run.skipped.append(self._name)
 
@@ -139,8 +142,42 @@ class CumulativeTestSuite(_TestSuite):
     """
     Runs all child tests and adds their scores together.
     """
+    def __init__(self, skipAfterFail = False):
+        super().__init__()
+        self._skipAfterFail = skipAfterFail
+
+    def __str__(self):
+        return "CumulativeTestSuite(skipAfterFail={}, nChildren={})".format(self._skipAfterFail, len(self._children))
+    
     def run(self):
-        return sum( [ child.run() for child in self._children ], testing.score.Score(0, 0) )
+        # Start with score 0/0
+        total = testing.score.Score(0, 0)
+
+        # No failures encountered yet
+        noFailures = True
+
+        # Create condition
+        if self._skipAfterFail:
+            # This condition expresses that child tests should only be
+            # ran if no failures have been encountered previously
+            c = testing.conditions.fromLambda("skip after failure", lambda: noFailures)
+        else:
+            # This condition does not impose limitations on child tests
+            c = testing.conditions.runAlways
+
+        with condition(testing.conditions.runNever):
+            for child in self._children:
+                # Run child test
+                score = child.run()
+
+                # Check if any failure occurred
+                noFailures = noFailures and score.isMaxScore()
+
+                # Accumulate score
+                total += score
+
+        return total
+
 
 class AllOrNothingTestSuite(_TestSuite):
     """
@@ -162,8 +199,8 @@ class _Scaler(_SingleChildTest):
     def run(self):
         return self._child.run().rescale(self._maximum)
 
-def cumulative():
-    return _TestContextManager(CumulativeTestSuite())
+def cumulative(**kwargs):
+    return _TestContextManager(CumulativeTestSuite(**kwargs))
 
 def allOrNothing():
     return _TestContextManager(AllOrNothingTestSuite())
@@ -235,17 +272,20 @@ def context(message, *args, **kwargs):
 def path(name, *args, **kwargs):
     return testing.environment.tests.let(path = testing.environment.tests.path + "/" + name.format(*args, **kwargs))
 
-def condition(cond):
+def condition(cond = None):
     """
     Adds an extra condition which needs to hold true
     for tests to be ran.
     """
-    
-    # Create conjunction of existing condition with new condition
-    conjunction = testing.environment.tests.condition & cond
 
-    # Update condition dynamic variable
-    return testing.environment.tests.let(condition = conjunction)
+    if cond:    
+        # Create conjunction of existing condition with new condition
+        conjunction = testing.environment.tests.condition & cond
+
+        # Update condition dynamic variable
+        return testing.environment.tests.let(condition = conjunction)
+    else:
+        return testing.environment.tests.condition
 
 def test(name, *args, **kwargs):
     """

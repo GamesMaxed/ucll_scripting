@@ -50,7 +50,7 @@ def loadTestsInCurrentDirectory():
         bindings['referenceModule'] =_readAndExecuteSourceFile('solution', testing.environment.settings.referenceFile)
 
     testModule = types.ModuleType('tests')
-    with open('tests.py', 'r') as file, testing.tests.path('tests.py'):
+    with open('tests.py', 'r') as file:
         code = file.read()
         with testing.environment.tests.let( **bindings ):
             exec(code, testModule.__dict__)
