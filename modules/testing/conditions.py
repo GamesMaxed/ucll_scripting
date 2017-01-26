@@ -34,7 +34,6 @@ def runIfFunctionExists(functionName):
         
         return TestCondition("run if {} exists".format(functionName), check)
 
-
 def limitTestCount():
     def check():
         return len(testing.environment.run.passed) + len(testing.environment.run.failed) < testing.environment.settings.maxTests

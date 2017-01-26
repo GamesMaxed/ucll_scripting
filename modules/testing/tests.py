@@ -81,7 +81,7 @@ class _TestFunction(_Test):
         
     def run(self):
         with testing.environment.let(tests = self._testenvironment):
-            if not condition():
+            if not staticCondition() or not dynamicCondition():
                 # Add current test to skip list
                 testing.environment.run.skipped.append(self._name)
 
@@ -165,7 +165,7 @@ class CumulativeTestSuite(_TestSuite):
             # This condition does not impose limitations on child tests
             c = testing.conditions.runAlways
 
-        with condition(testing.conditions.runNever):
+        with dynamicCondition(testing.conditions.runNever):
             for child in self._children:
                 # Run child test
                 score = child.run()
@@ -235,7 +235,7 @@ def testedFunctionName(functionName = None):
         @contextmanager
         def context():
             with testing.environment.tests.let(testedFunctionName = functionName), \
-                 condition(testing.conditions.runIfFunctionExists(functionName)):
+                 staticCondition(testing.conditions.runIfFunctionExists(functionName)):
                 yield
 
         return context()
@@ -272,7 +272,7 @@ def context(message, *args, **kwargs):
 def path(name, *args, **kwargs):
     return testing.environment.tests.let(path = testing.environment.tests.path + "/" + name.format(*args, **kwargs))
 
-def condition(cond = None):
+def staticCondition(cond = None):
     """
     Adds an extra condition which needs to hold true
     for tests to be ran.
@@ -287,6 +287,13 @@ def condition(cond = None):
     else:
         return testing.environment.tests.condition
 
+def dynamicCondition(cond = None):
+    if cond:
+        conjunction = testing.environment.run.condition & cond
+        return testing.environment.run.let(condition = conjunction)
+    else:
+        return testing.environment.run.condition
+    
 def test(name, *args, **kwargs):
     """
     Decorator that turns the function into a test

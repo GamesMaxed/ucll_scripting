@@ -41,11 +41,10 @@ def main():
     root = testing.tests.CumulativeTestSuite()
     settings = parseSettings()
 
-    
     with testing.environment.let(tests = dyn.create(), settings = dyn.create(), run = dyn.create()), \
          testing.environment.tests.let(top=root, context=[], path="", condition = testing.conditions.limitTestCount()), \
          testing.environment.settings.let( **settings ), \
-         testing.environment.run.let(skipped=[], passed=[], failed=[]):
+         testing.environment.run.let(skipped=[], passed=[], failed=[], condition = testing.conditions.runAlways):
         testing.run.loadTestsRecursively()
         score = testing.run.runTests()
         printStatistics(score)
