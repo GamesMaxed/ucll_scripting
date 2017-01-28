@@ -8,32 +8,29 @@ class Log:
             print(string)
 
 
-class TestFailureMessage:
-    def __init__(self, testDescription, context):
-        self.testDescription = testDescription
-        self.context = context
+def logFailure():
+    print("[FAIL] {}".format("/".join(testing.environment.testPath + [testing.environment.testDescription])))
 
-    def __str__(self):
-        result = "[FAIL] {}".format(self.testDescription)
-        
-        if testing.environment.showContext:
-            result = "\n".join( [result] + [str(entry) for entry in self.context] )
+    if testing.environment.showFilePath:
+        print("  in file {}".format("/".join(testing.environment.testFilePath)))
 
-        return result
+    if testing.environment.showContext:
+        for entry in testing.environment.context:
+            print(str(entry))
 
+def logSuccess():
+    if testing.environment.showPassingTests:
+        print("[PASS] {}".format(testing.environment.testDescription))
 
-class StatisticsMessage:
-    def __init__(self, score, passedTests, failedTests, skippedTests):
-        self.score = score
-        self.passedTests = passedTests
-        self.failedTests = failedTests
-        self.skippedTests = skippedTests
+def logSkip():
+    if testing.environment.showSkippedTests:
+        print("[SKIP] {}".format(testing.environment.testDescription))
 
-    def __str__(self):
-        result = "=" * 50 + "\n"
-        result += "#PASS = {}\n".format(len(self.passedTests))
-        result += "#FAIL = {}\n".format(len(self.failedTests))
-        result += "#SKIP = {}\n".format(len(self.skippedTests))
-        result += "SCORE = {}".format(self.score)
+def logStatistics(score):
+    print("=" * 50)
+    print("#PASS = {}".format(len(testing.environment.passedTests)))
+    print("#FAIL = {}".format(len(testing.environment.failedTests)))
+    print("#SKIP = {}".format(len(testing.environment.skippedTests)))
+    print("SCORE = {}".format(score))
 
-        return result
+    

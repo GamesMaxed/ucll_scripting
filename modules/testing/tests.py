@@ -36,6 +36,8 @@ def _runTest(testFunction):
 
         # Score 0/1
         testing.environment.scoreReceiver( testing.score.Score(0, 1) )
+
+        testing.logging.logSkip()
     else:
         try:
             try:
@@ -47,6 +49,8 @@ def _runTest(testFunction):
 
                 # Score 1/1
                 testing.environment.scoreReceiver(testing.score.Score(1, 1))
+
+                testing.logging.logSuccess()
 
             except TestFailure as e:
                 raise e
@@ -250,4 +254,11 @@ def scale(maximum):
         currentScoreReceiver(score.rescale(maximum))
 
     with testing.environment.let(scoreReceiver=scoreReceiver):
+        yield
+
+@contextmanager
+def path(component):
+    currentPath = testing.environment.testPath
+
+    with testing.environment.let(testPath = currentPath + [ component ]):
         yield

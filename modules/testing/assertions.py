@@ -7,8 +7,7 @@ def fail():
     When called within a test, aborts the test immediately.
     The test is considered to have failed.
     """
-    message = testing.logging.TestFailureMessage(testing.environment.testDescription, testing.environment.context)
-    testing.environment.log.write(message)
+    testing.logging.logFailure()
 
     raise testing.tests.TestFailure()
 
