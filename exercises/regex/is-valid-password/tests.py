@@ -11,12 +11,12 @@ with cumulative():
 
         for invalid_password in invalid_passwords:
             @test('isValidPassword({}) should return falsey value', repr(invalid_password))
-            def checkInvalidPassword(invalid_password=invalid_password):
+            def _():
                 mustBeFalsey(testedFunction(invalid_password))
 
         for valid_password in valid_passwords:
             @test('isValidPassword({}) must return truthy value', repr(valid_password))
-            def checkValidPassword(valid_password=valid_password):
+            def _():
                 mustBeTruthy(testedFunction(valid_password))
 
         for password in [ 'jf7!fjifjid',        \
