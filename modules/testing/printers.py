@@ -2,5 +2,5 @@ import testing
 
 class Printer:
     def log(self, verbosity, message, *args, **kwargs):
-        if testing.environment.settings.verbosity >= verbosity:
+        if testing.environment.verbosity >= verbosity:
             print(message.format(*args, **kwargs))

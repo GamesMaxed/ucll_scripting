@@ -19,194 +19,126 @@ class InvalidTestCallError(TestError):
     def __init__(self):
         super().__init__("Calling test functions is disallowed")
 
+    
+# class _Scaler(_SingleChildTest):
+#     def __init__(self, maximum):
+#         super().__init__()
+#         self._maximum = maximum
 
+#     def run(self):
+#         return self._child.run().rescale(self._maximum)
 
-class _TestContextManager:
-    def __init__(self, *tests):
-        super().__init__()
-        self._tests = tests
-        
-    def __enter__(self):
-        for test in self._tests:
-            testing.environment.tests.top.addChild(test)
-            testing.environment.tests.push(top=test)
-
-    def __exit__(self, *args):
-        for test in self._tests:
-            testing.environment.tests.pop()
+# def scale(maximum):
+#     return _TestContextManager(_Scaler(maximum))
 
 
 
-class _Test:
-    """
-    Superclass for all test classes.
-    """
-    pass
 
-class _SingleChildTest(_Test):
-    def __init__(self):
-        super().__init__()
-        self._child = None
-        
-    def addChild(self, child):
-        if self._child != None:
-            print("Only one child allowed in {}".format(type(self).__name__))
-            print("Attempted to add {}".format(type(child).__name__))
-            print("Existing child {}".format(type(self._child).__name__))
-            sys.exit(-1)
-        self._child = child
-
-    def run(self):
-        return self._child.run()
-
-    def childCount(self):
-        if self._child == None:
-            return 0
-        else:
-            return 1
-        
-
-class RootTest(_SingleChildTest):
-    pass
-
-
-class _TestFunction(_Test):
+class Test:
     def __init__(self, name, function):
-        self._name = name
-        self._function = function
-        self._testenvironment = testing.environment.tests.copy()
+        self.name = name
+        self.function = function
 
-    def __str__(self):
-        return 'TestFunction(name={})'.format(self._name)
-        
-    def run(self):
-        with testing.environment.let(tests = self._testenvironment):
-            if not staticCondition() or not dynamicCondition():
-                # Add current test to skip list
-                testing.environment.run.skipped.append(self._name)
+    def runTest(self):
+        return self.function()
 
-                printer = testing.environment.settings.printer
 
-                printer.log(2, "SKIP: {} (in {})", self._name, testing.environment.tests.path)
+def _runTest(testFunction):
+    if not testing.environment.condition():
+        # Add current test to skip list
+        testing.environment.skippedTests.append(testing.environment.testDescription)
 
-                # Return 0/1
-                return testing.score.Score(0, 1)
-            else:
-                try:
-                    # Set test name
-                    testing.environment.tests.push(testName = self._name)
+        testing.environment.printer.log(2, "SKIP: {}", testing.environment.testDescription)
 
-                    # Run test
-                    try:
-                        self._function()
-                    except TestFailure as e:
-                        # If a regular test failure was raised, deal with it below
-                        raise e
-                    except Exception as e:
-                        # If a different exception was raised, convert it to a TestFailure exception
-                        if str(e):
-                            contextString = "Exception {} raised: {}".format(type(e).__name__, str(e))
-                        else:
-                            contextString = "Exception {} raised".format(type(e).__name__)
-                            
-                        with context(contextString):
-                            testing.assertions.fail()
+        # Score 0/1
+        testing.environment.scoreReceiver( testing.score.Score(0, 1) )
+    else:
+        try:
+            try:
+                # Run test
+                testFunction()
 
-                    # Add test to pass list
-                    testing.environment.run.passed.append(self._name)
+                # Add test to pass list
+                testing.environment.passedTests.append(testing.environment.testDescription)
 
-                    # Return 1/1
-                    return testing.score.Score(1, 1)
+                # Score 1/1
+                testing.environment.scoreReceiver(testing.score.Score(1, 1))
 
-                except TestFailure:
-                    # Add test to fail list
-                    testing.environment.run.failed.append(self._name)
+            except TestFailure as e:
+                raise e
+            except Exception as e:
+                # If a different exception was raised, convert it to a TestFailure exception
+                if str(e):
+                    contextString = "Exception {} raised: {}".format(type(e).__name__, str(e))
+                else:
+                    contextString = "Exception {} raised".format(type(e).__name__)
 
-                    # Return 0/1
-                    return testing.score.Score(0, 1)
+                with context(contextString):
+                    testing.assertions.fail()
+
+        except TestFailure:
+            # Add test to fail list
+            testing.environment.failedTests.append(testing.environment.testDescription)
+
+            # Score 0/1
+            testing.environment.scoreReceiver(testing.score.Score(0, 1))
+    
+    
+
+def test(description, *args, **kwargs):
+    description = description.format(*args, **kwargs)
+    
+    def functionReceiver(testFunction):
+        with testing.environment.let(testDescription = description):
+            _runTest(testFunction)
             
-
-class _TestSuite(_Test):
-    def __init__(self):
-        super().__init__()
-        self._children = []
-
-    def addChild(self, child):
-        self._children.append(child)
-
-    def childCount(self):
-        return len(self._children)
+    return functionReceiver
 
 
-class CumulativeTestSuite(_TestSuite):
-    """
-    Runs all child tests and adds their scores together.
-    """
-    def __init__(self, skipAfterFail = False):
-        super().__init__()
-        self._skipAfterFail = skipAfterFail
+@contextmanager
+def cumulative(skipAfterFail = False):
+    total = testing.score.Score(0, 0)
 
-    def __str__(self):
-        return "CumulativeTestSuite(skipAfterFail={}, nChildren={})".format(self._skipAfterFail, len(self._children))
+    if skipAfterFail:
+        def conditionFunction():
+            return total.isMaxScore()
+
+        condition = testing.conditions.fromLambda('skip after first failure', conditionFunction)
+    else:
+        condition = testing.conditions.runAlways
+
+    def scoreReceiver(score):
+        nonlocal total
+        total += score
+
+    with testing.environment.let(condition=condition, scoreReceiver=scoreReceiver):
+        yield
+
+    testing.environment.scoreReceiver(total)
+
+@contextmanager
+def allOrNothing(skipAfterFail = False):
+    receivedScore = testing.score.Score(0, 0)
     
-    def run(self):
-        # Start with score 0/0
-        total = testing.score.Score(0, 0)
+    def scoreReceiver(score):
+        nonlocal receivedScore
+        receivedScore = score
 
-        # No failures encountered yet
-        noFailures = True
+    with testing.environment.let(scoreReceiver=scoreReceiver):
+        yield
 
-        # Create condition
-        if self._skipAfterFail:
-            # This condition expresses that child tests should only be
-            # ran if no failures have been encountered previously
-            c = testing.conditions.fromLambda("skip after failure", lambda: noFailures)
-        else:
-            # This condition does not impose limitations on child tests
-            c = testing.conditions.runAlways
-
-        with dynamicCondition(testing.conditions.runNever):
-            for child in self._children:
-                # Run child test
-                score = child.run()
-
-                # Check if any failure occurred
-                noFailures = noFailures and score.isMaxScore()
-
-                # Accumulate score
-                total += score
-
-        return total
-
-
-class AllOrNothingTestSuite(_TestSuite):
-    """
-    Runs all child tests. If all child tests pass with a perfect
-    score, returns 1/1. Otherwise, 0/1.
-    """
-    def run(self):
-        if all([ child.run().isMaxScore() for child in self._children ]):
-            return testing.score.Score(1, 1)
-        else:
-            return testing.score.Score(0, 1)
+    if receivedScore.isMaxScore():
+        testing.environment.scoreReceiver(testing.score.Score(1, 1))
+    else:
+        testing.environment.scoreReceiver(testing.score.Score(0, 1))
 
     
-class _Scaler(_SingleChildTest):
-    def __init__(self, maximum):
-        super().__init__()
-        self._maximum = maximum
-
-    def run(self):
-        return self._child.run().rescale(self._maximum)
-
-def cumulative(**kwargs):
-    return _TestContextManager(CumulativeTestSuite(**kwargs))
-
-def allOrNothing():
-    return _TestContextManager(AllOrNothingTestSuite())
-
-def scale(maximum):
-    return _TestContextManager(_Scaler(maximum))
+@contextmanager
+def context(contextString, *args, **kwargs):
+    contextString = contextString.format(*args, **kwargs)
+    
+    with testing.environment.let(context=contextString):
+        yield
 
 def testedModule(module = None):
     """
@@ -215,9 +147,9 @@ def testedModule(module = None):
     current value of testedModule.
     """
     if module:
-        return testing.environment.tests.let(testedModule = module)
+        return testing.environment.let(testedModule = module)
     else:
-        return testing.environment.tests.testedModule
+        return testing.environment.testedModule
 
 def referenceModule(module = None):
     """
@@ -226,33 +158,33 @@ def referenceModule(module = None):
     current value of referenceModule.
     """
     if module:
-        return testing.environment.tests.let(referenceModule = module)
+        return testing.environment.let(referenceModule = module)
     else:
-        return testing.environment.tests.referenceModule
+        return testing.environment.referenceModule
     
 def testedFunctionName(functionName = None):
     if functionName:
         @contextmanager
         def context():
-            with testing.environment.tests.let(testedFunctionName = functionName), \
-                 staticCondition(testing.conditions.runIfFunctionExists(functionName)):
+            with testing.environment.let(testedFunctionName = functionName), \
+                 condition(testing.conditions.runIfFunctionExists(functionName)):
                 yield
 
         return context()
     else:
-        return testing.environment.tests.testedFunctionName
+        return testing.environment.testedFunctionName
 
 def _getTestedFunction():
     """
     Fetches the test function.
     """
-    return getattr(testing.environment.tests.testedModule, testing.environment.tests.testedFunctionName)
+    return getattr(testing.environment.testedModule, testing.environment.testedFunctionName)
 
 def _getReferenceFunction():
     """
     Fetches the test function.
     """
-    return getattr(testing.environment.tests.referenceModule, testing.environment.tests.testedFunctionName)
+    return getattr(testing.environment.referenceModule, testing.environment.testedFunctionName)
 
 def testedFunction(*args, **kwargs):
     """
@@ -265,14 +197,8 @@ def referenceFunction(*args, **kwargs):
     Calls the reference function with the provided arguments.
     """
     return _getReferenceFunction()(*args, **kwargs)
-
-def context(message, *args, **kwargs):
-    return testing.environment.tests.let(context = testing.environment.tests.context + [ message.format(*args, **kwargs) ])
-
-def path(name, *args, **kwargs):
-    return testing.environment.tests.let(path = testing.environment.tests.path + "/" + name.format(*args, **kwargs))
-
-def staticCondition(cond = None):
+        
+def condition(cond = None):
     """
     Adds an extra condition which needs to hold true
     for tests to be ran.
@@ -280,41 +206,19 @@ def staticCondition(cond = None):
 
     if cond:    
         # Create conjunction of existing condition with new condition
-        conjunction = testing.environment.tests.condition & cond
+        conjunction = testing.environment.condition & cond
 
         # Update condition dynamic variable
-        return testing.environment.tests.let(condition = conjunction)
+        return testing.environment.let(condition = conjunction)
     else:
-        return testing.environment.tests.condition
-
-def dynamicCondition(cond = None):
-    if cond:
-        conjunction = testing.environment.run.condition & cond
-        return testing.environment.run.let(condition = conjunction)
-    else:
-        return testing.environment.run.condition
-    
-def test(name, *args, **kwargs):
-    """
-    Decorator that turns the function into a test
-    and adds it to the top test's children.
-    """
-    def wrapper(function):
-        def _dummy():
-            raise InvalidTestCallError()
-
-        # Add test function as child to top test
-        testing.environment.tests.top.addChild(_TestFunction(name.format(*args, **kwargs), function))
-        return _dummy
-
-    return wrapper
+        return testing.environment.condition
 
 def _limitStringLength(string, maxLength = 60):
     if len(string) > maxLength:
         return string[0:maxLength-3] + "..."
     else:
         return string
-
+    
 def reftest(result = None, arguments = None):
     compareResults = result or testing.assertions.mustBeEqual
     compareArguments = arguments or testing.assertions.ignore
@@ -353,3 +257,14 @@ def reftest(result = None, arguments = None):
                         compareArguments(refkwargs[key], testkwargs[i])
 
     return testFunction
+
+@contextmanager
+def scale(maximum):
+    currentScoreReceiver = testing.environment.scoreReceiver
+    
+    def scoreReceiver(score):
+        currentScoreReceiver(score.rescale(maximum))
+
+    with testing.environment.let(scoreReceiver=scoreReceiver):
+        yield
+        

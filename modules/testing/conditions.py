@@ -26,17 +26,17 @@ runAlways = TestCondition("always", lambda: True)
 runNever = TestCondition("never", lambda: False)
 
 def runIfFunctionExists(functionName):
-    if not testing.environment.tests.isBound('testedModule'):
+    if not testing.environment.isBound('testedModule'):
         raise testing.tests.TestError("No tested module set")
     else:
         def check():
-            return functionName in dir(testing.environment.tests.testedModule)
+            return functionName in dir(testing.environment.testedModule)
         
         return TestCondition("run if {} exists".format(functionName), check)
 
 def limitTestCount():
     def check():
-        return len(testing.environment.run.passed) + len(testing.environment.run.failed) < testing.environment.settings.maxTests
+        return len(testing.environment.passedTests) + len(testing.environment.failedTests) < testing.environment.maxTests
 
     return TestCondition("limit test count", check)
 

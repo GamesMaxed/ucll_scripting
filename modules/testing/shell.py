@@ -26,25 +26,38 @@ def parseSettings():
 def printStatistics(score):
     printer = testing.environment.settings.printer
 
-    with testing.environment.settings.let(verbosity=testing.environment.settings.statistics):
+    with testing.environment.settings.let(verbosity=testing.environment.statistics):
         printer.log(1, "Passed tests: {}", len(testing.environment.run.passed))
-        printer.log(2, "\n".join("  " + test for test in testing.environment.run.passed))
+        printer.log(2, "\n".join("  " + test for test in testing.environment.passed))
         printer.log(1, "Failed tests: {}", len(testing.environment.run.failed))
-        printer.log(2, "\n".join("  " + test for test in testing.environment.run.failed))
+        printer.log(2, "\n".join("  " + test for test in testing.environment.failed))
         printer.log(1, "Skipped tests: {}", len(testing.environment.run.skipped))
-        printer.log(2, "\n".join("  " + test for test in testing.environment.run.skipped))
+        printer.log(2, "\n".join("  " + test for test in testing.environment.skipped))
         
         printer.log(1, "Score: {}", format(score))
 
 
 def main():
-    root = testing.tests.CumulativeTestSuite()
-    settings = parseSettings()
+    bindings = parseSettings()
 
-    with testing.environment.let(tests = dyn.create(), settings = dyn.create(), run = dyn.create()), \
-         testing.environment.tests.let(top=root, context=[], path="", condition = testing.conditions.limitTestCount()), \
-         testing.environment.settings.let( **settings ), \
-         testing.environment.run.let(skipped=[], passed=[], failed=[], condition = testing.conditions.runAlways):
+    # with testing.environment.let(tests = dyn.create(), settings = dyn.create(), run = dyn.create()), \
+    #      testing.environment.tests.let(top=root, context=[], path="", condition = testing.conditions.limitTestCount()), \
+    #      testing.environment.settings.let( **settings ), \
+    #      testing.environment.run.let(skipped=[], passed=[], failed=[], condition = testing.conditions.runAlways):
+    #     testing.run.loadTestsRecursively()
+    #     score = testing.run.runTests()
+    #     printStatistics(score)
+
+    def scoreReceiver(score):
+        print("Received score {}".format(score))
+
+    bindings['scoreReceiver'] = scoreReceiver
+    bindings['skippedTests'] = []
+    bindings['passedTests'] = []
+    bindings['failedTests'] = []
+    bindings['condition'] = testing.conditions.limitTestCount()
+    bindings['context'] = []
+    
+        
+    with testing.environment.let(**bindings), testing.tests.cumulative():
         testing.run.loadTestsRecursively()
-        score = testing.run.runTests()
-        printStatistics(score)
