@@ -4,6 +4,8 @@ import testing.conditions
 import testing.score
 import testing.assertions
 import copy
+import traceback
+import sys
 
 
 class TestError(Exception):
@@ -32,8 +34,6 @@ def _runTest(testFunction):
         # Add current test to skip list
         testing.environment.skippedTests.append(testing.environment.testDescription)
 
-        testing.environment.log.write(2, "SKIP: {}", testing.environment.testDescription)
-
         # Score 0/1
         testing.environment.scoreReceiver( testing.score.Score(0, 1) )
 
@@ -56,8 +56,12 @@ def _runTest(testFunction):
                 raise e
             except Exception as e:
                 # If a different exception was raised, convert it to a TestFailure exception
+                exceptionType, exceptionValue, exceptionTB = sys.exc_info()
+                exceptionStrings = traceback.format_exception(exceptionType, exceptionValue, exceptionTB)
+                exceptionString = "\n".join(exceptionStrings[-2:-1])
+                
                 if str(e):
-                    contextString = "Exception {} raised: {}".format(type(e).__name__, str(e))
+                    contextString = "Exception {} raised: {}\n{}".format(type(e).__name__, str(e), exceptionString)
                 else:
                     contextString = "Exception {} raised".format(type(e).__name__)
 

@@ -83,7 +83,27 @@ def mustRaise(exceptionType, code):
         if type(e) != exceptionType:
             with testing.tests.context("Wrong exception thrown, expected {}, got {}", exceptionType.__name__, type(e).__name__):
                 fail()
-            
+
+def mustContainSameElements(expected, actual, sameOrder=True):
+    expected = list(expected)
+    actual = list(actual)
+    
+    with testing.tests.context('Comparing number of elements'):
+        mustBeEqual(len(expected), len(actual))
+
+    if sameOrder:
+        for i in range(0, len(expected)):
+            with testing.tests.context('Comparing elements at index {}', i):
+                mustBeEqual(expected[i], actual[i])
+    else:
+        for x in expected:
+            with testing.tests.context('Looking for element {}', x):
+                if x not in actual:
+                    fail()
+                else:
+                    actual.remove(x)
+                
+                
 def ignore(*args, **kwargs):
     """
     Does nothing.

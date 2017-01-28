@@ -8,7 +8,7 @@ import dyn
 
 def parseSettings():
     parser = argparse.ArgumentParser()
-    parser.add_argument('--context', help='Show context', action='store_true')
+    parser.add_argument('-c', '--show-context', help='Show context', action='store_true')
     parser.add_argument('-n', '--count', help='Number of tests to run (default=all tests)', default=float('inf'), type=int)
     parser.add_argument('--test', help='File to be tested (default=student.py)', default='student.py')
     parser.add_argument('--reference', help='Reference implementation file (default=solution.py)', default='solution.py')
@@ -18,7 +18,7 @@ def parseSettings():
     args = parser.parse_args()
 
     return dict(log=testing.logging.Log(), \
-                showContext=args.context, \
+                showContext=args.show_context, \
                 maxTests=args.count, \
                 testedFile=args.test, \
                 showPassingTests=args.show_pass, \

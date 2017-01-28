@@ -26,7 +26,7 @@ runAlways = TestCondition("always", lambda: True)
 runNever = TestCondition("never", lambda: False)
 
 def runIfFunctionExists(functionName):
-    if not testing.environment.isBound('testedModule'):
+    if not testing.environment.is_bound('testedModule'):
         raise testing.tests.TestError("No tested module set")
     else:
         def check():
