@@ -7,12 +7,12 @@ from testing.assertions import *
 with cumulative(), testedFunctionName("findRepetition"):
     def repetition(string, repetition):
         @test('findRepetition({}) should return {}', repr(string), repr(repetition))
-        def checkRepetition():
+        def _():
             mustBeEqual(repetition, testedFunction(string))
 
     def noRepetition(string):
         @test('findRepetition({}) should return falsey value', repr(string))
-        def checkNoRepetition():
+        def _():
             mustBeFalsey(testedFunction(string))
 
     repetition('aaaabaaaa', 'aaaa')
