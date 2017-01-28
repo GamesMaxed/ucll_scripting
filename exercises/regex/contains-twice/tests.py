@@ -6,12 +6,12 @@ from testing.assertions import *
 with cumulative(), testedFunctionName("containsTwice"):
     def yes(string, fragment):
         @test("containsTwice({}, {}) should return truthy value", repr(string), repr(fragment))
-        def checkContainsTwice():
+        def _():
             mustBeTruthy(testedFunction(string, fragment))
 
     def no(string, fragment):
         @test("containsTwice({}, {}) should return falsey value", repr(string), repr(fragment))
-        def checkNotContainsTwice():
+        def _():
             mustBeFalsey(testedFunction(string, fragment))
                     
     yes('aa', 'a')
