@@ -24,7 +24,7 @@ class _Frame:
 
 class _RootFrame:
     def __getattr__(self, id):
-        raise DynamicScopeError( "Unbound dynamic variable {}".format(id) )
+        raise DynamicScopeError( "Unbound dynamic variable '{}'".format(id) )
 
     def __setattr__(self, id, val):
         raise DynamicScopeError( "Cannot write to root frame" )
@@ -78,9 +78,6 @@ class _DynamicEnvironment:
 
     def __iter__(self):
         yield from self._top
-
-    def copy(self):
-        return _DynamicEnvironment(self._top)
 
     def __str__(self):
         return ", ".join([ "{} => {}".format(id, getattr(self, id)) for id in self.__iter__() ])
