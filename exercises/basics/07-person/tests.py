@@ -11,8 +11,8 @@ with path('Person'), cumulative():
         def _():
             p = Person(80, 1.8)
 
-            mustBeEqual(80, p.weight)
-            mustBeEqual(1.8, p.height)
+            must_be_equal(80, p.weight)
+            must_be_equal(1.8, p.height)
 
     with path('weight'):
         @test("setting weight")
@@ -20,7 +20,7 @@ with path('Person'), cumulative():
             p = Person(45, 1.52)
             p.weight = 50
 
-            mustBeEqual(50, p.weight)
+            must_be_equal(50, p.weight)
 
         @test("invalid weight should raise RuntimeError")
         def _():
@@ -37,7 +37,7 @@ with path('Person'), cumulative():
             p = Person(45, 1.52)
             p.height = 1.50
 
-            mustBeEqual(1.50, p.height)
+            must_be_equal(1.50, p.height)
             
         @test("invalid height should raise RuntimeError")
         def _():
@@ -53,4 +53,4 @@ with path('Person'), cumulative():
         def _():
             p = Person(80, 1.8)
 
-            mustBeEqual(80 / 1.8**2, p.bmi, epsilon = 0.0001)
+            must_be_equal(80 / 1.8**2, p.bmi, epsilon = 0.0001)

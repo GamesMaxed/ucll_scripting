@@ -9,13 +9,13 @@ with allOrNothing():
 
         with testedFunctionName("decodeMorse"):
             @test("decodeMorse({}) should return {}", repr(morseCode), repr(plaintext))
-            def testFunction():
-                mustBeEqual(plaintext, testedFunction(morseCode))
+            def _():
+                must_be_equal(plaintext, testedFunction(morseCode))
 
         with testedFunctionName("encodeMorse"):
             @test("encodeMorse({}) should return {}", repr(plaintext), repr(morseCode))
-            def testFunction():
-                mustBeEqual(morseCode, testedFunction(plaintext))
+            def _():
+                must_be_equal(morseCode, testedFunction(plaintext))
             
     testcase('')
 

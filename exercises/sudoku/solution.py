@@ -4,7 +4,7 @@ class Position:
         self.y = y
 
     def __eq__(self, other):
-        return self.x == other.x and self.y == other.y
+        return type(other) == Position and self.x == other.x and self.y == other.y
 
     def __neq__(self, other):
         return not self == other
@@ -28,9 +28,7 @@ class Sudoku:
         self.__squares[position.y][position.x] = value
 
     def allPositions(self):
-        for y in range(0, 9):
-            for x in range(0, 9):
-                yield Position(x, y)
+        return [ Position(x, y) for x in range(0, 9) for y in range(0, 9) ]
         
     def copy(self):
         result = Sudoku()

@@ -10,14 +10,14 @@ with path('Counter'), cumulative():
         @test("initializes to 0")
         def _():
             counter = Counter()
-            mustBeEqual(0, counter.current())
+            must_be_equal(0, counter.current())
 
     with path('increment'):
         @test("increments counter")
         def _():
             counter = Counter()
             counter.increment()
-            mustBeEqual(1, counter.current())
+            must_be_equal(1, counter.current())
 
     with path('reset'):
         @test("sets value to 0")
@@ -27,5 +27,5 @@ with path('Counter'), cumulative():
             counter.increment()
             counter.increment()
             counter.reset()
-            mustBeEqual(0, counter.current())
+            must_be_equal(0, counter.current())
         

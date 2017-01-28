@@ -11,7 +11,7 @@ def fail():
 
     raise testing.tests.TestFailure()
 
-def mustBeEqual(expected, actual, epsilon = None):
+def must_be_equal(expected, actual, epsilon = None):
     """
     Assert that the given values must be equal to each other.
     If they are not, failure ensues.
@@ -89,12 +89,12 @@ def mustContainSameElements(expected, actual, sameOrder=True):
     actual = list(actual)
     
     with testing.tests.context('Comparing number of elements'):
-        mustBeEqual(len(expected), len(actual))
+        must_be_equal(len(expected), len(actual))
 
     if sameOrder:
         for i in range(0, len(expected)):
             with testing.tests.context('Comparing elements at index {}', i):
-                mustBeEqual(expected[i], actual[i])
+                must_be_equal(expected[i], actual[i])
     else:
         for x in expected:
             with testing.tests.context('Looking for element {}', x):

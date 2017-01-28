@@ -212,7 +212,7 @@ def _limitStringLength(string, maxLength = 60):
         return string
     
 def reftest(result = None, arguments = None):
-    compareResults = result or testing.assertions.mustBeEqual
+    compareResults = result or testing.assertions.must_be_equal
     compareArguments = arguments or testing.assertions.ignore
     
     def testFunction(*args, **kwargs):

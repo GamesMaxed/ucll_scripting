@@ -8,7 +8,7 @@ with cumulative(), testedFunctionName("findRepetition"):
     def repetition(string, repetition):
         @test('findRepetition({}) should return {}', repr(string), repr(repetition))
         def _():
-            mustBeEqual(repetition, testedFunction(string))
+            must_be_equal(repetition, testedFunction(string))
 
     def noRepetition(string):
         @test('findRepetition({}) should return falsey value', repr(string))
