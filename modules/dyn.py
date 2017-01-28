@@ -14,8 +14,8 @@ class _Frame:
         else:
             return self.parent.__getattr__(id)
 
-    def isBound(self, id):
-        return id in self._map or self.parent.isBound(id)
+    def is_bound(self, id):
+        return id in self._map or self.parent.is_bound(id)
 
     def __iter__(self):
         yield from self._map
@@ -29,7 +29,7 @@ class _RootFrame:
     def __setattr__(self, id, val):
         raise DynamicScopeError( "Cannot write to root frame" )
 
-    def isBound(self, id):
+    def is_bound(self, id):
         return False
     
     def __iter__(self):
@@ -67,8 +67,8 @@ class _DynamicEnvironment:
         """To be used in conjunction with the with-statement"""
         return _DynamicEnvironmentContextManager(self, **kwargs)
 
-    def isBound(self, id):
-        return self._top.isBound(id)
+    def is_bound(self, id):
+        return self._top.is_bound(id)
 
     def __getattr__(self, id):
         return self._top.__getattr__(id)
