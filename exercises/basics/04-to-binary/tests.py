@@ -10,5 +10,5 @@ with allOrNothing(), testedFunctionName("toBinary"):
         check(i)
 
     @test("toBinary(-4) should throw exception")
-    def exceptionTest():
+    def _():
         mustRaise( RuntimeError, lambda: testedFunction(-4) )
