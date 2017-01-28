@@ -28,7 +28,7 @@ def must_be_equal(expected, actual, epsilon = None):
             if (not expected == actual) or (expected != actual):
                 fail()
 
-def mustNotBeEqual(forbidden, actual):
+def must_not_be_equal(forbidden, actual):
     """
     Assert that the given values must not be equal to each other.
     If they are equal, failure ensues.

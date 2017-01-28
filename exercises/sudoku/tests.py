@@ -35,21 +35,21 @@ with cumulative(skipAfterFail = False): ## TODO
                 p = Position(1, 4)
                 q = Position(5, 4)
 
-                mustNotBeEqual(p, q)
+                must_not_be_equal(p, q)
 
             @test("unequal y => unequal points")
             def _():
                 p = Position(5, 3)
                 q = Position(5, 4)
 
-                mustNotBeEqual(p, q)
+                must_not_be_equal(p, q)
 
             @test("comparing with non-Position yields falsey value")
             def _():
                 p = Position(5, 3)
                 q = 'hello'
 
-                mustNotBeEqual(p, q)
+                must_not_be_equal(p, q)
                 
     with path('Sudoku'):
         with path('__init__'):
