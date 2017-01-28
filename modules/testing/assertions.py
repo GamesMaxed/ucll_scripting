@@ -38,7 +38,7 @@ def must_not_be_equal(forbidden, actual):
         if not (forbidden != actual) or (forbidden == actual):
             fail()
                 
-def mustBeSameTruthiness(expected, actual):
+def must_be_same_truthiness(expected, actual):
     """
     Assert that both values represent the same truthiness.
     If they do not, failure ensues.

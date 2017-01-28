@@ -27,4 +27,4 @@ with cumulative():
                           'ffjlHJLKHffwq',      \
                           '16!ffJKLJdd ',       \
                           'ab7!D' ]:
-            reftest(result=mustBeSameTruthiness)(password)
+            reftest(result=must_be_same_truthiness)(password)
