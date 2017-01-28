@@ -3,50 +3,54 @@ from testing.tests import *
 from testing.assertions import *
 
 
-with cumulative():
+with path('Person'), cumulative():
     Person = testedModule().Person
-    
-    @test("[Person] Constructor initializes fields")
-    def initializePerson():
-        p = Person(80, 1.8)
 
-        mustBeEqual(80, p.weight)
-        mustBeEqual(1.8, p.height)
+    with path('constructor'):
+        @test("initializes fields")
+        def _():
+            p = Person(80, 1.8)
 
-    @test("[Person] Setting weight")
-    def setWeight():
-        p = Person(45, 1.52)
-        p.weight = 50
+            mustBeEqual(80, p.weight)
+            mustBeEqual(1.8, p.height)
 
-        mustBeEqual(50, p.weight)
+    with path('weight'):
+        @test("setting weight")
+        def _():
+            p = Person(45, 1.52)
+            p.weight = 50
 
-    @test("[Person] Setting height")
-    def setWeight():
-        p = Person(45, 1.52)
-        p.height = 1.50
+            mustBeEqual(50, p.weight)
 
-        mustBeEqual(1.50, p.height)
-        
-    @test("[Person] Setting invalid weight should raise RuntimeError")
-    def setInvalidWeight():
-        p = Person(80, 1.8)
+        @test("invalid weight should raise RuntimeError")
+        def _():
+            p = Person(80, 1.8)
 
-        def code():
-            p.weight = -5
-        
-        mustRaise(RuntimeError, code)
+            def code():
+                p.weight = -5
 
-    @test("[Person] Setting invalid height should raise RuntimeError")
-    def setInvalidWeight():
-        p = Person(80, 1.8)
+            mustRaise(RuntimeError, code)
+            
+    with path('height'):
+        @test("setting height")
+        def _():
+            p = Person(45, 1.52)
+            p.height = 1.50
 
-        def code():
-            p.height = -1
+            mustBeEqual(1.50, p.height)
+            
+        @test("invalid height should raise RuntimeError")
+        def _():
+            p = Person(80, 1.8)
 
-        mustRaise(RuntimeError, code)
-    
-    @test("[Person] Computing bmi")
-    def bmi():
-        p = Person(80, 1.8)
+            def code():
+                p.height = -1
 
-        mustBeEqual(80 / 1.8**2, p.bmi, epsilon = 0.0001)
+            mustRaise(RuntimeError, code)
+
+    with path('bmi'):
+        @test("yields correct result")
+        def _():
+            p = Person(80, 1.8)
+
+            mustBeEqual(80 / 1.8**2, p.bmi, epsilon = 0.0001)
