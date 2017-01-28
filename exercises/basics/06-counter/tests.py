@@ -3,26 +3,29 @@ from testing.tests import *
 from testing.assertions import *
 
 
-with cumulative():
+with path('Counter'), cumulative():
     Counter = testedModule().Counter
-    
-    @test("Counter() initialized to 0")
-    def counterInit():
-        counter = Counter()
-        mustBeEqual(0, counter.current())
 
-    @test("Increment() increments counter")
-    def counterIncrement():
-        counter = Counter()
-        counter.increment()
-        mustBeEqual(1, counter.current())
+    with path('__init__'):
+        @test("initializes to 0")
+        def _():
+            counter = Counter()
+            mustBeEqual(0, counter.current())
 
-    @test("Increment() increments counter")
-    def counterReset():
-        counter = Counter()
-        counter.increment()
-        counter.increment()
-        counter.increment()
-        counter.reset()
-        mustBeEqual(0, counter.current())
+    with path('increment'):
+        @test("increments counter")
+        def _():
+            counter = Counter()
+            counter.increment()
+            mustBeEqual(1, counter.current())
+
+    with path('reset'):
+        @test("sets value to 0")
+        def _():
+            counter = Counter()
+            counter.increment()
+            counter.increment()
+            counter.increment()
+            counter.reset()
+            mustBeEqual(0, counter.current())
         
