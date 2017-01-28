@@ -4,7 +4,7 @@ from testing.assertions import *
 import dyn
 from contextlib import contextmanager
 
-with cumulative():
+with cumulative(skipAfterFail=True):
     env = dyn.create()
 
     @contextmanager
@@ -14,12 +14,12 @@ with cumulative():
     
     def match(string):
         @test("Riddle {}: + {}", env.riddle, repr(string))
-        def check():
+        def _():
             mustBeTruthy( testedFunction(string) )
 
     def noMatch(string):
         @test("Riddle {}: - {}", env.riddle, repr(string))
-        def check():
+        def _():
             mustBeFalsey( testedFunction(string) )
 
             
