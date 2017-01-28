@@ -7,15 +7,8 @@ def fail():
     When called within a test, aborts the test immediately.
     The test is considered to have failed.
     """
-    printer = testing.environment.printer
-    
-    printer.log(1, "FAIL: {}", testing.environment.testDescription)
-
-    printer.log(2, "Additional information:")
-    for item in testing.environment.context:
-        printer.log(2, "  " + item)
-
-    printer.log(2, "")
+    message = testing.logging.TestFailureMessage(testing.environment.testDescription, testing.environment.context)
+    testing.environment.log.write(message)
 
     raise testing.tests.TestFailure()
 

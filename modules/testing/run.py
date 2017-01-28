@@ -1,8 +1,7 @@
 from contextlib import contextmanager
-import testing.printers
 import testing.tests
 import testing.conditions
-import testing.printers
+import testing.logging
 import types
 import copy
 import sys
@@ -58,8 +57,16 @@ def loadTestsInCurrentDirectory():
 def loadTestsRecursively():
     for entry in os.listdir('.'):
         if os.path.isdir(entry):
-            with inside_directory(entry): # , testing.environment.path(entry):
+            with inside_directory(entry), testFilePath(entry):
                 loadTestsRecursively()
                 
     if os.path.isfile('tests.py'):
-        loadTestsInCurrentDirectory()
+        with testFilePath('tests.py'):
+            loadTestsInCurrentDirectory()
+
+@contextmanager
+def testFilePath(component):
+    oldPath = testing.environment.testFilePath
+    
+    with testing.environment.let(testFilePath = oldPath + [ component ]):
+        yield

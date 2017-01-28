@@ -4,7 +4,6 @@ import testing.conditions
 import testing.score
 import testing.assertions
 import copy
-import sys
 
 
 class TestError(Exception):
@@ -18,21 +17,6 @@ class TestFailure(TestError):
 class InvalidTestCallError(TestError):
     def __init__(self):
         super().__init__("Calling test functions is disallowed")
-
-    
-# class _Scaler(_SingleChildTest):
-#     def __init__(self, maximum):
-#         super().__init__()
-#         self._maximum = maximum
-
-#     def run(self):
-#         return self._child.run().rescale(self._maximum)
-
-# def scale(maximum):
-#     return _TestContextManager(_Scaler(maximum))
-
-
-
 
 class Test:
     def __init__(self, name, function):
@@ -48,7 +32,7 @@ def _runTest(testFunction):
         # Add current test to skip list
         testing.environment.skippedTests.append(testing.environment.testDescription)
 
-        testing.environment.printer.log(2, "SKIP: {}", testing.environment.testDescription)
+        testing.environment.log.write(2, "SKIP: {}", testing.environment.testDescription)
 
         # Score 0/1
         testing.environment.scoreReceiver( testing.score.Score(0, 1) )
@@ -137,7 +121,7 @@ def allOrNothing(skipAfterFail = False):
 def context(contextString, *args, **kwargs):
     contextString = contextString.format(*args, **kwargs)
     
-    with testing.environment.let(context=contextString):
+    with testing.environment.let(context=testing.environment.context + [contextString]):
         yield
 
 def testedModule(module = None):
@@ -267,4 +251,3 @@ def scale(maximum):
 
     with testing.environment.let(scoreReceiver=scoreReceiver):
         yield
-        
