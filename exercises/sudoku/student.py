@@ -1,23 +1,23 @@
-class _position:
+class Position:
     def __init__(self, x, y):
         self.x = x
         self.y = y
 
     def __eq__(self, other):
-        return self.x == other.x and self.y == other.y
-
-    def __neq__(self, other):
-        return self.x == other.x and self.y == other.y
+        return type(other) ==  Position and self.x == other.x and self.y == other.y
 
     def __str__(self):
         return "({}, {})".format(self.x, self.y)
+
+    def __repr__(self):
+        return str(self)
 
 
 class Inconsistency(Exception):
     pass
 
 
-class _sudoku:
+class Sudoku:
     def __init__(self):
         self.__squares = [ [ {1, 2, 3, 4, 5, 6, 7, 8, 9 } for x in range(0, 9) ] for y in range(0, 9) ]
 
@@ -28,32 +28,36 @@ class _sudoku:
         self.__squares[position.y][position.x] = value
 
     def all_positions(self):
+        result = []
+        
         for y in range(0, 9):
             for x in range(0, 9):
-                yield _position(x, y)
+                result.append(Position(x, y))
+
+        return result
         
     def copy(self):
-        result = _sudoku()
+        result = Sudoku()
 
         for p in self.all_positions():
             result[p] = (set(self[p]) if type(self[p]) == set else self[p])
 
         return result
 
-    def is_in_same_row(self, p, q):
+    def are_in_same_row(self, p, q):
         return p.y == q.y
 
-    def is_in_same_column(self, p, q):
+    def are_in_same_column(self, p, q):
         return p.x == q.x
 
-    def is_in_same_square(self, p, q):
+    def are_in_same_square(self, p, q):
         return (p.x // 3 == q.x // 3) and (p.y // 3 == q.y // 3)
 
-    def is_in_same_group(self, p, q):
-        return self.is_in_same_row(p, q) or self.is_in_same_column(p, q) or self.is_in_same_square(p, q)
+    def are_in_same_group(self, p, q):
+        return self.are_in_same_row(p, q) or self.are_in_same_column(p, q) or self.are_in_same_square(p, q)
 
-    def in_same_group(self, p):
-        return (q for q in self.all_positions() if p != q and self.is_in_same_group(p, q))
+    def others_in_same_group(self, p):
+        return (q for q in self.all_positions() if p != q and self.are_in_same_group(p, q))
     
     def set(self, position, x):
         if (type(self[position]) == int and self[position] != x) or (type(self[position]) == set and x not in self[position]):
@@ -61,7 +65,7 @@ class _sudoku:
         
         self[position] = x
         
-        for q in self.in_same_group(position):
+        for q in self.others_in_same_group(position):
             if type(self[q]) == set:
                 if x in self[q]:
                     self[q].remove(x)
@@ -80,7 +84,7 @@ class _sudoku:
 
         for y in range(0, 9):
             for x in range(0, 9):
-                p = _position(x, y)
+                p = Position(x, y)
                 ns = self[p]
 
                 if type(ns) == set and len(ns) < least:
@@ -124,17 +128,17 @@ class _sudoku:
                 return "."
 
         def row_at(y):
-            return "".join( char_at( _position(x, y) ) for x in range(0, 9) )
+            return "".join( char_at( Position(x, y) ) for x in range(0, 9) )
             
         return "\n".join( row_at(y) for y in range(0, 9) )
 
 def parse(strings):
-    sudoku = _sudoku()
+    sudoku = Sudoku()
 
     for y, string in zip(range(0, 9), strings):
         for x, char in zip(range(0, 9), string):
             if char.isdigit():
-                p = _position(x, y)
+                p = Position(x, y)
                 sudoku.set(p, int(char))
 
     return sudoku
