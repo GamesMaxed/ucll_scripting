@@ -1,7 +1,7 @@
-def getName(`\pgfmark{getName:p:start}`p`\pgfmark{getName:p:end}`):
-    `\pgfmark{getName:body:start}`return p.name`\pgfmark{getName:body:end}`
+def get_name(`\pgfmark{get_name:p:start}`p`\pgfmark{get_name:p:end}`):
+    `\pgfmark{get_name:body:start}`return p.name`\pgfmark{get_name:body:end}`
 
-map(persons, getName)
+map(persons, get_name)
 
 # kan geschreven worden als
 

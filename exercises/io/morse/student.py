@@ -3,7 +3,7 @@ from functools import reduce
 
 
 
-def decodeMorse(code):
+def decode_morse(code):
     """
     Decodes the given code to plaintext.
     """
@@ -11,7 +11,7 @@ def decodeMorse(code):
     raise NotImplementedError()
 
 
-def encodeMorse(plaintext):
+def encode_morse(plaintext):
     """
     Translates given plaintext to morse.
     """

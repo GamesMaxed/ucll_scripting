@@ -1,4 +1,4 @@
-def longestIncreasingSubsequence(xs):
+def longest_increasing_subsequence(xs):
     if len(xs) == 0:
         return []
     else:

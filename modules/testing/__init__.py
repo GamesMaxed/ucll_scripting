@@ -2,13 +2,13 @@ import sys
 import dyn
 
 
-def checkPythonVersion():
+def check_python_version():
     version = sys.version_info
 
     if version.major < 3 or (version.major == 3 and version.minor < 5):
         sys.exit("You need at least Python 3.5")
 
-checkPythonVersion()
+check_python_version()
 
 
 import testing.tests

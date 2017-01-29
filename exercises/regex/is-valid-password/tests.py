@@ -5,19 +5,19 @@ from testing.assertions import *
 
 
 with cumulative():
-    with testedFunctionName("isValidPassword"):
+    with tested_function_name("is_valid_password"):
         invalid_passwords = [ 'a', 'aaaaaaaa', '7aTkffff', '7a!kqfpoifpo', 'a!kJFLoifpo' ]    
         valid_passwords = [ '7aT!ffff', '7 aA!         ', 'aBc123!!' ]
 
         for invalid_password in invalid_passwords:
-            @test('isValidPassword({}) should return falsey value', repr(invalid_password))
+            @test('is_valid_password({}) should return falsey value', repr(invalid_password))
             def _():
-                mustBeFalsey(testedFunction(invalid_password))
+                must_be_falsey(tested_function(invalid_password))
 
         for valid_password in valid_passwords:
-            @test('isValidPassword({}) must return truthy value', repr(valid_password))
+            @test('is_valid_password({}) must return truthy value', repr(valid_password))
             def _():
-                mustBeTruthy(testedFunction(valid_password))
+                must_be_truthy(tested_function(valid_password))
 
         for password in [ 'jf7!fjifjid',        \
                           'jfF!fjifjidd',       \

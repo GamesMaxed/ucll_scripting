@@ -1,7 +1,7 @@
 import re
 
 
-def containsTwice(text, fragment):
+def contains_twice(text, fragment):
     """
     Returns True if text contains fragment twice.
 

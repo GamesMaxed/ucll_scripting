@@ -1,4 +1,4 @@
-def getName(person):
+def get_name(person):
     return person.name
 
-ages = map(persons, getName)
+ages = map(persons, get_name)

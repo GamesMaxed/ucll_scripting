@@ -3,7 +3,7 @@ from testing.tests import *
 from testing.assertions import *
 
 
-with allOrNothing(), testedFunctionName("sign"):
+with all_or_nothing(), tested_function_name("sign"):
     check = reftest()
 
     for i in range(-10,10):

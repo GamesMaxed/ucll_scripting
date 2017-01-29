@@ -4,7 +4,7 @@ from testing.assertions import *
 
 
 with path('Counter'), cumulative():
-    Counter = testedModule().Counter
+    Counter = tested_module().Counter
 
     with path('__init__'):
         @test("initializes to 0")

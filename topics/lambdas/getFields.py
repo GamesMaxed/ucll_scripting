@@ -1,4 +1,4 @@
-def getFields(objects, fieldName):
+def get_fields(objects, fieldName):
     result = []
 
     for o in objects:

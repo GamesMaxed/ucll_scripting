@@ -1,7 +1,7 @@
-def getAge(person):
+def get_age(person):
     return person.age
 
-ages = map(persons, getAge)
+ages = map(persons, get_age)
 
 # kan geschreven worden als
 

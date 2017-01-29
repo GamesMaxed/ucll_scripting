@@ -1,4 +1,4 @@
-def getNames(persons):
+def get_names(persons):
     result = []
 
     for p in persons:

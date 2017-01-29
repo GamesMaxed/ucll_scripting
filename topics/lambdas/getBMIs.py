@@ -1,4 +1,4 @@
-def getBMIs(people):
+def get_b_m_is(people):
     result = []
 
     for p in people:

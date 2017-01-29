@@ -1,4 +1,4 @@
-def balancedParentheses(string):
+def balanced_parentheses(string):
     """
     Checks if the parentheses are balanced, i.e.
     that every opening parenthesis ( has a

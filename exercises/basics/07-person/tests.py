@@ -4,7 +4,7 @@ from testing.assertions import *
 
 
 with path('Person'), cumulative():
-    Person = testedModule().Person
+    Person = tested_module().Person
 
     with path('constructor'):
         @test("initializes fields")
@@ -29,7 +29,7 @@ with path('Person'), cumulative():
             def code():
                 p.weight = -5
 
-            mustRaise(RuntimeError, code)
+            must_raise(RuntimeError, code)
             
     with path('height'):
         @test("setting height")
@@ -46,7 +46,7 @@ with path('Person'), cumulative():
             def code():
                 p.height = -1
 
-            mustRaise(RuntimeError, code)
+            must_raise(RuntimeError, code)
 
     with path('bmi'):
         @test("yields correct result")

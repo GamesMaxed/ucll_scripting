@@ -1,4 +1,4 @@
-def getAges(persons):
+def get_ages(persons):
     result = []
 
     for p in persons:

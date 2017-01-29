@@ -3,19 +3,19 @@ from testing.tests import *
 from testing.assertions import *
 
 
-with allOrNothing():
+with all_or_nothing():
     def testcase(plaintext):
-        morseCode = referenceModule().encodeMorse(plaintext)
+        morseCode = reference_module().encode_morse(plaintext)
 
-        with testedFunctionName("decodeMorse"):
-            @test("decodeMorse({}) should return {}", repr(morseCode), repr(plaintext))
+        with tested_function_name("decode_morse"):
+            @test("decode_morse({}) should return {}", repr(morseCode), repr(plaintext))
             def _():
-                must_be_equal(plaintext, testedFunction(morseCode))
+                must_be_equal(plaintext, tested_function(morseCode))
 
-        with testedFunctionName("encodeMorse"):
-            @test("encodeMorse({}) should return {}", repr(plaintext), repr(morseCode))
+        with tested_function_name("encode_morse"):
+            @test("encode_morse({}) should return {}", repr(plaintext), repr(morseCode))
             def _():
-                must_be_equal(morseCode, testedFunction(plaintext))
+                must_be_equal(morseCode, tested_function(plaintext))
             
     testcase('')
 

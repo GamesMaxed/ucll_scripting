@@ -1,4 +1,4 @@
-def countAdults(persons):
+def count_adults(persons):
     result = 0
 
     for p in persons:

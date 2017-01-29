@@ -1,14 +1,14 @@
-def isAdult(person):
-    return `\pgfmark{selectAdults2 start1}`person.age >= 18`\pgfmark{selectAdults2 end1}`
+def is_adult(person):
+    return `\pgfmark{select_adults2 start1}`person.age >= 18`\pgfmark{select_adults2 end1}`
 
-def selectAdults(persons):
+def select_adults(persons):
     result = []
 
     for person in persons:
-        if `\pgfmark{selectAdults2 start2}`isAdult(person)`\pgfmark{selectAdults2 end2}`:
+        if `\pgfmark{select_adults2 start2}`is_adult(person)`\pgfmark{select_adults2 end2}`:
             result.append(person)
 
     return result
 
 # Verderop
-adults = selectAdults(persons)
+adults = select_adults(persons)

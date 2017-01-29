@@ -4,53 +4,53 @@ from testing.assertions import *
 
 
 with cumulative():
-    with testedFunctionName("isPrime"):
-        def checkPrimality(n):
-            if referenceFunction(n):
-                @test("isPrime({}) should return truthy value", n)
+    with tested_function_name("is_prime"):
+        def check_primality(n):
+            if reference_function(n):
+                @test("is_prime({}) should return truthy value", n)
                 def _():
-                    mustBeTruthy(testedFunction(n))
+                    must_be_truthy(tested_function(n))
             else:
-                @test("isPrime({}) should return falsey value", n)
+                @test("is_prime({}) should return falsey value", n)
                 def _():
-                    mustBeFalsey(testedFunction(n))
+                    must_be_falsey(tested_function(n))
 
-        with allOrNothing():
+        with all_or_nothing():
             for n in range(0, 100):
-                checkPrimality(n)
+                check_primality(n)
 
-    with testedFunctionName("nthPrime"):
-        def checkNthPrime(n):
-            expected = referenceFunction(n)
+    with tested_function_name("nth_prime"):
+        def check_nth_prime(n):
+            expected = reference_function(n)
             
-            @test("nthPrime({}) should return {}", n, expected)
+            @test("nth_prime({}) should return {}", n, expected)
             def _():
-                must_be_equal(expected, testedFunction(n))
+                must_be_equal(expected, tested_function(n))
 
-        with allOrNothing():
+        with all_or_nothing():
             for n in range(1,50):
-                checkNthPrime(n)
+                check_nth_prime(n)
 
-    with testedFunctionName("primesUpTo"):
-        def listPrimes(n):
-            expected = referenceFunction(n)
+    with tested_function_name("primes_up_to"):
+        def list_primes(n):
+            expected = reference_function(n)
             
-            @test("primesUpTo({}) should return {}", n, expected)
+            @test("primes_up_to({}) should return {}", n, expected)
             def _():
-                must_be_equal(expected, testedFunction(n))
+                must_be_equal(expected, tested_function(n))
 
-        with allOrNothing():
+        with all_or_nothing():
             for n in range(1, 50):
-                listPrimes(n)
+                list_primes(n)
             
-    with testedFunctionName("factorInteger"):
+    with tested_function_name("factor_integer"):
         def factor(n):
-            expected = referenceFunction(n)
+            expected = reference_function(n)
             
-            @test("factorInteger({}) should return {}", n, expected)
+            @test("factor_integer({}) should return {}", n, expected)
             def _():
-                must_be_equal(expected, testedFunction(n))
+                must_be_equal(expected, tested_function(n))
 
-        with allOrNothing():
+        with all_or_nothing():
             for n in range(1,50):
                 factor(n)

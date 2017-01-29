@@ -30,5 +30,5 @@ class Score:
     def __str__(self):
         return "{}/{}".format(self.value, self.maximum)
 
-    def isMaxScore(self):
+    def is_max_score(self):
         return self.value == self.maximum

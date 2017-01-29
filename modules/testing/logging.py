@@ -8,25 +8,26 @@ class Log:
             print(string)
 
 
-def logFailure():
-    print("[FAIL] {}".format("/".join(testing.environment.testPath + [testing.environment.testDescription])))
+def log_failure():
+    if testing.environment.showFailedTests:
+        print("[FAIL] {}".format("/".join(testing.environment.testPath + [testing.environment.testDescription])))
 
-    if testing.environment.showFilePath:
-        print("  in file {}".format("/".join(testing.environment.testFilePath)))
+        if testing.environment.showFilePath:
+            print("  in file {}".format("/".join(testing.environment.test_file_path)))
 
-    if testing.environment.showContext:
-        for entry in testing.environment.context:
-            print(str(entry))
+        if testing.environment.showContext:
+            for entry in testing.environment.context:
+                print(str(entry))
 
-def logSuccess():
+def log_success():
     if testing.environment.showPassingTests:
         print("[PASS] {}".format(testing.environment.testDescription))
 
-def logSkip():
+def log_skip():
     if testing.environment.showSkippedTests:
         print("[SKIP] {}".format(testing.environment.testDescription))
 
-def logStatistics(score):
+def log_statistics(score):
     print("=" * 50)
     print("#PASS = {}".format(len(testing.environment.passedTests)))
     print("#FAIL = {}".format(len(testing.environment.failedTests)))

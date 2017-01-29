@@ -1,4 +1,4 @@
-def selectWithAgeBetween(persons, min, max):
+def select_with_age_between(persons, min, max):
     result = []
 
     for p in persons:

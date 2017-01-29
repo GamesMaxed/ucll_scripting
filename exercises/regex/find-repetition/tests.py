@@ -4,22 +4,22 @@ from testing.assertions import *
 
 
 
-with cumulative(), testedFunctionName("findRepetition"):
+with cumulative(), tested_function_name("find_repetition"):
     def repetition(string, repetition):
-        @test('findRepetition({}) should return {}', repr(string), repr(repetition))
+        @test('find_repetition({}) should return {}', repr(string), repr(repetition))
         def _():
-            must_be_equal(repetition, testedFunction(string))
+            must_be_equal(repetition, tested_function(string))
 
-    def noRepetition(string):
-        @test('findRepetition({}) should return falsey value', repr(string))
+    def no_repetition(string):
+        @test('find_repetition({}) should return falsey value', repr(string))
         def _():
-            mustBeFalsey(testedFunction(string))
+            must_be_falsey(tested_function(string))
 
     repetition('aaaabaaaa', 'aaaa')
     repetition('axxabaxxa', 'axxa')
     repetition('12341234', '1234')
     repetition('a1234bbbb1234c', '1234')
-    noRepetition('aaaabaaa')
-    noRepetition('123b123')
-    noRepetition('aaaaaaa')
+    no_repetition('aaaabaaa')
+    no_repetition('123b123')
+    no_repetition('aaaaaaa')
 

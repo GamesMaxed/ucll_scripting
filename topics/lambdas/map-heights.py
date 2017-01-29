@@ -1,4 +1,4 @@
-def getHeight(person):
+def get_height(person):
     return person.height
 
-ages = map(persons, getHeight)
+ages = map(persons, get_height)

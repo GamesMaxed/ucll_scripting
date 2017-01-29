@@ -1,4 +1,4 @@
-def parseTime(str):
+def parse_time(str):
     pattern = r"(\d\d):(\d\d):(\d\d)\.(\d\d\d)"
     match = re.fullmatch(pattern, str)
 

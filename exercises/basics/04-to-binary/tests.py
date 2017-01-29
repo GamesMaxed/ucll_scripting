@@ -3,12 +3,12 @@ from testing.tests import *
 from testing.assertions import *
 
 
-with allOrNothing(), testedFunctionName("toBinary"):
+with all_or_nothing(), tested_function_name("to_binary"):
     check = reftest()
 
     for i in range(0,32):
         check(i)
 
-    @test("toBinary(-4) should throw exception")
+    @test("to_binary(-4) should throw exception")
     def _():
-        mustRaise( RuntimeError, lambda: testedFunction(-4) )
+        must_raise( RuntimeError, lambda: tested_function(-4) )

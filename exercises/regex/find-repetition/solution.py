@@ -1,7 +1,7 @@
 import re
 
 
-def findRepetition(string):
+def find_repetition(string):
     """
     Returns a substring of at least 4 characters
     that is repeated in the given string.

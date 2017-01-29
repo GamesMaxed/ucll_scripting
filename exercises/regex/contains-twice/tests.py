@@ -3,16 +3,16 @@ from testing.tests import *
 from testing.assertions import *
 
 
-with cumulative(), testedFunctionName("containsTwice"):
+with cumulative(), tested_function_name("contains_twice"):
     def yes(string, fragment):
-        @test("containsTwice({}, {}) should return truthy value", repr(string), repr(fragment))
+        @test("contains_twice({}, {}) should return truthy value", repr(string), repr(fragment))
         def _():
-            mustBeTruthy(testedFunction(string, fragment))
+            must_be_truthy(tested_function(string, fragment))
 
     def no(string, fragment):
-        @test("containsTwice({}, {}) should return falsey value", repr(string), repr(fragment))
+        @test("contains_twice({}, {}) should return falsey value", repr(string), repr(fragment))
         def _():
-            mustBeFalsey(testedFunction(string, fragment))
+            must_be_falsey(tested_function(string, fragment))
                     
     yes('aa', 'a')
     yes('axa', 'a')

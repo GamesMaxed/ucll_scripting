@@ -21,18 +21,18 @@ def inside_directory(path):
         os.chdir(currentDirectory)
 
 
-def _ensureExistenceOfFile(filename):
+def _ensure_existence_of_file(filename):
     if not os.path.isfile(filename):
         sys.exit('Could not find {} in {}'.format(filename, os.getcwd()))
 
-def _ensureExistenceOfFiles(*filenames):
+def _ensure_existence_of_files(*filenames):
     for filename in filenames:
         ensureExistenceOfFile(filename)
 
-def _readAndExecuteSourceFile(moduleName, filename):
+def _read_and_execute_source_file(moduleName, filename):
     module = types.ModuleType(moduleName)
 
-    _ensureExistenceOfFile(filename)
+    _ensure_existence_of_file(filename)
     
     with open(filename, 'r') as file:
         code = file.read()
@@ -40,13 +40,13 @@ def _readAndExecuteSourceFile(moduleName, filename):
 
     return module
         
-def loadTestsInCurrentDirectory():
+def load_tests_in_current_directory():
     bindings = {}
     
-    bindings['testedModule'] = _readAndExecuteSourceFile('student', testing.environment.testedFile)
+    bindings['tested_module'] = _read_and_execute_source_file('student', testing.environment.testedFile)
     
     if os.path.isfile(testing.environment.referenceFile):
-        bindings['referenceModule'] =_readAndExecuteSourceFile('solution', testing.environment.referenceFile)
+        bindings['reference_module'] =_read_and_execute_source_file('solution', testing.environment.referenceFile)
 
     testModule = types.ModuleType('tests')
     with open('tests.py', 'r') as file:
@@ -54,19 +54,19 @@ def loadTestsInCurrentDirectory():
         with testing.environment.let( **bindings ):
             exec(code, testModule.__dict__)
 
-def loadTestsRecursively():
+def load_tests_recursively():
     for entry in os.listdir('.'):
         if os.path.isdir(entry):
-            with inside_directory(entry), testFilePath(entry):
-                loadTestsRecursively()
+            with inside_directory(entry), test_file_path(entry):
+                load_tests_recursively()
                 
     if os.path.isfile('tests.py'):
-        with testFilePath('tests.py'):
-            loadTestsInCurrentDirectory()
+        with test_file_path('tests.py'):
+            load_tests_in_current_directory()
 
 @contextmanager
-def testFilePath(component):
-    oldPath = testing.environment.testFilePath
+def test_file_path(component):
+    oldPath = testing.environment.test_file_path
     
-    with testing.environment.let(testFilePath = oldPath + [ component ]):
+    with testing.environment.let(test_file_path = oldPath + [ component ]):
         yield

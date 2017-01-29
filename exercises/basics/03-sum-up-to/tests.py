@@ -3,7 +3,7 @@ from testing.tests import *
 from testing.assertions import *
 
 
-with allOrNothing(), testedFunctionName("sumUpTo"):
+with all_or_nothing(), tested_function_name("sum_up_to"):
     check = reftest()
 
     for i in range(0,10):

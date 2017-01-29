@@ -1,2 +1,2 @@
-def toBinary(n):
+def to_binary(n):
     raise NotImplementedError()

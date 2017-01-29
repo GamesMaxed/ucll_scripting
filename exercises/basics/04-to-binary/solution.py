@@ -1,4 +1,4 @@
-def toBinary(n):
+def to_binary(n):
     if n < 0:
         raise RuntimeError("n must be positive")
     elif n == 0:

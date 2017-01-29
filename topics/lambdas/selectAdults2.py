@@ -1,11 +1,11 @@
-def selectAdults(persons):
+def select_adults(persons):
     result = []
 
     for person in persons:
-        if `\pgfmark{selectAdults start}`person.age >= 18`\pgfmark{selectAdults end}`:
+        if `\pgfmark{select_adults start}`person.age >= 18`\pgfmark{select_adults end}`:
             result.append(person)
 
     return result
 
 # Verderop
-adults = selectAdults(persons)
+adults = select_adults(persons)

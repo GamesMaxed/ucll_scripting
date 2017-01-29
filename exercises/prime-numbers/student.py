@@ -1,4 +1,4 @@
-def isPrime(n):
+def is_prime(n):
     """
     Returns True if n is prime, False otherwise.
     """
@@ -6,7 +6,7 @@ def isPrime(n):
     raise NotImplementedError()
 
 
-def nthPrime(n):
+def nth_prime(n):
     """
     Computes the n-th prime. The first prime (n=1) is 2.
     """
@@ -14,7 +14,7 @@ def nthPrime(n):
     raise NotImplementedError()
 
 
-def primesUpTo(n):
+def primes_up_to(n):
     """
     Returns all primes less than or equal to n in a
     list. Its elements must be sorted in increasing order.
@@ -23,12 +23,12 @@ def primesUpTo(n):
     raise NotImplementedError()
 
 
-def factorInteger(n):
+def factor_integer(n):
     """
     Factorizes the given integer into prime factors.
     These are grouped in a list sorted in increasing order.
 
-    For example, factorInteger(12) = [2, 2, 3].
+    For example, factor_integer(12) = [2, 2, 3].
     """
 
     raise NotImplementedError()

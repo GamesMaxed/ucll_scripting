@@ -1,7 +1,7 @@
 import re
 
 
-def findEpisodeTitles(series):
+def find_episode_titles(series):
     regex = re.compile( r'"{}".*\{{(.*) \(#(\d+)\.(\d+)\)\}}'.format(series) )
 
     results = []
@@ -22,7 +22,7 @@ def findEpisodeTitles(series):
     return [ title for (season, episode, title) in results ]
 
 
-def bestMovieFromYear(year, minimumCount = 10000):
+def best_movie_from_year(year, minimumCount = 10000):
     regex = re.compile( r'^\s+[0-9.]{{10}}\s+(\d+)   (\d{{1,2}}\.\d)  ([^"]+) \({}\)$'.format(year) )
 
     bestScore = 0
@@ -44,7 +44,7 @@ def bestMovieFromYear(year, minimumCount = 10000):
     return (bestTitle, bestScore)
 
 
-def episodeCount():
+def episode_count():
     regex = re.compile( r'^\s+[0-9.]+\s+\d+\s+\d{1,2}\.\d\s+"([^"]+)"' )
     results = {}
 
@@ -64,7 +64,7 @@ def episodeCount():
 
 
 
-def seriesAverageRatings():
+def series_average_ratings():
     regex = re.compile( r'^\s+[0-9.]+\s+\d+\s+(\d{1,2}\.\d)\s+"([^"]+)"' )
     results = {}
 

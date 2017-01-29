@@ -7,7 +7,7 @@ def fail():
     When called within a test, aborts the test immediately.
     The test is considered to have failed.
     """
-    testing.logging.logFailure()
+    testing.logging.log_failure()
 
     raise testing.tests.TestFailure()
 
@@ -52,7 +52,7 @@ def must_be_same_truthiness(expected, actual):
             if actual:
                 fail()
             
-def mustBeTruthy(actual):
+def must_be_truthy(actual):
     """
     Assert that the given value must be truthy.
     If it is not, failure ensues.
@@ -61,7 +61,7 @@ def mustBeTruthy(actual):
         if not actual:
             fail()
 
-def mustBeFalsey(actual):
+def must_be_falsey(actual):
     """
     Assert that the given value must be falsey.
     If it is not, failure ensues.
@@ -70,7 +70,7 @@ def mustBeFalsey(actual):
         if actual:
             fail()
 
-def mustRaise(exceptionType, code):
+def must_raise(exceptionType, code):
     """
     Assert that the execution of the given code
     leads to an exception of the given type.
@@ -84,7 +84,7 @@ def mustRaise(exceptionType, code):
             with testing.tests.context("Wrong exception thrown, expected {}, got {}", exceptionType.__name__, type(e).__name__):
                 fail()
 
-def mustContainSameElements(expected, actual, sameOrder=True):
+def must_contain_same_elements(expected, actual, sameOrder=True):
     expected = list(expected)
     actual = list(actual)
     

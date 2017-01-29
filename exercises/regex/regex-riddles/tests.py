@@ -9,18 +9,18 @@ with cumulative(skipAfterFail=True):
 
     @contextmanager
     def riddle(n):
-        with env.let(riddle=n), allOrNothing(), testedFunctionName('riddle{}'.format(n)):
+        with env.let(riddle=n), all_or_nothing(), tested_function_name('riddle{}'.format(n)):
             yield
     
     def match(string):
         @test("Riddle {}: + {}", env.riddle, repr(string))
         def _():
-            mustBeTruthy( testedFunction(string) )
+            must_be_truthy( tested_function(string) )
 
-    def noMatch(string):
+    def no_match(string):
         @test("Riddle {}: - {}", env.riddle, repr(string))
         def _():
-            mustBeFalsey( testedFunction(string) )
+            must_be_falsey( tested_function(string) )
 
             
     with riddle(1):
@@ -30,11 +30,11 @@ with cumulative(skipAfterFail=True):
         match('fff')
         match('   ')
 
-        noMatch('')
-        noMatch('f')
-        noMatch('cc')
-        noMatch('1234')
-        noMatch('abcde')
+        no_match('')
+        no_match('f')
+        no_match('cc')
+        no_match('1234')
+        no_match('abcde')
         
     with riddle(2):
         match('')
@@ -44,11 +44,11 @@ with cumulative(skipAfterFail=True):
         match('bbb')
         match('aabbbb')
 
-        noMatch('c')
-        noMatch('1')
-        noMatch('   ')
-        noMatch('ba')
-        noMatch('aba')
+        no_match('c')
+        no_match('1')
+        no_match('   ')
+        no_match('ba')
+        no_match('aba')
 
     with riddle(3):
         match('')
@@ -61,10 +61,10 @@ with cumulative(skipAfterFail=True):
         match('aba')
         match('ababababa')
         
-        noMatch('c')
-        noMatch('1')
-        noMatch('   ')
-        noMatch('abc')
+        no_match('c')
+        no_match('1')
+        no_match('   ')
+        no_match('abc')
 
     with riddle(4):
         match('aaaa')
@@ -75,12 +75,12 @@ with cumulative(skipAfterFail=True):
         match('1a2a3a4a5')
         match('aaaaaaaaa')
         
-        noMatch('')
-        noMatch('a')
-        noMatch('aa')
-        noMatch('aaa')
-        noMatch('bbbb')
-        noMatch('1a2a3a4')
+        no_match('')
+        no_match('a')
+        no_match('aa')
+        no_match('aaa')
+        no_match('bbbb')
+        no_match('1a2a3a4')
         
     with riddle(5):
         match('111')
@@ -94,14 +94,14 @@ with cumulative(skipAfterFail=True):
         match('999')
         match('000')
         
-        noMatch('')
-        noMatch('1')
-        noMatch('11')
-        noMatch('123')
-        noMatch('abc')
-        noMatch(' 111')
-        noMatch('111 ')
-        noMatch('1111')
+        no_match('')
+        no_match('1')
+        no_match('11')
+        no_match('123')
+        no_match('abc')
+        no_match(' 111')
+        no_match('111 ')
+        no_match('1111')
         
     with riddle(6):
         match('111')
@@ -118,15 +118,15 @@ with cumulative(skipAfterFail=True):
         match('123123123')
         match('767676')
         
-        noMatch('')
-        noMatch('1')
-        noMatch('11')
-        noMatch('123')
-        noMatch('abc')
-        noMatch(' 111')
-        noMatch('111 ')
-        noMatch('131415')
-        noMatch('12 12 12')
+        no_match('')
+        no_match('1')
+        no_match('11')
+        no_match('123')
+        no_match('abc')
+        no_match(' 111')
+        no_match('111 ')
+        no_match('131415')
+        no_match('12 12 12')
 
     with riddle(7):
         match('')
@@ -134,18 +134,18 @@ with cumulative(skipAfterFail=True):
         match('fqljc')
         match(' f q c ldj')
 
-        noMatch('1')
-        noMatch('2')
-        noMatch('3')
-        noMatch('4')
-        noMatch('5')
-        noMatch('6')
-        noMatch('7')
-        noMatch('8')
-        noMatch('9')
-        noMatch('0')
-        noMatch('   3 ')
-        noMatch('djkl9jafjlk')
+        no_match('1')
+        no_match('2')
+        no_match('3')
+        no_match('4')
+        no_match('5')
+        no_match('6')
+        no_match('7')
+        no_match('8')
+        no_match('9')
+        no_match('0')
+        no_match('   3 ')
+        no_match('djkl9jafjlk')
 
     with riddle(8):
         match('')
@@ -157,13 +157,13 @@ with cumulative(skipAfterFail=True):
         match('ac')
         match('abc')
 
-        noMatch('x')
-        noMatch('4')
-        noMatch('aa')
-        noMatch('ba')
-        noMatch('cba')
-        noMatch(' a')
-        noMatch(' a')
+        no_match('x')
+        no_match('4')
+        no_match('aa')
+        no_match('ba')
+        no_match('cba')
+        no_match(' a')
+        no_match(' a')
 
     with riddle(9):
         match('aba')
@@ -176,13 +176,13 @@ with cumulative(skipAfterFail=True):
         match('10101010101')
         match(' a a a a a ')
 
-        noMatch('')
-        noMatch('a')
-        noMatch('ab')
-        noMatch('abab')
-        noMatch('7575')
-        noMatch(' aba')
-        noMatch('aba ')
+        no_match('')
+        no_match('a')
+        no_match('ab')
+        no_match('abab')
+        no_match('7575')
+        no_match(' aba')
+        no_match('aba ')
 
     with riddle(10):
         match('1')
@@ -198,12 +198,12 @@ with cumulative(skipAfterFail=True):
         match('7/3/7/8/9')
         match('178+54-45*787+31/2')
 
-        noMatch('')
-        noMatch('x')
-        noMatch('7+')
-        noMatch(' 1')
-        noMatch('1 ')
-        noMatch('1 + 2')
-        noMatch('-8')
-        noMatch('7-5*')
-        noMatch('(1+2)*3')
+        no_match('')
+        no_match('x')
+        no_match('7+')
+        no_match(' 1')
+        no_match('1 ')
+        no_match('1 + 2')
+        no_match('-8')
+        no_match('7-5*')
+        no_match('(1+2)*3')

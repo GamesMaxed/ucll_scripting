@@ -1,4 +1,4 @@
-def selectYoungAdults(persons):
+def select_young_adults(persons):
     result = []
 
     for p in persons:

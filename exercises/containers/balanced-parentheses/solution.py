@@ -1,4 +1,4 @@
-def balancedParentheses(string):
+def balanced_parentheses(string):
     count = 0
 
     for char in string:

@@ -1,17 +1,17 @@
 import re
 
 
-def findEpisodeTitles(series):
+def find_episode_titles(series):
     raise NotImplementedError()
     
 
-def bestMovieFromYear(year, minimumCount = 10000):
+def best_movie_from_year(year, minimumCount = 10000):
     raise NotImplementedError()
 
 
-def episodeCount():
+def episode_count():
     raise NotImplementedError()
 
 
-def seriesAverageRatings():
+def series_average_ratings():
     raise NotImplementedError()

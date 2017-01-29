@@ -1,4 +1,4 @@
-def selectPersons(persons,
+def select_persons(persons,
                   minAge = None, \
                   maxAge = None, \
                   name = None, \

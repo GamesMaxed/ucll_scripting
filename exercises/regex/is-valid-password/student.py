@@ -1,7 +1,7 @@
 import re
 
 
-def isValidPassword(password):
+def is_valid_password(password):
     """
     Returns True if the given password is valid,
     False otherwise.

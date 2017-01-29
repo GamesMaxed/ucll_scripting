@@ -1,4 +1,4 @@
-def selectOlderThan(persons, age):
+def select_older_than(persons, age):
     result = []
 
     for person in persons:
