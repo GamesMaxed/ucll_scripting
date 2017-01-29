@@ -159,3 +159,22 @@ with cumulative(skip_after_fail = True):
                     actual = Sudoku().others_in_same_group(translate_position(p))
                     
                     must_contain_same_elements( expected, actual, same_order=False )
+
+        with path('set'), all_or_nothing():
+            @test('setting sets the grid contents at the given position')
+            def _():
+                sudoku = Sudoku()
+                p = Position(3, 1)
+                sudoku.set(p, 5)
+
+                must_be_equal(5, sudoku[p])
+
+            @test('setting removes the value from all other squares in the same group')
+            def _():
+                sudoku = Sudoku()
+                p = Position(5, 8)
+                n = 1
+                sudoku.set(p, n)
+
+                for q in sudoku.others_in_same_group(p):
+                    must_be_falsey( n in sudoku[q] )
