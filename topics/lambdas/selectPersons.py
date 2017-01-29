@@ -1,20 +1,20 @@
 def select_persons(persons,
-                  minAge = None, \
-                  maxAge = None, \
+                  min_age = None, \
+                  max_age = None, \
                   name = None, \
-                  minWeight = None, \
-                  maxWeight = None, \
-                  minHeight = None, \
-                  maxHeight = None, \
+                  min_weight = None, \
+                  max_weight = None, \
+                  min_height = None, \
+                  max_height = None, \
                   minBMI = None, \
                   maxBMI = None):
     result = []
 
     for p in persons:
-        if (minAge == None or minAge <= p.age) and \
-           (maxAge == None or p.age <= maxAge) and \
+        if (min_age == None or min_age <= p.age) and \
+           (max_age == None or p.age <= max_age) and \
            (name == None or p.name == name) and \
-           (minWeight == None or minWeight <= p.weight) and \
+           (min_weight == None or min_weight <= p.weight) and \
            ...
         result.append(p)
 

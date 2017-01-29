@@ -4,7 +4,7 @@ from testing.assertions import *
 import dyn
 from contextlib import contextmanager
 
-with cumulative(skipAfterFail=True):
+with cumulative(skip_after_fail=True):
     env = dyn.create()
 
     @contextmanager

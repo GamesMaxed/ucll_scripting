@@ -22,11 +22,11 @@ def find_episode_titles(series):
     return [ title for (season, episode, title) in results ]
 
 
-def best_movie_from_year(year, minimumCount = 10000):
+def best_movie_from_year(year, minimum_count = 10000):
     regex = re.compile( r'^\s+[0-9.]{{10}}\s+(\d+)   (\d{{1,2}}\.\d)  ([^"]+) \({}\)$'.format(year) )
 
-    bestScore = 0
-    bestTitle = None
+    best_score = 0
+    best_title = None
     
     with open("ratings.txt", "r") as file:
         for line in file:
@@ -37,11 +37,11 @@ def best_movie_from_year(year, minimumCount = 10000):
                 score = float(match.group(2))
                 title = match.group(3)
 
-                if score > bestScore and count > minimumCount:
-                    bestScore = score
-                    bestTitle = title
+                if score > best_score and count > minimum_count:
+                    best_score = score
+                    best_title = title
 
-    return (bestTitle, bestScore)
+    return (best_title, best_score)
 
 
 def episode_count():

@@ -13,12 +13,12 @@ import dyn
 
 @contextmanager
 def inside_directory(path):
-    currentDirectory = os.getcwd()
+    current_directory = os.getcwd()
     try:
         os.chdir(path)
         yield
     finally:
-        os.chdir(currentDirectory)
+        os.chdir(current_directory)
 
 
 def _ensure_existence_of_file(filename):
@@ -27,10 +27,10 @@ def _ensure_existence_of_file(filename):
 
 def _ensure_existence_of_files(*filenames):
     for filename in filenames:
-        ensureExistenceOfFile(filename)
+        ensure_existence_of_file(filename)
 
-def _read_and_execute_source_file(moduleName, filename):
-    module = types.ModuleType(moduleName)
+def _read_and_execute_source_file(module_name, filename):
+    module = types.ModuleType(module_name)
 
     _ensure_existence_of_file(filename)
     
@@ -43,16 +43,16 @@ def _read_and_execute_source_file(moduleName, filename):
 def load_tests_in_current_directory():
     bindings = {}
     
-    bindings['tested_module'] = _read_and_execute_source_file('student', testing.environment.testedFile)
+    bindings['tested_module'] = _read_and_execute_source_file('student', testing.environment.tested_file)
     
-    if os.path.isfile(testing.environment.referenceFile):
-        bindings['reference_module'] =_read_and_execute_source_file('solution', testing.environment.referenceFile)
+    if os.path.isfile(testing.environment.reference_file):
+        bindings['reference_module'] =_read_and_execute_source_file('solution', testing.environment.reference_file)
 
-    testModule = types.ModuleType('tests')
+    test_module = types.ModuleType('tests')
     with open('tests.py', 'r') as file:
         code = file.read()
         with testing.environment.let( **bindings ):
-            exec(code, testModule.__dict__)
+            exec(code, test_module.__dict__)
 
 def load_tests_recursively():
     for entry in os.listdir('.'):
@@ -66,7 +66,7 @@ def load_tests_recursively():
 
 @contextmanager
 def test_file_path(component):
-    oldPath = testing.environment.test_file_path
+    old_path = testing.environment.test_file_path
     
-    with testing.environment.let(test_file_path = oldPath + [ component ]):
+    with testing.environment.let(test_file_path = old_path + [ component ]):
         yield

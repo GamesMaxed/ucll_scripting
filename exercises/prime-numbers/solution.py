@@ -22,16 +22,16 @@ def primes_up_to(n):
 
 def factor_integer(n):
     primes = primes_up_to(n)
-    primeIndex = 0
+    prime_index = 0
     result = []
 
     while n != 1:
-        currentPrime = primes[primeIndex]
+        current_prime = primes[prime_index]
         
-        if n % currentPrime == 0:
-            result.append(currentPrime)
-            n /= currentPrime
+        if n % current_prime == 0:
+            result.append(current_prime)
+            n /= current_prime
         else:
-            primeIndex += 1
+            prime_index += 1
 
     return result

@@ -70,28 +70,28 @@ def must_be_falsey(actual):
         if actual:
             fail()
 
-def must_raise(exceptionType, code):
+def must_raise(exception_type, code):
     """
     Assert that the execution of the given code
     leads to an exception of the given type.
     """    
     try:
         code()
-        with testing.tests.context("No exception thrown; expected exception {}", exceptionType):
+        with testing.tests.context("No exception thrown; expected exception {}", exception_type):
             fail()
     except Exception as e:
-        if type(e) != exceptionType:
-            with testing.tests.context("Wrong exception thrown, expected {}, got {}", exceptionType.__name__, type(e).__name__):
+        if type(e) != exception_type:
+            with testing.tests.context("Wrong exception thrown, expected {}, got {}", exception_type.__name__, type(e).__name__):
                 fail()
 
-def must_contain_same_elements(expected, actual, sameOrder=True):
+def must_contain_same_elements(expected, actual, same_order=True):
     expected = list(expected)
     actual = list(actual)
     
     with testing.tests.context('Comparing number of elements'):
         must_be_equal(len(expected), len(actual))
 
-    if sameOrder:
+    if same_order:
         for i in range(0, len(expected)):
             with testing.tests.context('Comparing elements at index {}', i):
                 must_be_equal(expected[i], actual[i])

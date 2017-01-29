@@ -2,7 +2,7 @@ def foo():
     print("Hello")
 
 # Toekennen aan variabele
-leFunc = foo
+le_func = foo
 
-# leFunc oproepen == foo oproepen
-leFunc() 
+# le_func oproepen == foo oproepen
+le_func() 

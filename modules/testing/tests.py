@@ -32,7 +32,7 @@ class Test:
 def _run_test(test_function):
     if not testing.environment.condition():
         # Add current test to skip list
-        testing.environment.skippedTests.append(testing.environment.testDescription)
+        testing.environment.skipped_tests.append(testing.environment.test_description)
 
         # Score 0/1
         testing.environment.score_receiver( testing.score.Score(0, 1) )
@@ -45,7 +45,7 @@ def _run_test(test_function):
                 test_function()
 
                 # Add test to pass list
-                testing.environment.passedTests.append(testing.environment.testDescription)
+                testing.environment.passed_tests.append(testing.environment.test_description)
 
                 # Score 1/1
                 testing.environment.score_receiver(testing.score.Score(1, 1))
@@ -70,7 +70,7 @@ def _run_test(test_function):
 
         except TestFailure:
             # Add test to fail list
-            testing.environment.failedTests.append(testing.environment.testDescription)
+            testing.environment.failed_tests.append(testing.environment.test_description)
 
             # Score 0/1
             testing.environment.score_receiver(testing.score.Score(0, 1))
@@ -81,23 +81,23 @@ def test(description, *args, **kwargs):
     description = description.format(*args, **kwargs)
     
     def function_receiver(test_function):
-        with testing.environment.let(testDescription = description):
+        with testing.environment.let(test_description = description):
             _run_test(test_function)
             
     return function_receiver
 
 
 @contextmanager
-def cumulative(skipAfterFail = False):
+def cumulative(skip_after_fail = False):
     total = testing.score.Score(0, 0)
 
-    if skipAfterFail:
+    if skip_after_fail:
         def condition_function():
             return total.is_max_score()
 
         condition = testing.conditions.from_lambda('skip after first failure', condition_function)
     else:
-        condition = testing.conditions.runAlways
+        condition = testing.conditions.run_always
 
     def score_receiver(score):
         nonlocal total
@@ -109,27 +109,27 @@ def cumulative(skipAfterFail = False):
     testing.environment.score_receiver(total)
 
 @contextmanager
-def all_or_nothing(skipAfterFail = False):
-    receivedScore = testing.score.Score(0, 0)
+def all_or_nothing(skip_after_fail = False):
+    received_score = testing.score.Score(0, 0)
     
     def score_receiver(score):
-        nonlocal receivedScore
-        receivedScore = score
+        nonlocal received_score
+        received_score = score
 
     with testing.environment.let(score_receiver=score_receiver):
         yield
 
-    if receivedScore.is_max_score():
+    if received_score.is_max_score():
         testing.environment.score_receiver(testing.score.Score(1, 1))
     else:
         testing.environment.score_receiver(testing.score.Score(0, 1))
 
     
 @contextmanager
-def context(contextString, *args, **kwargs):
-    contextString = contextString.format(*args, **kwargs)
+def context(context_string, *args, **kwargs):
+    context_string = context_string.format(*args, **kwargs)
     
-    with testing.environment.let(context=testing.environment.context + [contextString]):
+    with testing.environment.let(context=testing.environment.context + [context_string]):
         yield
 
 def tested_module(module = None):
@@ -154,12 +154,12 @@ def reference_module(module = None):
     else:
         return testing.environment.reference_module
     
-def tested_function_name(functionName = None):
-    if functionName:
+def tested_function_name(function_name = None):
+    if function_name:
         @contextmanager
         def context():
-            with testing.environment.let(tested_function_name = functionName), \
-                 condition(testing.conditions.run_if_function_exists(functionName)):
+            with testing.environment.let(tested_function_name = function_name), \
+                 condition(testing.conditions.run_if_function_exists(function_name)):
                 yield
 
         return context()
@@ -205,30 +205,30 @@ def condition(cond = None):
     else:
         return testing.environment.condition
 
-def _limit_string_length(string, maxLength = 60):
-    if len(string) > maxLength:
-        return string[0:maxLength-3] + "..."
+def _limit_string_length(string, max_length = 60):
+    if len(string) > max_length:
+        return string[0:max_length-3] + "..."
     else:
         return string
     
 def reftest(result = None, arguments = None):
-    compareResults = result or testing.assertions.must_be_equal
-    compareArguments = arguments or testing.assertions.ignore
+    compare_results = result or testing.assertions.must_be_equal
+    compare_arguments = arguments or testing.assertions.ignore
     
     def test_function(*args, **kwargs):
-        argumentStrings = [ repr(arg) for arg in args ] + [ "{} = {}".format(key, repr(val)) for key, val in kwargs ]
-        argumentString = "{}".format(", ".join(argumentStrings))
+        argument_strings = [ repr(arg) for arg in args ] + [ "{} = {}".format(key, repr(val)) for key, val in kwargs ]
+        argument_string = "{}".format(", ".join(argument_strings))
 
         # Call reference function
         refargs = copy.deepcopy(args)
         refkwargs = copy.deepcopy(kwargs)
         refretval = reference_function(*refargs, **refkwargs)
 
-        name = "{}({}), refimpl returned {}".format(tested_function_name(), argumentString, _limit_string_length(str(refretval)))
+        name = "{}({}), refimpl returned {}".format(tested_function_name(), argument_string, _limit_string_length(str(refretval)))
         
         @test(name)
         def reference_implementation_test():
-            with context('Comparing {}({}) with reference solution', tested_function_name(), argumentString):
+            with context('Comparing {}({}) with reference solution', tested_function_name(), argument_string):
                 # Call test implementation
                 testargs = copy.deepcopy(args)
                 testkwargs = copy.deepcopy(kwargs)
@@ -236,33 +236,33 @@ def reftest(result = None, arguments = None):
 
                 # Compare return values
                 with context("Comparing return values: expected {}, received {}", refretval, testretval):
-                    compareResults(refretval, testretval)
+                    compare_results(refretval, testretval)
 
                 # Compare positional arguments
                 for i in range(0, len(args)):
                     with context("Comparing positional argument #{}: expected {}, received {}", i, repr(refargs[i]), repr(testargs[i])):
-                        compareArguments(refargs[i], testargs[i])
+                        compare_arguments(refargs[i], testargs[i])
 
                 # Compare keyword arguments
                 for key in kwargs:
                     with context("Comparing keyword argument {}: expected {}, received {}", key, repr(refkwargs[key]), repr(testkwargs[i])):
-                        compareArguments(refkwargs[key], testkwargs[i])
+                        compare_arguments(refkwargs[key], testkwargs[i])
 
     return test_function
 
 @contextmanager
 def scale(maximum):
-    currentScoreReceiver = testing.environment.score_receiver
+    current_score_receiver = testing.environment.score_receiver
     
     def score_receiver(score):
-        currentScoreReceiver(score.rescale(maximum))
+        current_score_receiver(score.rescale(maximum))
 
     with testing.environment.let(score_receiver=score_receiver):
         yield
 
 @contextmanager
 def path(component):
-    currentPath = testing.environment.testPath
+    current_path = testing.environment.test_path
 
-    with testing.environment.let(testPath = currentPath + [ component ]):
+    with testing.environment.let(test_path = current_path + [ component ]):
         yield

@@ -83,11 +83,11 @@ class _DynamicEnvironment:
         return ", ".join([ "{} => {}".format(id, getattr(self, id)) for id in self.__iter__() ])
 
 
-_globalEnvironment = _DynamicEnvironment()
+_global_environment = _DynamicEnvironment()
 
 def let(**kwargs):
     """To be used in conjunction with the with-statement"""
-    return _globalEnvironment.let(**kwargs)
+    return _global_environment.let(**kwargs)
 
 
 def create():

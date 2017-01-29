@@ -19,14 +19,14 @@ def parse_settings():
     args = parser.parse_args()
 
     return dict(log=testing.logging.Log(), \
-                showContext=args.show_context, \
-                maxTests=args.count, \
-                testedFile=args.test, \
-                showPassingTests=args.show_pass, \
-                showSkippedTests=args.show_skip, \
-                showFailedTests=not args.hide_fail, \
-                showFilePath=args.show_filepath, \
-                referenceFile=args.reference)
+                show_context=args.show_context, \
+                max_tests=args.count, \
+                tested_file=args.test, \
+                show_passing_tests=args.show_pass, \
+                show_skipped_tests=args.show_skip, \
+                show_failed_tests=not args.hide_fail, \
+                show_file_path=args.show_filepath, \
+                reference_file=args.reference)
 
 
 def main():
@@ -36,12 +36,12 @@ def main():
         testing.logging.log_statistics(score)
 
     bindings['score_receiver'] = score_receiver
-    bindings['skippedTests'] = []
-    bindings['passedTests'] = []
-    bindings['failedTests'] = []
+    bindings['skipped_tests'] = []
+    bindings['passed_tests'] = []
+    bindings['failed_tests'] = []
     bindings['condition'] = testing.conditions.limit_test_count()
     bindings['context'] = []
-    bindings['testPath'] = []
+    bindings['test_path'] = []
     bindings['test_file_path'] = []
         
     with testing.environment.let(**bindings), testing.tests.cumulative():

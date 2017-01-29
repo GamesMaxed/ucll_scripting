@@ -3,7 +3,7 @@ from testing.tests import *
 from testing.assertions import *
 
 
-with cumulative(skipAfterFail = False): ## TODO
+with cumulative(skip_after_fail = False): ## TODO
     def _position(*args, **kwargs):
         return tested_module()._position(*args, **kwargs)
 
@@ -75,4 +75,4 @@ with cumulative(skipAfterFail = False): ## TODO
                 sudoku = _sudoku()
                 ref = R_sudoku()
                 
-                must_contain_same_elements( ref.all_positions(), sudoku.all_positions(), sameOrder=False )
+                must_contain_same_elements( ref.all_positions(), sudoku.all_positions(), same_order=False )
