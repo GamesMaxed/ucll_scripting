@@ -23,8 +23,8 @@
 \begin{frame}
   \frametitle{Veralgemening: \texttt{selectOlderThan}}
   \begin{itemize}
-    \item \texttt{selectAdults} selecteert $\mathrm{age} \geq 18$
-    \item \texttt{selectCentennials} selecteert $\mathrm{age} \geq 100$
+    \item \texttt{select\_adults} selecteert $\mathrm{age} \geq 18$
+    \item \texttt{select\_centennials} selecteert $\mathrm{age} \geq 100$
     \item Twee verschillende functies met quasi zelfde implementatie
     \item Samenvoegen in \'e\'en veralgemeende functie
   \end{itemize}
@@ -49,8 +49,8 @@
   \begin{overprint}
     \onslide<1>
     \begin{center}
-      Zeer gelijkaardig aan \texttt{selectAdults}\dots \\
-      Kunnen we misschien \texttt{selectOlderThan} herbruiken?
+      Zeer gelijkaardig aan \texttt{select\_adults}\dots \\
+      Kunnen we misschien \texttt{select\_older\_than} herbruiken?
     \end{center}
 
     \onslide<2>
@@ -65,11 +65,11 @@
   \begin{itemize}
     \item Wat als we $18 \leq \mathrm{age} \leq 65$ willen selecteren?
     \item We veralgemenen weeral
-    \item \texttt{selectOlderThan} ontving minimale leeftijd
+    \item \texttt{select\_older\_than} ontving minimale leeftijd
     \item We voegen maximale leeftijd parameter toe
   \end{itemize}
   \vskip5mm
-  \code[language=python,font=\small,width=.9\linewidth]{selectWithAgeBetween.py}
+  \code[language=python,font=\small,width=.95\linewidth]{selectWithAgeBetween.py}
 \end{frame}
 
 \begin{frame}
@@ -121,3 +121,9 @@
     \item Werkt op willekeurige objecten (niet enkel \texttt{Person}s)
   \end{itemize}
 \end{frame}
+
+
+%%% Local Variables:
+%%% mode: latex
+%%% TeX-master: "lambdas"
+%%% End:

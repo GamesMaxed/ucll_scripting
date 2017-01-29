@@ -1,4 +1,4 @@
-def get_b_m_is(people):
+def get_bmis(people):
     result = []
 
     for p in people:

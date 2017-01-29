@@ -1,13 +1,13 @@
 def select_persons(persons,
-                  min_age = None, \
-                  max_age = None, \
-                  name = None, \
-                  min_weight = None, \
-                  max_weight = None, \
-                  min_height = None, \
-                  max_height = None, \
-                  minBMI = None, \
-                  maxBMI = None):
+                   min_age = None, \
+                   max_age = None, \
+                   name = None, \
+                   min_weight = None, \
+                   max_weight = None, \
+                   min_height = None, \
+                   max_height = None, \
+                   min_bmi = None, \
+                   max_bmi = None):
     result = []
 
     for p in persons:
