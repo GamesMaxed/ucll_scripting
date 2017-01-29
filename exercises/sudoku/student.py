@@ -50,11 +50,11 @@ class Sudoku:
     def are_in_same_column(self, p, q):
         return p.x == q.x
 
-    def are_in_same_square(self, p, q):
+    def are_in_same_block(self, p, q):
         return (p.x // 3 == q.x // 3) and (p.y // 3 == q.y // 3)
 
     def are_in_same_group(self, p, q):
-        return self.are_in_same_row(p, q) or self.are_in_same_column(p, q) or self.are_in_same_square(p, q)
+        return self.are_in_same_row(p, q) or self.are_in_same_column(p, q) or self.are_in_same_block(p, q)
 
     def others_in_same_group(self, p):
         return (q for q in self.all_positions() if p != q and self.are_in_same_group(p, q))

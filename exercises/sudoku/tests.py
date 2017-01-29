@@ -107,58 +107,58 @@ with cumulative(skip_after_fail = True):
 
                 must_be_equal({1, 2, 3}, original[Position(6, 5)])
 
-        with path('are_in_same_row'), all_or_nothing():
-            ref = RSudoku()
+        # with path('are_in_same_row'), all_or_nothing():
+        #     ref = RSudoku()
 
-            for p in ref.all_positions():
-                for q in ref.all_positions():
-                    if ref.are_in_same_row(p, q):
-                        @test('{} and {} should be in same row', p, q)
-                        def _():
-                            must_be_truthy(Sudoku().are_in_same_row(p, q))
-                    else:
-                        @test('{} and {} should not be in same row', p, q)
-                        def _():
-                            must_be_falsey(Sudoku().are_in_same_row(p, q))
+        #     for p in ref.all_positions():
+        #         for q in ref.all_positions():
+        #             if ref.are_in_same_row(p, q):
+        #                 @test('{} and {} should be in same row', p, q)
+        #                 def _():
+        #                     must_be_truthy(Sudoku().are_in_same_row(p, q))
+        #             else:
+        #                 @test('{} and {} should not be in same row', p, q)
+        #                 def _():
+        #                     must_be_falsey(Sudoku().are_in_same_row(p, q))
                             
-        with path('are_in_same_row'), all_or_nothing():
-            ref = RSudoku()
+        # with path('are_in_same_row'), all_or_nothing():
+        #     ref = RSudoku()
 
-            for p in ref.all_positions():
-                for q in ref.all_positions():
-                    if ref.are_in_same_column(p, q):
-                        @test('{} and {} should be in same column', p, q)
-                        def _():
-                            must_be_truthy(Sudoku().are_in_same_column(p, q))
-                    else:
-                        @test('{} and {} should not be in same column', p, q)
-                        def _():
-                            must_be_falsey(Sudoku().are_in_same_column(p, q))
+        #     for p in ref.all_positions():
+        #         for q in ref.all_positions():
+        #             if ref.are_in_same_column(p, q):
+        #                 @test('{} and {} should be in same column', p, q)
+        #                 def _():
+        #                     must_be_truthy(Sudoku().are_in_same_column(p, q))
+        #             else:
+        #                 @test('{} and {} should not be in same column', p, q)
+        #                 def _():
+        #                     must_be_falsey(Sudoku().are_in_same_column(p, q))
                             
-        with path('are_in_same_group'), all_or_nothing():
-            ref = RSudoku()
+        # with path('are_in_same_group'), all_or_nothing():
+        #     ref = RSudoku()
 
-            for p in ref.all_positions():
-                for q in ref.all_positions():
-                    if ref.are_in_same_group(p, q):
-                        @test('{} and {} should be in same group', p, q)
-                        def _():
-                            must_be_truthy(Sudoku().are_in_same_group(p, q))
-                    else:
-                        @test('{} and {} should not be in same group', p, q)
-                        def _():
-                            must_be_falsey(Sudoku().are_in_same_group(p, q))
+        #     for p in ref.all_positions():
+        #         for q in ref.all_positions():
+        #             if ref.are_in_same_group(p, q):
+        #                 @test('{} and {} should be in same group', p, q)
+        #                 def _():
+        #                     must_be_truthy(Sudoku().are_in_same_group(p, q))
+        #             else:
+        #                 @test('{} and {} should not be in same group', p, q)
+        #                 def _():
+        #                     must_be_falsey(Sudoku().are_in_same_group(p, q))
                             
-        with path('others_in_same_group'), all_or_nothing():
-            ref = RSudoku()
+        # with path('others_in_same_group'), all_or_nothing():
+        #     ref = RSudoku()
 
-            for p in ref.all_positions():
-                @test('in same group as {}', p)
-                def _():
-                    expected = [ translate_position(q) for q in ref.others_in_same_group(p) ]
-                    actual = Sudoku().others_in_same_group(translate_position(p))
+        #     for p in ref.all_positions():
+        #         @test('in same group as {}', p)
+        #         def _():
+        #             expected = [ translate_position(q) for q in ref.others_in_same_group(p) ]
+        #             actual = Sudoku().others_in_same_group(translate_position(p))
                     
-                    must_contain_same_elements( expected, actual, same_order=False )
+        #             must_contain_same_elements( expected, actual, same_order=False )
 
         with path('set'), all_or_nothing():
             @test('setting sets the grid contents at the given position')
@@ -178,3 +178,51 @@ with cumulative(skip_after_fail = True):
 
                 for q in sudoku.others_in_same_group(p):
                     must_be_falsey( n in sudoku[q] )
+
+            @test('setting a previously set square to a different value raises Inconsistency')
+            def _():
+                sudoku = Sudoku()
+                p = Position(3, 6)
+                sudoku.set(p, 1)
+
+                must_raise(tested_module().Inconsistency, lambda: sudoku.set(p, 2))
+
+            @test('setting a square with a value already used in that row raises Inconsistency')
+            def _():
+                sudoku = Sudoku()
+                sudoku.set(Position(1, 2), 1)
+
+                must_raise(tested_module().Inconsistency, lambda: sudoku.set(Position(2, 2), 1))
+
+            @test('setting a square with a value already used in that column raises Inconsistency')
+            def _():
+                sudoku = Sudoku()
+                sudoku.set(Position(5, 4), 1)
+
+                must_raise(tested_module().Inconsistency, lambda: sudoku.set(Position(5, 6), 1))
+
+            @test('setting a square with a value already used in that block raises Inconsistency')
+            def _():
+                sudoku = Sudoku()
+                sudoku.set(Position(0, 0), 9)
+
+                must_raise(tested_module().Inconsistency, lambda: sudoku.set(Position(1, 1), 9))
+                
+            @test('cannot set a square that leads another square to have 0 options left')
+            def _():
+                sudoku = Sudoku()
+                sudoku[Position(1,0)] = {1}
+
+                must_raise(tested_module().Inconsistency, lambda: sudoku.set(Position(0,0), 1))
+
+            @test('setting recursively sets all other certain squares')
+            def _():
+                sudoku = Sudoku()
+
+                for x in range(0, 9):
+                    sudoku[Position(x, 0)] = set(range(1, x+2))
+                sudoku.set(Position(0,0), 1)
+
+                for x in range(0, 9):
+                    must_be_equal(sudoku[Position(x, 0)], x + 1)
+                
