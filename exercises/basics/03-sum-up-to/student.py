@@ -1,7 +1,14 @@
-# Java heeft 2 for-lussen: de 'gewone' for:
-#    for ( ...; ...; ...) { ... }
-# en de foreach lus:
-#    for ( ... : ... ) { ... }
-# Python biedt enkel de 2de versie
-def sum_up_to(n):
+def is_prime(n):
+    for i in range(2, n):
+        if n % i == 0:
+            return False
+
+    return n > 1
+
+
+def count_primes_below(n):
+    raise NotImplementedError()
+
+
+def gcd(x, y):
     raise NotImplementedError()
