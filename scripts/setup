@@ -2,5 +2,5 @@ UCLL_SCRIPTING_ROOT=`git rev-parse --show-toplevel`
 UCLL_SCRIPTING_ROOT="/${UCLL_SCRIPTING_ROOT/:/}"
 
 export PATH=$PATH:"$UCLL_SCRIPTING_ROOT/scripts"
-
+export PYTHONPATH="$UCLL_SCRIPTING_ROOT/modules"
 alias rt=run-tests
