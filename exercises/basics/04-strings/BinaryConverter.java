@@ -24,11 +24,39 @@ class ToBinary
                 result = (n % 2) + result;
 
                 // Let op: in Python moet je expliciet kiezen voor integer division
-                // zodat 5 delen door 2 gelijn is aan 2 en niet aan 2.5
+                // zodat 5 delen door 2 gelijk is aan 2 en niet aan 2.5
                 n /= 2;
             }
 
             return result;
         }
+    }
+
+    public int fromBinary(String s)
+    {
+        int result = 0;
+
+        for ( char c : s.toCharArray() )
+        {
+            int digit;
+
+            switch ( c )
+            {
+            case '0':
+                digit = 0;
+                break;
+
+            case '1':
+                digit = 1;
+                break;
+
+            default:
+                throw new IllegalArgumentException("Invalid digit");
+            }
+            
+            result = result * 2 + digit;
+        }
+
+        return result;
     }
 }
