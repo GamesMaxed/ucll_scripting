@@ -81,7 +81,7 @@ public class Fraction
         return new Fraction(denominator, numerator);
     }
 
-    // Implementeer dit als __div__
+    // Implementeer dit als __truediv__
     public Fraction divide(Fraction that)
     {
         return multiply(that.inverse());

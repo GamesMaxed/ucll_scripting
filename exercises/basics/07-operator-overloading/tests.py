@@ -114,6 +114,37 @@ with path('Fraction'), cumulative(skip_after_fail=True):
         mul( Fraction(1, 2), Fraction(1, 2) )
         mul( Fraction(1, 2), Fraction(2, 3) )
         mul( Fraction(5, 2), Fraction(7, 3) )
+        mul( Fraction(-7, 2), Fraction(2, 7) )
 
+    with path('invert'), all_or_nothing():
+        def invert(a):
+            ra = ref(a)
+            
+            @test('Inversion of {} == {}', ra, ra.invert())
+            def _test():
+                expected = ra.invert()
+                actual = a.invert()
 
-    
+                checkref(expected, actual)
+
+        invert( Fraction(1, 1) )
+        invert( Fraction(-2, 3) )
+        invert( Fraction(4, 1) )
+        invert( Fraction(-5, 2) )
+
+    with path('__div__'), all_or_nothing():
+        def div(a, b):
+            ra = ref(a)
+            rb = ref(b)
+            
+            @test('{} / {} == {}', ra, rb, ra / rb)
+            def _test():
+                expected = ra / rb
+                actual = a / b
+
+                checkref(expected, actual)
+
+        div( Fraction(1, 2), Fraction(1, 2) )
+        div( Fraction(5, 3), Fraction(7, 4) )
+        div( Fraction(-1, 2), Fraction(4, 7) )
+        div( Fraction(4, 3), Fraction(-7, 8) )

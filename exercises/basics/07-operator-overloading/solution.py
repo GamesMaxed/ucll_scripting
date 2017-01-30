@@ -51,7 +51,7 @@ class Fraction:
     def invert(self):
         return Fraction(self.denominator, self.numerator)
 
-    def __div__(self, that):
+    def __truediv__(self, that):
         return self * that.invert()
 
     def __str__(self):
