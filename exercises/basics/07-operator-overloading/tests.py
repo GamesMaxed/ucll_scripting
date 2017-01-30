@@ -61,3 +61,38 @@ with path('Fraction'), cumulative(skip_after_fail=True):
         add(Fraction(1, 5), Fraction(2, 5))
         add(Fraction(1, 2), Fraction(1, 2))
         add(Fraction(1, 2), Fraction(-1, 2))
+        add(Fraction(-4, 5), Fraction(-2, 5))
+        add(Fraction(1, 2), Fraction(2, 3))
+
+    with path('__neg__'), all_or_nothing():
+        def neg(a):
+            ra = ref(a)
+            
+            @test('Negation of {} == {}', ra, -ra)
+            def _test():
+                expected = -ra
+                actual = -a
+
+                checkref(expected, actual)
+
+        neg( Fraction(1, 1) )
+        neg( Fraction(-2, 3) )
+        neg( Fraction(0, 1) )
+        neg( Fraction(-5, 2) )
+
+    with path('__sub__'), all_or_nothing():
+        def sub(a, b):
+            ra = ref(a)
+            rb = ref(b)
+            
+            @test('{} - {} == {}', ra, rb, ra - rb)
+            def _test():
+                expected = ra - rb
+                actual = a - b
+
+                checkref(expected, actual)
+
+        sub( Fraction(1, 2), Fraction(1, 2) )
+        sub( Fraction(2, 3), Fraction(-1, 3) )
+        sub( Fraction(1, 1), Fraction(1, 5) )
+        sub( Fraction(-3, 5), Fraction(1, 7) )

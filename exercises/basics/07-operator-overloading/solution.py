@@ -36,7 +36,7 @@ class Fraction:
 
         return Fraction(numerator, denominator)
 
-    def __neg__(self, that):
+    def __neg__(self):
         return Fraction(-self.numerator, self.denominator)
     
     def __sub__(self, that):
