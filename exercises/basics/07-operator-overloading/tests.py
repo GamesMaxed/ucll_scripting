@@ -96,3 +96,24 @@ with path('Fraction'), cumulative(skip_after_fail=True):
         sub( Fraction(2, 3), Fraction(-1, 3) )
         sub( Fraction(1, 1), Fraction(1, 5) )
         sub( Fraction(-3, 5), Fraction(1, 7) )
+
+    with path('__mul__'), all_or_nothing():
+        def mul(a, b):
+            ra = ref(a)
+            rb = ref(b)
+            
+            @test('{} * {} == {}', ra, rb, ra * rb)
+            def _test():
+                expected = ra * rb
+                actual = a * b
+
+                checkref(expected, actual)
+
+        mul( Fraction(0, 1), Fraction(5, 3) )
+        mul( Fraction(1, 7), Fraction(0, 1) )
+        mul( Fraction(1, 2), Fraction(1, 2) )
+        mul( Fraction(1, 2), Fraction(2, 3) )
+        mul( Fraction(5, 2), Fraction(7, 3) )
+
+
+    
