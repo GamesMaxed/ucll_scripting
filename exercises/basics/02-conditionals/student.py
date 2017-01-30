@@ -1,3 +1,4 @@
+# Voorbeeld
 def abs(x):
     if x < 0:
         return -x
@@ -7,4 +8,7 @@ def abs(x):
 # Merk op dat 'else if' in Python een speciale syntax heeft
 # Zoek deze zelf op online
 def sign(x):
+    raise NotImplementedError()
+
+def are_ordered(x, y, z):
     raise NotImplementedError()
