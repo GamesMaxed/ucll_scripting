@@ -6,7 +6,7 @@ from testing.assertions import *
 with path('Person'), cumulative():
     Person = tested_module().Person
 
-    with path('constructor'):
+    with path('__init__'):
         @test("initializes fields")
         def _():
             p = Person(80, 1.8)
