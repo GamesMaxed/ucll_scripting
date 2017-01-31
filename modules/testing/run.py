@@ -7,18 +7,7 @@ import copy
 import sys
 import os
 import dyn
-
-
-
-
-@contextmanager
-def inside_directory(path):
-    current_directory = os.getcwd()
-    try:
-        os.chdir(path)
-        yield
-    finally:
-        os.chdir(current_directory)
+from fileutil import inside_directory
 
 
 def _ensure_existence_of_file(filename):
