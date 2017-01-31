@@ -14,12 +14,17 @@ class _Frame:
         else:
             return self.parent.__getattr__(id)
 
-    def is_bound(self, id):
+    def keys(self):
+        return set(self._map).union(self.parent.keys())
+
+    def is_bound(self, id): ## TODO Remove
+        return id in self._map or self.parent.is_bound(id)
+
+    def __contains__(self, id):
         return id in self._map or self.parent.is_bound(id)
 
     def __iter__(self):
-        yield from self._map
-        yield from self.parent
+        yield from self.keys()
 
 
 class _RootFrame:
@@ -29,11 +34,17 @@ class _RootFrame:
     def __setattr__(self, id, val):
         raise DynamicScopeError( "Cannot write to root frame" )
 
-    def is_bound(self, id):
+    def is_bound(self, id): ## TODO Remove
         return False
+
+    def __contains__(self, id):
+        return False
+
+    def keys(self):
+        return set()
     
     def __iter__(self):
-        yield from []
+        yield from self.keys()
 
 
 class _DynamicEnvironmentContextManager:
@@ -67,7 +78,10 @@ class _DynamicEnvironment:
         """To be used in conjunction with the with-statement"""
         return _DynamicEnvironmentContextManager(self, **kwargs)
 
-    def is_bound(self, id):
+    def is_bound(self, id): ## TODO Remove this
+        return self._top.is_bound(id)
+
+    def __contains__(self, id):
         return self._top.is_bound(id)
 
     def __getattr__(self, id):
