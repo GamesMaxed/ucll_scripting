@@ -3,4 +3,7 @@ UCLL_SCRIPTING_ROOT="/${UCLL_SCRIPTING_ROOT/:/}"
 
 export PATH=$PATH:"$UCLL_SCRIPTING_ROOT/scripts"
 export PYTHONPATH="$UCLL_SCRIPTING_ROOT/modules"
+
+# Shortcuts
 alias rt=run-tests
+alias h=show-help
