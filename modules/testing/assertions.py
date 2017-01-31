@@ -77,8 +77,10 @@ def must_raise(exception_type, code):
     """    
     try:
         code()
-        with testing.tests.context("No exception thrown; expected exception {}", exception_type):
+        with testing.tests.context("No exception thrown; expected exception {}", exception_type.__name__):
             fail()
+    except testing.tests.TestFailure as e:
+        raise e
     except Exception as e:
         if type(e) != exception_type:
             with testing.tests.context("Wrong exception thrown, expected {}, got {}", exception_type.__name__, type(e).__name__):
@@ -87,21 +89,22 @@ def must_raise(exception_type, code):
 def must_contain_same_elements(expected, actual, same_order=True):
     expected = list(expected)
     actual = list(actual)
-    
-    with testing.tests.context('Comparing number of elements'):
-        must_be_equal(len(expected), len(actual))
 
-    if same_order:
-        for i in range(0, len(expected)):
-            with testing.tests.context('Comparing elements at index {}', i):
-                must_be_equal(expected[i], actual[i])
-    else:
-        for x in expected:
-            with testing.tests.context('Looking for element {}', x):
-                if x not in actual:
-                    fail()
-                else:
-                    actual.remove(x)
+    with testing.tests.context('{} must contain same elements as {}', expected, actual):
+        with testing.tests.context('Comparing number of elements'):
+            must_be_equal(len(expected), len(actual))
+
+        if same_order:
+            for i in range(0, len(expected)):
+                with testing.tests.context('Comparing elements at index {}', i):
+                    must_be_equal(expected[i], actual[i])
+        else:
+            for x in expected:
+                with testing.tests.context('{} should be in {}', x, actual):
+                    if x not in actual:
+                        fail()
+                    else:
+                        actual.remove(x)
                 
                 
 def ignore(*args, **kwargs):

@@ -25,14 +25,21 @@ run_always = TestCondition("always", lambda: True)
 
 run_never = TestCondition("never", lambda: False)
 
-def run_if_function_exists(function_name):
+def run_if_exists(identifier):
     if not testing.environment.is_bound('tested_module'):
         raise testing.tests.TestError("No tested module set")
     else:
         def check():
-            return function_name in dir(testing.environment.tested_module)
-        
-        return TestCondition("run if {} exists".format(function_name), check)
+            return identifier in dir(testing.environment.tested_module)
+
+        return TestCondition("run if {} exists".format(identifier), check)
+    
+
+def run_if_function_exists(function_name):
+    return run_if_exists(function_name) & from_lambda('{} is a function'.format(function_name), lambda: callable(getattr(testing.environment.tested_module, function_name)))
+
+def run_if_class_exists(class_name):
+    return run_if_exists(class_name) & from_lambda('{} is a class'.format(class_name), lambda: type(getattr(testing.environment.tested_module, class_name)) == type)
 
 def limit_test_count():
     def check():

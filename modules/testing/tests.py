@@ -30,7 +30,7 @@ class Test:
 
 
 def _run_test(test_function):
-    if not testing.environment.condition():
+    if not testing.environment.condition():        
         # Add current test to skip list
         testing.environment.skipped_tests.append(testing.environment.test_description)
 
@@ -42,7 +42,8 @@ def _run_test(test_function):
         try:
             try:
                 # Run test
-                test_function()
+                with testing.environment.let(inside_test=True):
+                    test_function()
 
                 # Add test to pass list
                 testing.environment.passed_tests.append(testing.environment.test_description)
@@ -75,7 +76,13 @@ def _run_test(test_function):
             # Score 0/1
             testing.environment.score_receiver(testing.score.Score(0, 1))
     
-    
+
+def inside_test():
+    """
+    Returns truthy value if execution in currently inside a test.
+    This can be important information as conditions are only active within tests.
+    """
+    return 'inside_test' in testing.environment and testing.environment.inside_test
 
 def test(description, *args, **kwargs):
     description = description.format(*args, **kwargs)
@@ -95,15 +102,15 @@ def cumulative(skip_after_fail = False):
         def condition_function():
             return total.is_max_score()
 
-        condition = testing.conditions.from_lambda('skip after first failure', condition_function)
+        cond = testing.conditions.from_lambda('skip after first failure', condition_function)
     else:
-        condition = testing.conditions.run_always
+        cond = testing.conditions.run_always
 
     def score_receiver(score):
         nonlocal total
         total += score
 
-    with testing.environment.let(condition=condition, score_receiver=score_receiver):
+    with condition(cond), testing.environment.let(score_receiver=score_receiver):
         yield
 
     testing.environment.score_receiver(total)
@@ -166,17 +173,68 @@ def tested_function_name(function_name = None):
     else:
         return testing.environment.tested_function_name
 
+def tested_class_name(class_name = None):
+    if class_name:
+        @contextmanager
+        def context():
+            with testing.environment.let(tested_class_name = class_name), \
+                 condition(testing.conditions.run_if_class_exists(class_name)):
+                yield
+
+        return context()
+    else:
+        return testing.environment.tested_class_name
+    
 def _get_tested_function():
     """
     Fetches the test function.
     """
-    return getattr(testing.environment.tested_module, testing.environment.tested_function_name)
+    if not inside_test():
+        raise RuntimeError("retrieving tested function outside test")
+    elif 'tested_module' not in testing.environment:
+        raise RuntimeError('No tested module set; use tested_module')
+    elif 'tested_function_name' not in testing.environment:
+        raise RuntimeError('No tested function set; use tested_function_name')
+    elif testing.environment.tested_function_name not in dir(testing.environment.tested_module):
+        raise RuntimeError('Tested module does not contain a function named {}'.format(testing.environment.tested_function_name))
+    else:
+        return getattr(testing.environment.tested_module, testing.environment.tested_function_name)
+    
 
 def _get_reference_function():
     """
     Fetches the test function.
     """
-    return getattr(testing.environment.reference_module, testing.environment.tested_function_name)
+    if 'reference_module' not in testing.environment:
+        raise RuntimeError('No tested module set; use reference_module')
+    elif 'tested_function_name' not in testing.environment:
+        raise RuntimeError('No tested function set; use tested_function_name')
+    elif testing.environment.tested_function_name not in dir(testing.environment.tested_module):
+        raise RuntimeError('Tested module does not contain a function named {}'.format(testing.environment.tested_function_name))
+    else:
+        return getattr(testing.environment.reference_module, testing.environment.tested_function_name)
+
+def _get_tested_class():
+    if not inside_test():
+        raise RuntimeError("retrieving tested class outside test")
+    if 'tested_module' not in testing.environment:
+        raise RuntimeError('No tested module set; use tested_module')
+    elif 'tested_class_name' not in testing.environment:
+        raise RuntimeError('No tested class set; use tested_class_name')
+    elif testing.environment.tested_class_name not in dir(testing.environment.tested_module):
+        raise RuntimeError('Tested module does not contain a class named {}'.format(testing.environment.tested_class_name))
+    else:
+        return getattr(testing.environment.tested_module, testing.environment.tested_class_name)
+
+def _get_reference_class():
+    if 'reference_module' not in testing.environment:
+        raise RuntimeError('No tested module set; use reference_module')
+    elif 'tested_class_name' not in testing.environment:
+        raise RuntimeError('No tested class set; use tested_class_name')
+    elif testing.environment.tested_class_name not in dir(testing.environment.reference_module):
+        raise RuntimeError('Reference module does not contain a class named {}'.format(testing.environment.tested_class_name))
+    else:
+        return getattr(testing.environment.reference_module, testing.environment.tested_class_name)
 
 def tested_function(*args, **kwargs):
     """
@@ -189,7 +247,13 @@ def reference_function(*args, **kwargs):
     Calls the reference function with the provided arguments.
     """
     return _get_reference_function()(*args, **kwargs)
-        
+
+def tested_class(*args, **kwargs):
+    return _get_tested_class()(*args, **kwargs)
+
+def reference_class(*args, **kwargs):
+    return _get_reference_class()(*args, **kwargs)
+
 def condition(cond = None):
     """
     Adds an extra condition which needs to hold true
@@ -266,3 +330,12 @@ def path(component):
 
     with testing.environment.let(test_path = current_path + [ component ]):
         yield
+
+def quicktest(expected, *args, **kwargs):
+    positional_argument_strings = [ repr(arg) for arg in args ]
+    keyword_argument_strings = [ "{}={}".format(repr(key), repr(val)) for key, val in kwargs ]
+    argument_strings = ", ".join(positional_argument_strings + keyword_argument_strings)
+    
+    @test("{}({}) should return {}", tested_function_name(), argument_strings, repr(expected))
+    def _():
+        testing.assertions.must_be_equal(expected, tested_function(*args, **kwargs))
