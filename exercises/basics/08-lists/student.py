@@ -20,4 +20,4 @@ def factors(n):
 
 
 def remove_short_strings(strings, minimum_length):
-    return None
+    raise NotImplementedError()
