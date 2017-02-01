@@ -1,4 +1,1 @@
-if [ -f readme.txt ]
-then less readme.txt
-else echo No help available
-fi
+python -c 'from help import main; main()' $@ | less
