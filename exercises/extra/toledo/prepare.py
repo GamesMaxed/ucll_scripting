@@ -6,7 +6,7 @@ import re
 
 template = """Name: {fname} {lname} ({qid})
 Assignment: Examen
-Date Submitted: Sunday, February 5, 2017 {hours:02}:{minutes:02}:{seconds:02} AM CET
+Date Submitted: Wednesday, January 18, 2017 {hours:02}:{minutes:02}:{seconds:02} AM CET
 Current Grade: Needs Grading
 
 Submission Field:
@@ -17,7 +17,7 @@ There are no student comments for this assignment.
 
 Files:
 	Original filename: {filename}.zip
-	Filename: Examen_{qid}_attempt_2017-02-05-{hours:02}-{minutes:02}-{seconds:02}_{filename}.zip
+	Filename: Examen_{qid}_attempt_2017-01-18-{hours:02}-{minutes:02}-{seconds:02}_{filename}.zip
 """
 
 
@@ -36,7 +36,7 @@ def random_string(length):
 
 def generate_submission():
     bindings = {}
-    bindings['hours'] = random.randrange(0, 12)
+    bindings['hours'] = random.randrange(9, 12)
     bindings['minutes'] = random.randrange(0, 60)
     bindings['seconds'] = random.randrange(0, 60)
     bindings['fname'] = random.choice(first_names)
@@ -48,12 +48,12 @@ def generate_submission():
     last_names.remove(bindings['lname'])
     qids.remove(bindings['qid'])
 
-    filename = "submissions/Examen_{qid}_attempt_2017-02-05-{hours:02}-{minutes:02}-{seconds:02}.txt".format(**bindings)
+    filename = "submissions/Examen_{qid}_attempt_2017-01-18-{hours:02}-{minutes:02}-{seconds:02}.txt".format(**bindings)
 
     with open(filename, 'w') as file:
         file.write(template.format(**bindings))
 
-    with zipfile.ZipFile('submissions/Examen_{qid}_attempt_2017-02-05-{hours:02}-{minutes:02}-{seconds:02}_{filename}.zip'.format(**bindings), 'w') as zip:
+    with zipfile.ZipFile('submissions/Examen_{qid}_attempt_2017-01-18-{hours:02}-{minutes:02}-{seconds:02}_{filename}.zip'.format(**bindings), 'w') as zip:
         for i in range(0, random.randrange(1,10)):
             data = random_string(1000)
             zip.writestr('src/file{}'.format(i), data)
@@ -68,4 +68,4 @@ def generate_submissions(n):
     
 if __name__ == '__main__':
     random.seed(76456)
-    generate_submissions(10)
+    generate_submissions(100)
