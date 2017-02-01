@@ -1,4 +1,4 @@
-class ToBinary
+class BinaryConverter
 {
     public String toBinary(int n)
     {
