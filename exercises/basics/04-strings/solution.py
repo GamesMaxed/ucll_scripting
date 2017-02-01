@@ -33,3 +33,11 @@ def from_binary(string):
         result = result * 2 + digit
 
     return result
+
+def has_extension(filename, extension):
+    extension = '.' + extension
+
+    if len(filename) < len(extension):
+        return False
+    else:
+        return filename[-len(extension):] == extension

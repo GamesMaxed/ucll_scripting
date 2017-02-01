@@ -13,3 +13,7 @@ def to_binary(n):
 
 def from_binary(string):
     raise NotImplementedError()
+
+
+def has_extension(filename, extension):
+    raise NotImplementedError()

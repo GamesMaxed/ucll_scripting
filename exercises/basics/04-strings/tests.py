@@ -36,3 +36,16 @@ with cumulative():
         def _():
             must_raise( RuntimeError, lambda: tested_function('151') )
             
+    with tested_function_name("has_extension"), all_or_nothing():
+        has_extension = reftest()
+
+        has_extension('foo.txt', 'txt')
+        has_extension('bar.html', 'html')
+        has_extension('baz.jpeg', 'jpeg')
+        has_extension('qux.gz', 'gz')
+        has_extension('footxt', 'txt')
+        has_extension('bar.htm', 'html')
+        has_extension('baz.jpeg2', 'jpeg')
+        has_extension('a', 'zip')
+
+        

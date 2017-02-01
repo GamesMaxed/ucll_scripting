@@ -72,4 +72,18 @@ class Code
 
         return result;
     }
+
+    public boolean hasExtension(String filename, String extension)
+    {
+        extension = "." + extension;
+        
+        if ( filename.length() < extension.length() )
+        {
+            return false;
+        }
+        else
+        {
+            return filename.substring(filename.length() - extension.length()).equals(extension);
+        }
+    }
 }
