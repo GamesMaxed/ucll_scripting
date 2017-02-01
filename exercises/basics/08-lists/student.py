@@ -17,3 +17,7 @@ def maximum(ns):
 
 def factors(n):
     raise NotImplementedError()
+
+
+def remove_short_strings(strings, minimum_length):
+    return None

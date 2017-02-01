@@ -34,3 +34,10 @@ def factors(n):
             k += 1
 
     return result
+
+def remove_short_strings(strings, minimum_length):
+    for i in range(len(strings), 0, -1):
+        j = i-1
+        if len(strings[j]) < minimum_length:
+            del strings[j]
+

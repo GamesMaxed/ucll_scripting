@@ -50,4 +50,15 @@ public class Code
 
         return result;
     }
+
+    public void removeShortStrings(ArrayList<String> strings, int minimumLength)
+    {
+        for ( int i = strings.size(); i >= 0; --i )
+        {
+            if ( strings.get(i).length() < minimumLength )
+            {
+                strings.remove(i);
+            }
+        }
+    }
 }

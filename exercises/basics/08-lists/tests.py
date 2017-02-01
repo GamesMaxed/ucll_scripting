@@ -33,3 +33,13 @@ with cumulative():
         factors(2400)
         factors(-3600)
         factors(17 * 19 * 31)
+
+    with tested_function_name("remove_short_strings"), all_or_nothing():
+        remove_short_strings = reftest(arguments=must_be_equal)
+
+        remove_short_strings([], 4)
+        remove_short_strings(['a'], 4)
+
+        for n in range(0, 11):
+            remove_short_strings( [ 'x' * k for k in range(0, 10) ], n )
+
