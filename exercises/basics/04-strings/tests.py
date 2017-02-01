@@ -4,6 +4,18 @@ from testing.assertions import *
 
 
 with cumulative():
+    with tested_function_name("is_binary"), all_or_nothing():
+        is_binary = reftest()
+
+        is_binary('')
+        is_binary('0')
+        is_binary('1')
+        is_binary('1010010')
+        is_binary('2')
+        is_binary('a')
+        is_binary('10101015')
+        is_binary('11010 10101')
+
     with tested_function_name("to_binary"), all_or_nothing():
         to_binary = reftest()
 

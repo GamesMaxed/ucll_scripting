@@ -1,5 +1,18 @@
-class BinaryConverter
+class Code
 {
+    public boolean isBinary(String string)
+    {
+        for ( char c : string.toCharArray() )
+        {
+            if ( c != '0' && c != '1' )
+            {
+                return false;
+            }
+        }
+
+        return true;
+    }
+        
     public String toBinary(int n)
     {
         if ( n < 0 )

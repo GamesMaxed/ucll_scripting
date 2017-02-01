@@ -1,3 +1,10 @@
+def is_binary(string):
+    for c in string:
+        if c != '0' and c != '1':
+            return False
+
+    return True
+
 def to_binary(n):
     if n < 0:
         raise RuntimeError("n must be positive")
