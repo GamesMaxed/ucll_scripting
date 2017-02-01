@@ -41,3 +41,9 @@ def has_extension(filename, extension):
         return False
     else:
         return filename[-len(extension):] == extension
+
+def format_date(day, month, year):
+    return "{}/{}/{}".format(day, month, year)
+
+def format_time(hours, minutes, seconds, milliseconds):
+    return "{}:{}:{}.{}".format(hours, minutes, seconds, milliseconds)

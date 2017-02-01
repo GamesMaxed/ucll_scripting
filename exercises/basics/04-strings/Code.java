@@ -12,7 +12,7 @@ class Code
 
         return true;
     }
-        
+
     public String toBinary(int n)
     {
         if ( n < 0 )
@@ -85,5 +85,16 @@ class Code
         {
             return filename.substring(filename.length() - extension.length()).equals(extension);
         }
+    }
+
+    public String formatDate(int day, int month, int year)
+    {
+        // %d betekent 'steek hier het volgende argument als een integer'
+        return String.format("%d/%d/%d", day, month, year);
+    }
+
+    public String formatTime(int hours, int minutes, int seconds, int milliseconds)
+    {
+        return String.format("%d:%d:%d.%d", hours, minutes, seconds, milliseconds);
     }
 }

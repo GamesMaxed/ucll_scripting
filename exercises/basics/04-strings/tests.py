@@ -48,4 +48,18 @@ with cumulative():
         has_extension('baz.jpeg2', 'jpeg')
         has_extension('a', 'zip')
 
-        
+    with tested_function_name('format_date'), all_or_nothing():
+        format_date = reftest()
+
+        format_date(1, 1, 2000)
+        format_date(18, 12, 1980)
+        format_date(25, 12, 1982)
+        format_date(14, 12, 1986)
+
+    with tested_function_name('format_time'), all_or_nothing():
+        format_time = reftest()
+
+        format_time(0, 0, 0, 0)
+        format_time(10, 1, 2, 323)
+        format_time(23, 59, 59, 999)
+        format_time(12, 15, 0, 0)
