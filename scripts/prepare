@@ -1,0 +1,4 @@
+if [ -f prepare.py ]
+then python prepare.py
+else echo Nothing to prepare
+fi
