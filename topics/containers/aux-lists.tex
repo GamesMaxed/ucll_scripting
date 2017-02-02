@@ -1,0 +1,167 @@
+\section{Lists}
+
+\frame{\tableofcontents[currentsection]}
+
+\begin{frame}
+  \frametitle{Python Lists}
+  \begin{itemize}
+    \item Vergelijkbaar met Java's \texttt{ArrayList}s
+    \item Elk element heeft een positie
+    \item Men kan via indexering (\texttt{xs[i]}) het $i$-de element opvragen
+    \item Kan groeien en krimpen
+  \end{itemize}
+\end{frame}
+
+\begin{frame}
+  \frametitle{Voorbeeld: Aanmaak Lijst}
+  \code[language=python]{list.py}
+  \begin{center}
+    \begin{tikzpicture}[rotate=90,transform shape]
+      \foreach[count=\i,evaluate={int(\i-1)} as \j] \x in {4, "bla", 5, True} {
+        \node[draw,minimum width=3cm,minimum height=1cm,drop shadow,fill=red!50] (item \i) at (0,-\i) {\ttfamily \x};
+        \node[anchor=east] at (item \i.west) {\ttfamily xs[\j]=};
+      }
+    \end{tikzpicture}
+  \end{center}
+\end{frame}
+
+\begin{frame}
+  \frametitle{Voorbeeld: Overschrijven Element}
+  \code[language=python]{list-overwrite.py}
+  \begin{center}
+    \begin{tikzpicture}[rotate=90,transform shape]
+      \visible<1>{
+        \foreach[count=\i,evaluate={int(\i-1)} as \j] \x in {4, "bla", 5, True} {
+          \node[draw,minimum width=3cm,minimum height=1cm,drop shadow,fill=red!50] (item \i) at (0,-\i) {\ttfamily \x};
+          \node[anchor=east] at (item \i.west) {\ttfamily xs[\j]=};
+        }
+      }
+      \visible<2>{
+        \foreach[count=\i,evaluate={int(\i-1)} as \j] \x in {5, "bla", 5, True} {
+          \node[draw,minimum width=3cm,minimum height=1cm,drop shadow,fill=red!50] (item \i) at (0,-\i) {\ttfamily \x};
+          \node[anchor=east] at (item \i.west) {\ttfamily xs[\j]=};
+        }
+      }
+      \visible<3>{
+        \foreach[count=\i,evaluate={int(\i-1)} as \j] \x in {5, "bla", 5, False} {
+          \node[draw,minimum width=3cm,minimum height=1cm,drop shadow,fill=red!50] (item \i) at (0,-\i) {\ttfamily \x};
+          \node[anchor=east] at (item \i.west) {\ttfamily xs[\j]=};
+        }
+      }
+    \end{tikzpicture}
+  \end{center}
+\end{frame}
+
+\begin{frame}
+  \frametitle{Voorbeeld: Toevoegen Aan Einde Lijst}
+  \code[language=python]{list-append.py}
+  \begin{center}
+    \begin{tikzpicture}[rotate=90,transform shape]
+      \foreach[count=\i,evaluate={int(\i-1)} as \j] \x in {1, 2, 3, 4, 5} {
+        \node[draw,minimum width=3cm,minimum height=1cm,drop shadow,fill=red!50] (item \i) at (0,-\i) {\ttfamily \x};
+        \node[anchor=east] at (item \i.west) {\ttfamily xs[\j]=};
+      }
+      \visible<2->{
+        \node[draw,minimum width=3cm,minimum height=1cm,drop shadow,fill=red!50] (item 6) at (0,-6) {\ttfamily 6};
+        \node[anchor=east] at (item 6.west) {\ttfamily xs[5]=};
+      }
+    \end{tikzpicture}
+  \end{center}
+\end{frame}
+
+\begin{frame}
+  \frametitle{Voorbeeld: Invoegen}
+  \code[language=python]{list-insert.py}
+  \begin{center}
+    \begin{tikzpicture}[rotate=90,transform shape]
+      \visible<1>{
+        \foreach[count=\i,evaluate={int(\i-1)} as \j] \x in {1, 2, 4, 5} {
+          \node[draw,minimum width=3cm,minimum height=1cm,drop shadow,fill=red!50] (item \i) at (0,-\i) {\ttfamily \x};
+          \node[anchor=east] at (item \i.west) {\ttfamily xs[\j]=};
+        }
+      }
+      \visible<2>{
+        \foreach[count=\i,evaluate={int(\i-1)} as \j] \x in {1, 2, 3, 4, 5} {
+          \node[draw,minimum width=3cm,minimum height=1cm,drop shadow,fill=red!50] (item \i) at (0,-\i) {\ttfamily \x};
+          \node[anchor=east] at (item \i.west) {\ttfamily xs[\j]=};
+        }
+      }
+    \end{tikzpicture}
+  \end{center}
+\end{frame}
+
+\begin{frame}
+  \frametitle{Voorbeeld: Verwijderen Element}
+  \code[language=python]{list-del.py}
+  \begin{center}
+    \begin{tikzpicture}[rotate=90,transform shape]
+      \visible<1>{
+        \foreach[count=\i,evaluate={int(\i-1)} as \j] \x in {1, 2, 3, 4, 5} {
+          \node[draw,minimum width=3cm,minimum height=1cm,drop shadow,fill=red!50] (item \i) at (0,-\i) {\ttfamily \x};
+          \node[anchor=east] at (item \i.west) {\ttfamily xs[\j]=};
+        }
+      }
+      \visible<2>{
+        \foreach[count=\i,evaluate={int(\i-1)} as \j] \x in {1, 2, 4, 5} {
+          \node[draw,minimum width=3cm,minimum height=1cm,drop shadow,fill=red!50] (item \i) at (0,-\i) {\ttfamily \x};
+          \node[anchor=east] at (item \i.west) {\ttfamily xs[\j]=};
+        }
+      }
+    \end{tikzpicture}
+  \end{center}
+\end{frame}
+
+\begin{frame}
+  \frametitle{Python Lists: Zwaktes}
+  \begin{itemize}
+    \item Invoegen en verwijderen element gaat traag
+    \item Elementen moeten intern telkens opgeschoven worden
+  \end{itemize}
+  \begin{center}
+    \begin{tikzpicture}
+      \foreach \x in {0,...,7} {
+        \draw[fill=red!50,drop shadow] (\x,0) rectangle ++(1,1);
+        \coordinate (top \x) at ($ (\x,1) + (0.5,0) $);
+        \coordinate (bottom \x) at ($ (\x,0) + (0.5,0) $);
+      }
+
+      \foreach \x in {3,...,6} {
+        \draw[-latex] (bottom \x) -- ++(0,-0.5) -- ++(0.75,0) -- ++(0,0.5);
+      }
+
+      \draw[latex-] (top 3) -- ++(0,0.5) node[right] {invoegen};
+    \end{tikzpicture}
+  \end{center}
+  \begin{center}
+    \begin{tikzpicture}
+      \foreach \x in {0,...,7} {
+        \draw[fill=red!50,drop shadow] (\x,0) rectangle ++(1,1);
+        \coordinate (top \x) at ($ (\x,1) + (0.5,0) $);
+        \coordinate (bottom \x) at ($ (\x,0) + (0.5,0) $);
+      }
+
+      \foreach \x in {3,...,6} {
+        \draw[latex-] (bottom \x) -- ++(0,-0.5) -- ++(0.75,0) -- ++(0,0.5);
+      }
+
+      \draw[-latex] (top 3) -- ++(0,0.5) node[right] {verwijderen};
+    \end{tikzpicture}
+  \end{center}
+\end{frame}
+
+\begin{frame}
+  \frametitle{Python Lists: Zwaktes}
+  \begin{itemize}
+    \item Positie elementen gekozen door gebruiker
+    \item List kan geen assumpties maken over positie elementen
+    \item Zoeken naar specifiek element gaat traag
+    \item Vergelijkbaar met niet-alfabetisch woordenboek
+  \end{itemize}
+  \code[language=python]{linear-search.py}
+\end{frame}
+
+
+%%% Local Variables:
+%%% mode: latex
+%%% TeX-master: "containers"
+%%% End:

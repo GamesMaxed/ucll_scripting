@@ -1,0 +1,97 @@
+\section{Dictionaries}
+
+\frame{\tableofcontents[currentsection]}
+
+\begin{frame}
+  \frametitle{Dictionaries}
+  \begin{itemize}
+    \item Is een \emph{associatieve container}
+    \item Associeert \emph{keys} met \emph{values}
+    \item Gegeven een key kan de dictionary snel de geassocieerde value opzoeken
+  \end{itemize}
+  \vskip5mm
+  \structure{Voorbeeld}
+  \begin{itemize}
+    \item Een woordenboek is een associatieve container
+    \item Het associeert woorden met hun omschrijving
+    \item Key: woord
+    \item Value: omschrijving
+  \end{itemize}
+\end{frame}
+
+\begin{frame}
+  \frametitle{Voorbeeld}
+  \begin{center}
+    \begin{tikzpicture}[key/.style={fill=green!50,minimum width=3cm,minimum height=0.9cm},
+                        value/.style={fill=red!50,minimum width=3cm,minimum height=0.9cm}]
+                        \draw[fill=blue!50,drop shadow] (-0.5,-0.75) rectangle (7.5,-4.25);
+      \foreach[count=\i] \key/\val in {one/un,two/deux,three/trois} {
+        \node[key,anchor=north west] (key \i) at (0,-\i) {\ttfamily "\key"};
+        \node[value,anchor=north west] (value \i) at (4,-\i) {\ttfamily "\val"};
+        \draw[-latex] (key \i) -- (value \i);
+      }
+    \end{tikzpicture}
+  \end{center}
+  \code[language=python]{dict.py}
+\end{frame}
+
+\begin{frame}
+  \frametitle{Verwijderen Associatie}
+  \begin{center}
+    \begin{tikzpicture}[key/.style={fill=green!50,minimum width=3cm,minimum height=0.9cm},
+                        value/.style={fill=red!50,minimum width=3cm,minimum height=0.9cm}]
+                        \draw[fill=blue!50,drop shadow] (-0.5,-0.75) rectangle (7.5,-4.25);
+      \visible<1>{
+        \foreach[count=\i] \key/\val in {one/un,two/deux,three/trois} {
+          \node[key,anchor=north west] (key \i) at (0,-\i) {\ttfamily "\key"};
+          \node[value,anchor=north west] (value \i) at (4,-\i) {\ttfamily "\val"};
+          \draw[-latex] (key \i) -- (value \i);
+        }
+      }
+      \visible<2>{
+        \foreach[count=\i] \key/\val in {one/un,three/trois} {
+          \node[key,anchor=north west] (key \i) at (0,-\i) {\ttfamily "\key"};
+          \node[value,anchor=north west] (value \i) at (4,-\i) {\ttfamily "\val"};
+          \draw[-latex] (key \i) -- (value \i);
+        }
+      }
+
+    \end{tikzpicture}
+  \end{center}
+  \vskip5mm
+  \code[language=python]{dict-del.py}
+\end{frame}
+
+\begin{frame}
+  \frametitle{Opvragen Keys en Values}
+  \begin{center}
+    \begin{tikzpicture}[key/.style={fill=green!50,minimum width=3cm,minimum height=0.9cm},
+                        value/.style={fill=red!50,minimum width=3cm,minimum height=0.9cm}]
+                        \draw[fill=blue!50,drop shadow] (-0.5,-0.75) rectangle (7.5,-4.25);
+      \foreach[count=\i] \key/\val in {one/un,two/deux,three/trois} {
+        \node[key,anchor=north west] (key \i) at (0,-\i) {\ttfamily "\key"};
+        \node[value,anchor=north west] (value \i) at (4,-\i) {\ttfamily "\val"};
+        \draw[-latex] (key \i) -- (value \i);
+      }
+    \end{tikzpicture}
+  \end{center}
+  \vskip5mm
+  \begin{overprint}
+    \onslide<1>
+    \code[language=python,font=\small]{dict-keys.py}
+    \onslide<2>
+    \code[language=python,font=\small]{dict-values.py}
+    \onslide<3>
+    \code[language=python,font=\small]{dict-pairs.py}
+    \onslide<4>
+    \code[language=python,font=\small]{dict-in.py}
+  \end{overprint}
+\end{frame}
+
+
+
+
+%%% Local Variables:
+%%% mode: latex
+%%% TeX-master: "containers"
+%%% End:

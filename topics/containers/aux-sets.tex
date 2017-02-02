@@ -1,0 +1,94 @@
+\section{Sets}
+
+\frame{\tableofcontents[currentsection]}
+
+\begin{frame}
+  \frametitle{Sets}
+  \begin{itemize}
+    \item Bij lists is het opzoeken van elementen traag
+    \item Sets specialiseren zich in het snel opzoeken van elementen
+    \item Een set bepaalt intern zelf de volgorde van de elementen
+    \item Set positioneert elementen op slimme manier
+    \item Volgorde zo gekozen om elementen snel terug te vinden
+          \begin{itemize}
+            \item Bv.~alfabetisch ordenen kan opzoeken sterk versnellen
+            \item Hashing, nog sneller dan alfabetisch
+          \end{itemize}
+  \end{itemize}
+\end{frame}
+
+\begin{frame}
+  \frametitle{Sets vs Lists}
+  \begin{itemize}
+    \item Positie in de set is ``geheim''
+    \item Je kan geen element op een bepaalde positie plaatsen
+    \item Je kan niet vragen waar een element zit
+    \item Je mag enkel vragen ``zit dit element \emph{ergens} de set?''
+  \end{itemize}
+  \begin{center}
+    \begin{tabular}{cc}
+      list & set \\
+      \toprule
+      \begin{tikzpicture}
+        \path[use as bounding box] (0,-1) rectangle (5,1);
+        \foreach \x in {1,2,3,4} {
+          \node[fill=red!50,draw,drop shadow,minimum size=1cm] at (\x,0) {\x};
+        }
+      \end{tikzpicture}
+      &
+      \begin{tikzpicture}
+        \draw[fill=red!50,drop shadow] (0,0) ellipse [x radius=2cm,y radius=1cm];
+        \draw[fill=black] (-1,0) circle [radius=0.05cm] node[above] {1};
+        \draw[fill=black] (0.75,0.25) circle [radius=0.05cm] node[above] {2};
+        \draw[fill=black] (0,0) circle [radius=0.05cm] node[above] {3};
+        \draw[fill=black] (0.25,-0.5) circle [radius=0.05cm] node[above] {4};
+      \end{tikzpicture}
+    \end{tabular}
+  \end{center}
+  \code[language=python,width=.5\linewidth] {set.py}
+\end{frame}
+
+\begin{frame}
+  \frametitle{Sets vs Lists}
+  \begin{itemize}
+    \item Twee lijsten zijn gelijk indien ze dezelfde elementen op dezelfde plaats bevatten
+    \item Sets kennen geen positie toe
+    \item Volgorde kan dus ook niet van belang zijn
+    \item Twee sets zijn gelijk indien ze dezelfde elementen bevatten
+  \end{itemize}
+  \code[language=python]{set-equality.py}
+\end{frame}
+
+\begin{frame}
+  \frametitle{Sets vs Lists}
+  \structure{Meermaals Voorkomend Element}
+  \begin{itemize}
+    \item Een set kan een element niet meer dan 1$\times$ bevatten
+    \item Element 2de maal toevoegen heeft geen effect
+  \end{itemize}
+  \code[language=python]{set-multiple.py}
+  \vskip2mm
+  \structure{Effici\"entie}
+  \begin{itemize}
+    \item Toevoegen element gaat sneller dan bij lists
+    \item Verwijderen element sneller dan bij lists
+    \item ``Is element van'' sneller dan bij lists
+  \end{itemize}
+\end{frame}
+
+\begin{frame}
+  \frametitle{Operaties op Lists}
+  \begin{itemize}
+    \item Toevoegen: \texttt{xs.add(5)}
+    \item Verwijderen: \texttt{xs.remove(1)}
+    \item Unie: \texttt{xs.union(ys)}
+    \item Doorsnede: \texttt{xs.intersection(ys)}
+    \item Deelverzameling: \texttt{xs.subsetof(ys)}
+    \item \dots
+  \end{itemize}
+\end{frame}
+
+%%% Local Variables:
+%%% mode: latex
+%%% TeX-master: "containers"
+%%% End:
