@@ -6,6 +6,7 @@ import testing.assertions
 import copy
 import traceback
 import sys
+import re
 
 
 class TestError(Exception):
@@ -206,11 +207,11 @@ def _get_reference_function():
     Fetches the test function.
     """
     if 'reference_module' not in testing.environment:
-        raise RuntimeError('No tested module set; use reference_module')
+        raise RuntimeError('No reference module set; use reference_module')
     elif 'tested_function_name' not in testing.environment:
         raise RuntimeError('No tested function set; use tested_function_name')
-    elif testing.environment.tested_function_name not in dir(testing.environment.tested_module):
-        raise RuntimeError('Tested module does not contain a function named {}'.format(testing.environment.tested_function_name))
+    elif testing.environment.tested_function_name not in dir(testing.environment.reference_module):
+        raise RuntimeError('Reference module does not contain a function named {}'.format(testing.environment.tested_function_name))
     else:
         return getattr(testing.environment.reference_module, testing.environment.tested_function_name)
 
@@ -288,8 +289,10 @@ def reftest(result = None, arguments = None):
         refkwargs = copy.deepcopy(kwargs)
         refretval = reference_function(*refargs, **refkwargs)
 
-        name = "{}({}), refimpl returned {}".format(tested_function_name(), argument_string, _limit_string_length(str(refretval)))
-        
+        name = "{}({}) should return {} according to reference implementation".format(tested_function_name(), argument_string, _limit_string_length(str(refretval)))
+        name = re.sub(r'\{', '{{', name)
+        name = re.sub(r'\}', '}}', name)
+
         @test(name)
         def reference_implementation_test():
             with context('Comparing {}({}) with reference solution', tested_function_name(), argument_string):
