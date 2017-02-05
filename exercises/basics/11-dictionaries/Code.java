@@ -74,4 +74,23 @@ public class Code
 
         return result;
     }
+
+    /*
+      Zoekt naar associatie van key in de eerste stylesheet uit de lijst.
+      Indien deze bestaat, geeft de overeenkomstige waarde terug.
+      Indien deze niet bestaat, wordt verder gezocht in de volgende stylesheet in de lijst.
+      Indien geen enkele stylesheet de key bevat wordt defaultValue teruggegeven.
+     */
+    public String cssLookup(ArrayList<HashMap<String, String>> styleSheets, String key, String defaultValue)
+    {
+        for ( HashMap<String, String> styleSheet : styleSheets )
+        {
+            if ( styleSheet.containsKey(key) )
+            {
+                return styleSheet.get(key);
+            }
+        }
+
+        return defaultValue;
+    }
 }

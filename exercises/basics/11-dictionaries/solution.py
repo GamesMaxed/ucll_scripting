@@ -31,3 +31,11 @@ def count_frequencies(xs):
             result[x] = 1
 
     return result
+
+
+def css_lookup(stylesheets, key, default):
+    for stylesheet in stylesheets:
+        if key in stylesheet:
+            return stylesheet[key]
+
+    return default

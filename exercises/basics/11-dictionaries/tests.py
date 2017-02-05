@@ -36,3 +36,14 @@ with cumulative():
         count_frequencies( [ 'a', 'b' ] )
         count_frequencies( [ 'a', 'b', 'b' ] )
         count_frequencies( [ 'a', 'b', 'b', 'a' ] )
+
+
+    with tested_function_name('css_lookup'), all_or_nothing():
+        css_lookup = reftest()
+
+        css_lookup( [], 'x', 0 )
+        css_lookup( [], 'x', 4 )
+        css_lookup( [ {'x': 3} ], 'x', 0 )
+        css_lookup( [ {'x': 3}, {'x': 5} ], 'x', 0 )
+        css_lookup( [ {'y': 3}, {'x': 5} ], 'x', 0 )
+        css_lookup( [ {'y': 3}, {'x': 5} ], 'z', 0 )
