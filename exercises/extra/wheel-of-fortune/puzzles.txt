@@ -1,0 +1,38 @@
+Movie|Once Upon A Time In The West
+Movie|The Good, the Bad and the Ugly
+Movie|The Prestige
+Movie|Interstellar
+Movie|Inception
+Movie|The Dark Knight
+Movie|The Fall
+Movie|Requiem for a Dream
+Movie|Arrival
+Movie|Looper
+Literature|House Of Leaves
+Literature|Moby Dick
+Literature|A Tale of Two Cities
+Literature|Ulysses
+Literature|Finnegan's Wake
+Literature|Harry Potter and the Deathly Hallows
+Literature|The Stand
+Literature|Needful Things
+Literature|Dolores Claiborne
+Literature|Catcher in the Rye
+Song|Sympathy For The Devil
+Song|Losing My Religion
+Historical Figure|Napoleon Bonaparte
+Historical Figure|Isaac Newton
+Historical Figure|Socrates
+Historical Figure|Genghis Khan
+Historical Figure|Mahatma Gandhi
+Historical Figure|Ludwig van Beethoven
+Historical Figure|Alan Turing
+Expression|There's more than one way to skin a cat
+Expression|Take with a grain of salt
+Expression|Throw under the bus
+Expression|Don't count chickens before they hatch
+Country|Belgium
+Country|The Netherlands
+Country|Germany
+Country|Sri Lanka
+Country|China
