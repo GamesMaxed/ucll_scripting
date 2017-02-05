@@ -11,5 +11,5 @@ def create_interval(a, b):
     return set( range(a, b+1) )
 
 
-def remove_duplicates(strings):
+def remove_duplicates_preserving_order(strings):
     raise NotImplementedError()

@@ -14,7 +14,7 @@ public class Code
         return result;
     }
 
-    public ArrayList<String> removeDuplicates(ArrayList<String> strings)
+    public ArrayList<String> removeDuplicatesPreservingOrder(ArrayList<String> strings)
     {
         HashSet<String> found = new HashSet<>();
         ArrayList<String> result = new ArrayList<>();
