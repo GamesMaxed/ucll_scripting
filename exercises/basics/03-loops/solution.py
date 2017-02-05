@@ -25,3 +25,14 @@ def gcd(x, y):
             return i
 
     return 0
+
+
+def sum_digits(n):
+    result = 0
+
+    n = abs(n)
+    while n > 0:
+        result += n % 10
+        n = n // 10
+
+    return result

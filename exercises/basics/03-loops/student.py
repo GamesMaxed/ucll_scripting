@@ -12,3 +12,8 @@ def count_primes_below(n):
 
 def gcd(x, y):
     raise NotImplementedError()
+
+
+# Rekent de som van de cijfers van n op
+def sum_digits(n):
+    raise NotImplementedError()
