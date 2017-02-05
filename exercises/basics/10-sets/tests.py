@@ -16,10 +16,26 @@ with cumulative():
         remove_duplicates_preserving_order = reftest()
         
         remove_duplicates_preserving_order([])
-        remove_duplicates_preserving_order([1])
-        remove_duplicates_preserving_order([1, 1])
-        remove_duplicates_preserving_order([1, 1, 1])
+        remove_duplicates_preserving_order(['a'])
+        remove_duplicates_preserving_order(['a', 'b'])
+        remove_duplicates_preserving_order(['a', 'a', 'a'])
+        remove_duplicates_preserving_order(['a', 'a', 'a'])
+        remove_duplicates_preserving_order(['c', 'b', 'a'])
         remove_duplicates_preserving_order([1, 2, 1])
         remove_duplicates_preserving_order([2, 1, 2])
         remove_duplicates_preserving_order([1, 2, 3, 2, 1])
-        remove_duplicates_preserving_order([5, 7, 3, 5, 7, 3])
+        remove_duplicates_preserving_order([5, 7, 2, 3, 5, 7, 3])
+
+    with tested_function_name("remove_duplicates_not_preserving_order"), all_or_nothing():
+        remove_duplicates_not_preserving_order = reftest()
+        
+        remove_duplicates_not_preserving_order([])
+        remove_duplicates_not_preserving_order(['a'])
+        remove_duplicates_not_preserving_order(['a', 'b'])
+        remove_duplicates_not_preserving_order(['a', 'a', 'a'])
+        remove_duplicates_not_preserving_order(['c', 'b', 'a'])
+        remove_duplicates_not_preserving_order([1, 2, 1])
+        remove_duplicates_not_preserving_order([2, 1, 2])
+        remove_duplicates_not_preserving_order([1, 2, 3, 2, 1])
+        remove_duplicates_not_preserving_order([5, 7, 2, 3, 5, 7, 3])
+        

@@ -30,4 +30,13 @@ public class Code
 
         return result;
     }
+
+    public ArrayList<String> removeDuplicatesNotPreservingOrder(ArrayList<String> strings)
+    {
+        // Elementen steken in set verwijdert automatisch duplicaten
+        HashSet<String> found = new HashSet<>(strings);
+
+        // Teruggieten in een list (maar oorspronkelijke volgorde is wel verloren gegaan)
+        ArrayList<String> result = new ArrayList<>(found);
+    }
 }

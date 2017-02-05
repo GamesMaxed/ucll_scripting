@@ -21,3 +21,7 @@ def remove_duplicates_preserving_order(strings):
             found.add(string)
 
     return result
+
+
+def remove_duplicates_not_preserving_order(strings):
+    return list(set(strings))
