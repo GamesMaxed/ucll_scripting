@@ -37,6 +37,11 @@ public class Code
         HashSet<String> found = new HashSet<>(strings);
 
         // Teruggieten in een list (maar oorspronkelijke volgorde is wel verloren gegaan)
-        ArrayList<String> result = new ArrayList<>(found);
+        return new ArrayList<>(found);
+    }
+
+    public int countUnique(ArrayList<Integer> ns)
+    {
+        return new HashSet<Integer>(ns).size();
     }
 }

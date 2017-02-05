@@ -39,3 +39,12 @@ with cumulative():
         remove_duplicates_not_preserving_order([1, 2, 3, 2, 1])
         remove_duplicates_not_preserving_order([5, 7, 2, 3, 5, 7, 3])
         
+    with tested_function_name("count_unique"), all_or_nothing():
+        count_unique = reftest()
+
+        count_unique( [] )
+        count_unique( [1] )
+        count_unique( [1, 1] )
+        count_unique( [1, 2] )
+        count_unique( [1, 2, 3, 4, 5] )
+        count_unique( [1, 2, 3, 4, 5, 1, 2, 3, 4, 5] )

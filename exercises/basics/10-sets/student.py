@@ -17,3 +17,4 @@ def remove_duplicates_preserving_order(strings):
 
 # remove_duplicates_not_preserving_order
 
+# count_unique

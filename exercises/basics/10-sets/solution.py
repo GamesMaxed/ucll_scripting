@@ -25,3 +25,7 @@ def remove_duplicates_preserving_order(strings):
 
 def remove_duplicates_not_preserving_order(strings):
     return list(set(strings))
+
+
+def count_unique(ns):
+    return len(set(ns))
