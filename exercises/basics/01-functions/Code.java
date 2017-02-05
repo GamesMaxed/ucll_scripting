@@ -30,4 +30,9 @@ class Code
     {
         return x * x;
     }
+    
+    public boolean areOrdered(int x, int y, int z)
+    {
+        return (x <= y && y <= z) || (x >= y && y >= z);
+    }
 }
