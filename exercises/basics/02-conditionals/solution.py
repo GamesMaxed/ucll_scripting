@@ -12,7 +12,3 @@ def sign(x):
         return 0
     else:
         return 1
-
-
-def are_ordered(x, y, z):
-    return (x <= y and y <= z) or (x >= y and y >= z)

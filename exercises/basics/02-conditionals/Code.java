@@ -15,9 +15,4 @@ class Code
         else if ( x == 0 ) return 0;
         else return 1;
     }
-
-    public boolean areOrdered(int x, int y, int z)
-    {
-        return (x <= y && y <= z) || (x >= y && y >= z);
-    }
 }

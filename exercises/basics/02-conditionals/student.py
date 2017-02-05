@@ -9,6 +9,3 @@ def abs(x):
 # Zoek deze zelf op online
 def sign(x):
     raise NotImplementedError()
-
-def are_ordered(x, y, z):
-    raise NotImplementedError()
