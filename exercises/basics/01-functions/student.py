@@ -10,3 +10,6 @@ def square(x):
 
 def are_ordered(x, y, z):
     raise NotImplementedError()
+
+
+# is_divisible_by

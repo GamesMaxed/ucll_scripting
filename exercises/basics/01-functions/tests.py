@@ -18,3 +18,10 @@ with cumulative():
                 for z in [-5, 0, 3]:
                     are_ordered(x, y, z)
         
+    with tested_function_name("is_divisible_by"), all_or_nothing():
+        is_divisible_by = reftest()
+
+        for x in [28, -4, 0, 5]:
+            for y in [-1, 0, 5, 7, 10]:
+                is_divisible_by(x, y)
+        
