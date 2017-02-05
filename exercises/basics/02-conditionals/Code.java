@@ -15,4 +15,11 @@ class Code
         else if ( x == 0 ) return 0;
         else return 1;
     }
+
+    public double factorial(int x)
+    {
+        if ( n < 0 ) return -factorial(-n);
+        if ( n == 0 ) return 1;
+        else return n * factorial(n - 1);
+    }
 }

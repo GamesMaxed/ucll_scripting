@@ -9,3 +9,6 @@ def abs(x):
 # Zoek deze zelf op online
 def sign(x):
     raise NotImplementedError()
+
+
+# factorial

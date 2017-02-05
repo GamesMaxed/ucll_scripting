@@ -9,3 +9,9 @@ with cumulative():
 
         for i in range(-10,10):
             sign(i)
+
+    with tested_function_name("factorial"), all_or_nothing():
+        factorial = reftest()
+
+        for i in range(-10,10):
+            factorial(i)
