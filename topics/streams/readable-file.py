@@ -1,0 +1,6 @@
+class FileReader:
+    def __init__(self, filename):
+        # ...
+    
+    def read_byte(self):
+        # ...
