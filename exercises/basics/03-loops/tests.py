@@ -31,6 +31,12 @@ with cumulative(skip_after_fail=True):
             for j in [-2000, -10, -3, 0, 16, 59, 4000]:
                 gcd(i, j)
 
+    with tested_function_name("fibonacci"), all_or_nothing():
+        fibonacci = reftest()
+
+        for i in range(0, 20):
+            fibonacci(i)
+        
     with tested_function_name("sum_digits"), all_or_nothing():
         sum_digits = reftest()
 

@@ -27,6 +27,17 @@ def gcd(x, y):
     return 0
 
 
+def fibonacci(n):
+    a = 0
+    b = 1
+
+    while n != 0:
+        a, b = b, a + b
+        n -= 1
+
+    return a
+
+
 def sum_digits(n):
     result = 0
 
@@ -49,3 +60,4 @@ def reverse_digits(n):
             n = n // 10
 
         return result
+
