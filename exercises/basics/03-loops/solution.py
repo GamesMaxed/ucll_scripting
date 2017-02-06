@@ -36,3 +36,16 @@ def sum_digits(n):
         n = n // 10
 
     return result
+
+
+def reverse_digits(n):
+    result = 0
+
+    if n < 0:
+        return -reverse_digits(-n)
+    else:
+        while n > 0:
+            result = result * 10 + (n % 10)
+            n = n // 10
+
+        return result

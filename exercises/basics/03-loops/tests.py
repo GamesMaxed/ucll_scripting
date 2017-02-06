@@ -42,3 +42,16 @@ with cumulative(skip_after_fail=True):
         sum_digits(123)
         sum_digits(797546)
         sum_digits(-55)
+
+    with tested_function_name("reverse_digits"), all_or_nothing():
+        reverse_digits = reftest()
+
+        reverse_digits(0)
+        reverse_digits(1)
+        reverse_digits(12)
+        reverse_digits(123)
+        reverse_digits(10)
+        reverse_digits(-1)
+        reverse_digits(-12)
+        reverse_digits(123456789)
+        
