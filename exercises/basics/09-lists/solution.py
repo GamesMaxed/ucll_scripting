@@ -63,7 +63,7 @@ def longest_increasing_subsequence(xs):
     else:
         longest = []
         current = []
-        last = float('inf')
+        last = math.inf
     
         for x in xs:
             if x < last:
