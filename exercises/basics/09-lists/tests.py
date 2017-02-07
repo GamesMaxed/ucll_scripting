@@ -14,6 +14,14 @@ with cumulative():
         sum([1,2,3,4,5,6])
         sum([5,1,4,7,4])
 
+    with tested_function_name('interval'), all_or_nothing():
+        interval = reftest()
+
+        interval(0, 0)
+        interval(0, 5)
+        interval(2, 5)
+        interval(10, 0)
+
     with tested_function_name("maximum"), all_or_nothing():
         maximum = reftest()
 
@@ -43,3 +51,15 @@ with cumulative():
         for n in range(0, 11):
             remove_short_strings( [ 'x' * k for k in range(0, 10) ], n )
 
+    with all_or_nothing(), tested_function_name("longest_increasing_subsequence"):
+        check = reftest()
+
+        check([])
+        check([0])
+        check([0,1,2,3,4,5])
+        check([5,1,2,3,0])
+        check([1,2,3,2,3,4])
+        check([1,5,2,6,3,7,4,8,5,9])
+        check([1,3,5,7,9,2,4,6,8])
+        check([1,3,5,7,9,2,4,6,8,10,12])
+        check([50,55,58,40,41,42,43,45,48,49,10,15,18])
