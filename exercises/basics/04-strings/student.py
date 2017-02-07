@@ -27,3 +27,22 @@ def format_date(day, month, year):
 
 def format_time(hours, minutes, seconds, milliseconds):
     raise NotImplementedError()
+
+
+def nth_digit(number, n):
+    """
+    Berekent het n-de cijfer van number.
+    """
+    raise NotImplementedError()
+
+
+def balanced_parentheses(string):
+    """
+    Gaat na of de haakjes correct in paren voorkomen.
+    Voor elk opende haakje moet er een overeenkomstige
+    sluitende haakjes zijn en vice versa.
+
+    Bv. "((()))" en "()()()" zijn ok, maar ")(" en "(((" zijn dat niet.
+    """
+
+    raise NotImplementedError()

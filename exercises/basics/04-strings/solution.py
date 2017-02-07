@@ -5,6 +5,7 @@ def is_binary(string):
 
     return True
 
+
 def to_binary(n):
     if n < 0:
         raise RuntimeError("n must be positive")
@@ -19,6 +20,7 @@ def to_binary(n):
 
         return result
 
+    
 def from_binary(string):
     result = 0
 
@@ -34,6 +36,7 @@ def from_binary(string):
 
     return result
 
+
 def has_extension(filename, extension):
     extension = '.' + extension
 
@@ -42,8 +45,29 @@ def has_extension(filename, extension):
     else:
         return filename[-len(extension):] == extension
 
+    
 def format_date(day, month, year):
     return "{}/{}/{}".format(day, month, year)
 
+
 def format_time(hours, minutes, seconds, milliseconds):
     return "{}:{}:{}.{}".format(hours, minutes, seconds, milliseconds)
+
+
+def nth_digit(number, n):
+    return int(str(abs(number))[n])
+
+
+def balanced_parentheses(string):
+    count = 0
+
+    for char in string:
+        if char == '(':
+            count += 1
+        elif char == ')':
+            count -= 1
+
+        if count < 0:
+            return False
+
+    return count == 0

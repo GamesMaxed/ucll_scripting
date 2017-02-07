@@ -63,3 +63,34 @@ with cumulative():
         format_time(10, 1, 2, 323)
         format_time(23, 59, 59, 999)
         format_time(12, 15, 0, 0)
+
+    with tested_function_name('nth_digit'), all_or_nothing():
+        nth_digit = reftest()
+
+        nth_digit(123, 0)
+        nth_digit(123, 1)
+        nth_digit(123, 2)
+        nth_digit(987654321, 0)
+        nth_digit(987654321, 1)
+        nth_digit(987654321, 2)
+        nth_digit(987654321, 3)
+        nth_digit(987654321, 4)
+        nth_digit(987654321, 5)
+        nth_digit(987654321, 6)
+        nth_digit(-987654321, 0)
+        nth_digit(-987654321, 1)
+                
+    with tested_function_name("balanced_parentheses"), all_or_nothing():
+        check = reftest()
+
+        check('')
+        check('(')
+        check(')')
+        check('())')
+        check('(()')
+        check('()()()()()')
+        check('(((())))')
+        check('((()((())())))')
+        check('x(x)x')
+        check('1(24)3((7)4)')
+        check('1(24)3(7)4)')
