@@ -18,4 +18,5 @@ def count_frequencies(xs):
     raise NotImplementedError()
 
 
-# css_lookup
+def css_lookup(stylesheets, key, default):
+    raise NotImplementedError()
