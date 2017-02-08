@@ -20,3 +20,21 @@ def count_frequencies(xs):
 
 def css_lookup(stylesheets, key, default):
     raise NotImplementedError()
+
+
+def group_by_extension(filenames):
+    """
+    Gegeven een lijst filenames waarvan de 3 laatste tekens
+    de extensie vormen, groepeer de bestandsnamen per extensie
+    in een dictionary.
+    De keys in de dictionary zijn de extensies,
+    de bijhorende waarde is een lijst van bestandsnamen
+    met die extensie.
+    
+    Bv. [ 'foo.txt', 'bar.txt', 'baz.png' ]
+    moet de dictionary
+      { 'txt': [ 'foo.txt', 'bar'txt' ],
+        'png': [ 'baz.png' ] }
+    opleveren.
+    """
+    raise NotImplementedError()

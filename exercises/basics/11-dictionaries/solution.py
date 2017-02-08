@@ -39,3 +39,17 @@ def css_lookup(stylesheets, key, default):
             return stylesheet[key]
 
     return default
+
+
+def group_by_extension(filenames):
+    result = dict()
+
+    for filename in filenames:
+        extension = filename[-3:]
+
+        if extension not in result:
+            result[extension] = []
+
+        result[extension].append(filename)
+
+    return result

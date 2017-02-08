@@ -47,3 +47,13 @@ with cumulative():
         css_lookup( [ {'x': 3}, {'x': 5} ], 'x', 0 )
         css_lookup( [ {'y': 3}, {'x': 5} ], 'x', 0 )
         css_lookup( [ {'y': 3}, {'x': 5} ], 'z', 0 )
+
+
+    with tested_function_name('group_by_extension'), all_or_nothing():
+        group_by_extension = reftest()
+
+        group_by_extension( [] )
+        group_by_extension( [ 'file.txt' ] )
+        group_by_extension( [ 'foo.txt', 'bar.txt' ] )
+        group_by_extension( [ 'foo.txt', 'bar.png' ] )
+        group_by_extension( [ 'foo.txt', 'bar.txt', 'baz.png', 'qux.png' ] )
