@@ -1,4 +1,5 @@
 import sys
+# Other imports AFTER version check!
 
 def check_python_version():
     version = sys.version_info
@@ -9,10 +10,7 @@ def check_python_version():
 check_python_version()
 
 
-
 import dyn
-
-
 import testing.tests
 
 environment = dyn.create()
