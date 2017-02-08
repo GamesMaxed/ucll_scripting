@@ -1,7 +1,3 @@
-import sys
-import dyn
-
-
 def check_python_version():
     version = sys.version_info
 
@@ -9,6 +5,10 @@ def check_python_version():
         sys.exit("You need at least Python 3.5")
 
 check_python_version()
+
+
+import sys
+import dyn
 
 
 import testing.tests
