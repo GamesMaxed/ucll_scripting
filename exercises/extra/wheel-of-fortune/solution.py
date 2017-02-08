@@ -21,7 +21,7 @@ class Puzzle:
             return re.fullmatch(r'[a-zA-Z]', c)
         
         self.__category = category
-        self.__puzzle = [ (char, not is_letter(char)) for char in solution ]
+        self.__puzzle = [ (char.upper(), not is_letter(char)) for char in solution ]
 
     @property
     def category(self):
@@ -38,3 +38,17 @@ class Puzzle:
 
     def is_solved(self):
         return all( shown in _, shown in self.__puzzle )
+
+    def guess(self, letter):
+        count = 0
+
+        for i in range(0, len(self.__puzzle)):
+            c, shown = self.__puzzle[i]
+
+            if not shown and c == letter.upper():
+                self.__puzzle[i] = (c, True)
+                count += 1
+
+        return count
+                
+

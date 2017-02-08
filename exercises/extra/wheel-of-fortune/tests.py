@@ -23,3 +23,21 @@ with path('Puzzle'), cumulative(skip_after_fail=True), tested_class_name('Puzzle
         def _():
             puzzle = Puzzle('Animal', 'a dog')
             must_be_equal('_ ___', puzzle.show())
+
+    with path('guess'), all_or_nothing():
+        @test('Guessing t in "cat"')
+        def _():
+            puzzle = Puzzle('Animal', 'cat')
+            count = puzzle.guess('t')
+
+            must_be_equal(1, count)
+            must_be_equal('__T', puzzle.show())
+
+        @test('Guessing e in "elephant"')
+        def _():
+            puzzle = Puzzle('Animal', 'elephant')
+            count = puzzle.guess('e')
+
+            must_be_equal(2, count)
+            must_be_equal('E_E_____', puzzle.show())
+            
