@@ -4,11 +4,17 @@ from testing.assertions import *
 
 
 with cumulative():
-    with tested_function_name("square"), all_or_nothing():
-        check = reftest()
+    with tested_function_name("increment"), do_not_count():
+        increment = reftest()
 
         for i in range(-10,10):
-            check(i)
+            increment(i)
+
+    with tested_function_name("square"), all_or_nothing():
+        square = reftest()
+
+        for i in range(-10,10):
+            square(i)
 
     with tested_function_name("are_ordered"), all_or_nothing():
         are_ordered = reftest()
