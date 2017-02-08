@@ -65,3 +65,50 @@ with cumulative():
         filter([1, 2, 3], always_false)
         filter([1, 2, 3, 4, 5], is_odd)
         filter([1, 'x', {4}, 9], is_int)
+
+    with tested_function_name('memoize'), all_or_nothing():
+        @test('memoize returns values of wrapped function')
+        def _():
+            def wrappee(x):
+                return x
+
+            wrapped = tested_function(wrappee)
+
+            for x in range(1, 10):
+                must_be_equal(wrappee(x), wrapped(x))
+        
+        @test('memoize calls function only once per input')
+        def _():
+            x = 0
+
+            def wrappee(a):
+                nonlocal x
+                x += 1
+                return x
+
+            wrapped = tested_function(wrappee)
+
+            must_be_equal(0, x)
+            must_be_equal(1, wrapped(1))
+            must_be_equal(1, x)
+            must_be_equal(1, wrapped(1))
+            must_be_equal(1, x)
+            must_be_equal(2, wrapped(5))
+            must_be_equal(2, x)
+            must_be_equal(2, wrapped(5))
+            # must_be_equal(2, x)
+            # must_be_equal(1, wrapped(1))
+            # must_be_equal(1, wrapped(2))
+
+
+    with tested_function_name('create_change_detector'), all_or_nothing():
+        @test('create_change_detector does as advertized')
+        def _():
+            f = tested_function()
+
+            must_be_truthy(f(0))
+            must_be_falsey(f(0))
+            must_be_truthy(f(1))
+            must_be_falsey(f(1))
+            must_be_truthy(f(0))
+            must_be_truthy(f(1))

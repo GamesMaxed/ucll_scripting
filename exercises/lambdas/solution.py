@@ -16,6 +16,10 @@ def find_first(xs, predicate, default = None):
     return default
 
 
+def filter(xs, predicate):
+    return [ x for x in xs if predicate(x) ]
+
+
 def group_by_key(xs, key_function):
     result = {}
 
@@ -30,5 +34,33 @@ def group_by_key(xs, key_function):
     return result
 
 
-def filter(xs, predicate):
-    return [ x for x in xs if predicate(x) ]
+def memoize(function):
+    cache = {}
+
+    def wrapper(x):
+        if x in cache:
+            return cache[x]
+        else:
+            result = function(x)
+            cache[x] = result
+            return result
+
+    return wrapper
+
+
+def create_change_detector():
+    last = None
+    is_first = True
+
+    def function(x):
+        nonlocal last
+        nonlocal is_first
+
+        if is_first or x != last:
+            is_first = False
+            last = x
+            return True
+        else:
+            return False
+
+    return function
