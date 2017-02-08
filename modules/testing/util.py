@@ -4,7 +4,7 @@ class NamedLambda:
         self._function = function
 
     def __call__(self, *args, **kwargs):
-        self._function(*args, **kwargs)
+        return self._function(*args, **kwargs)
 
     def __str__(self):
         return self._name
