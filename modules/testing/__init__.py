@@ -1,3 +1,5 @@
+import sys
+
 def check_python_version():
     version = sys.version_info
 
@@ -7,7 +9,7 @@ def check_python_version():
 check_python_version()
 
 
-import sys
+
 import dyn
 
 
