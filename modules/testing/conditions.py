@@ -26,7 +26,7 @@ run_always = TestCondition("always", lambda: True)
 run_never = TestCondition("never", lambda: False)
 
 def run_if_exists(identifier):
-    if not testing.environment.is_bound('tested_module'):
+    if 'tested_module' not in testing.environment:
         raise testing.tests.TestError("No tested module set")
     else:
         def check():
