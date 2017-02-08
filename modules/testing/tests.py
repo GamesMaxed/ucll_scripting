@@ -281,7 +281,7 @@ def reftest(result = None, arguments = None):
     compare_arguments = arguments or testing.assertions.ignore
     
     def test_function(*args, **kwargs):
-        argument_strings = [ repr(arg) for arg in args ] + [ "{} = {}".format(key, repr(val)) for key, val in kwargs ]
+        argument_strings = [ _limit_string_length(repr(arg)) for arg in args ] + [ "{} = {}".format(key, repr(val)) for key, val in kwargs ]
         argument_string = "{}".format(", ".join(argument_strings))
 
         # Call reference function
