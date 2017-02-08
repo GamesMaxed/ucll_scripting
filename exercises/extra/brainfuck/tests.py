@@ -5,8 +5,8 @@ from testing.conditions import *
 
 import testing.conditions
 
-with path('VirtualMachine'), cumulative(skip_after_fail=True), tested_class_name('VirtualMachine'):
-    VirtualMachine = tested_class
+with path('Brainfuck'), cumulative(skip_after_fail=True), tested_class_name('Brainfuck'):
+    Brainfuck = tested_class
 
     def array_reader(xs):
         i = 0
@@ -38,7 +38,7 @@ with path('VirtualMachine'), cumulative(skip_after_fail=True), tested_class_name
         @test('Running "{}"', code, memory)
         def _():
             out, writer = array_writer()
-            vm = VirtualMachine(code, array_reader(input), writer)
+            vm = Brainfuck(code, array_reader(input), writer)
             vm.run()
 
             if memory:
@@ -50,6 +50,7 @@ with path('VirtualMachine'), cumulative(skip_after_fail=True), tested_class_name
     check('', memory = [0] * 10)
     check('+', memory = [1])
     check('++', memory = [2])
+    check('-', memory = [255])
     check('>+', memory = [0, 1])
     check('+>+', memory = [1, 1])
     check('+>+>+', memory = [1, 1, 1])
@@ -71,5 +72,3 @@ with path('VirtualMachine'), cumulative(skip_after_fail=True), tested_class_name
     check(',[>+>+<<-]', input = [4], memory = [0,4,4])
     check(',>,[>+>+<<-]', input = [4, 3], memory = [4, 0, 3, 3])
     check(',>,<[>>+<<-]>[>+<-]>.', input = [0, 0], output = [0])
-
-

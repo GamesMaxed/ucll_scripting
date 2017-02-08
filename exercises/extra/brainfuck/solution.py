@@ -5,7 +5,7 @@ class CompilationError(Exception):
     pass
 
 
-class VirtualMachine:
+class Brainfuck:
     def __init__(self, code, input = None, output = None):
         self.__memory = dict()
         self.__position = 0
@@ -115,8 +115,6 @@ class VirtualMachine:
 
 
 if __name__ == '__main__':
-    with open(sys.argv[1], 'r') as file:
-        code = file.read()
-        vm = VirtualMachine(code)
-        vm.run()
-
+    code = sys.stdin.read()
+    vm = Brainfuck(code)
+    vm.run()
