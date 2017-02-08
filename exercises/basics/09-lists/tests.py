@@ -4,7 +4,7 @@ from testing.assertions import *
 
 
 with cumulative():
-    with tested_function_name("sum"), all_or_nothing():
+    with tested_function_name("sum"), do_not_count():
         sum = reftest()
 
         sum([])
