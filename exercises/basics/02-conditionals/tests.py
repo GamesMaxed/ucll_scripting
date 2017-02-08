@@ -4,6 +4,12 @@ from testing.assertions import *
 
 
 with cumulative():
+    with tested_function_name("abs"), do_not_count():
+        abs = reftest()
+
+        for i in range(-10,10):
+            abs(i)
+
     with tested_function_name("sign"), all_or_nothing():
         sign = reftest()
 
