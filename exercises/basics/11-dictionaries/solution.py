@@ -41,6 +41,10 @@ def css_lookup(stylesheets, key, default):
     return default
 
 
+def word_width(letter_widths, word):
+    return sum( letter_widths[letter] for letter in word )
+
+
 def group_by_extension(filenames):
     result = dict()
 

@@ -57,3 +57,16 @@ with cumulative():
         group_by_extension( [ 'foo.txt', 'bar.txt' ] )
         group_by_extension( [ 'foo.txt', 'bar.png' ] )
         group_by_extension( [ 'foo.txt', 'bar.txt', 'baz.png', 'qux.png' ] )
+
+
+    with tested_function_name('word_width'), all_or_nothing():
+        word_width = reftest()
+        letter_widths = dict( zip("abcdefghijklmnopqrstuvwxyz", range(1,30)) )
+
+        word_width(letter_widths, '')
+        word_width(letter_widths, 'a')
+        word_width(letter_widths, 'b')
+        word_width(letter_widths, 'c')
+        word_width(letter_widths, 'abc')
+        word_width(letter_widths, 'abcdefghijklmnopqrstuvwxyz')
+        word_width(letter_widths, 'abcdefghiklopqrtuxyz')
