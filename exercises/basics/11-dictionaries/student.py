@@ -36,7 +36,6 @@ def word_width(letter_widths, word):
     geeft als resultaat
         20 + 16 + 6 + 5 + 16 + 5 = 68
     """
-    
     raise NotImplementedError()
 
 
@@ -55,7 +54,6 @@ def group_by_extension(filenames):
         'png': [ 'baz.png' ] }
     opleveren.
     """
-    
     raise NotImplementedError()
 
 

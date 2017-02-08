@@ -4,7 +4,7 @@ from testing.assertions import *
 
 
 with cumulative():
-    with tested_function_name("inverse_lookup"), all_or_nothing():
+    with tested_function_name("inverse_lookup"), do_not_count():
         inverse_lookup = reftest()
 
         inverse_lookup([])
