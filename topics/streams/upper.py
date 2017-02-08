@@ -1,4 +1,4 @@
 import sys
 
-while True:
-    print(input().upper())
+for line in sys.stdin:
+    print(line.upper(), end='', flush=True)

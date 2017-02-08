@@ -1,8 +1,6 @@
 import sys
 import re
 
-while True:
-    line = input()
-
+for line in sys.stdin:
     if not re.match('#', line):
-        print(line)
+        print(line, end='', flush=True)
