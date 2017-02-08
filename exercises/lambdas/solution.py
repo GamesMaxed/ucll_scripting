@@ -28,3 +28,7 @@ def group_by_key(xs, key_function):
         result[key].append(x)
 
     return result
+
+
+def filter(xs, predicate):
+    return [ x for x in xs if predicate(x) ]

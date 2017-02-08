@@ -8,7 +8,7 @@ with cumulative():
     always_true = named_lambda('always_true', lambda x: True)
     always_false = named_lambda('always_false', lambda x: False)
     is_odd = named_lambda('is_odd', lambda x: x % 2 != 0)
-    is_int = named_lambda('is_odd', lambda x: type(x) == int)
+    is_int = named_lambda('is_int', lambda x: type(x) == int)
 
     get_type = named_lambda('get_type', lambda x: type(x).__name__)
     
@@ -51,3 +51,17 @@ with cumulative():
         group_by_key([1, 'x'], get_type)
         group_by_key([1, 'x', [1,2], {1,2}], get_type)
         group_by_key([1, 2, 3, 4, 5], is_odd)
+
+    with tested_function_name('filter'), all_or_nothing():
+        filter = reftest()
+
+        filter([], always_true)
+        filter([1], always_true)
+        filter([1, 2], always_true)
+        filter([1, 2, 3], always_true)
+        filter([], always_false)
+        filter([1], always_false)
+        filter([1, 2], always_false)
+        filter([1, 2, 3], always_false)
+        filter([1, 2, 3, 4, 5], is_odd)
+        filter([1, 'x', {4}, 9], is_int)
