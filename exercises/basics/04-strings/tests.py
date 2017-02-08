@@ -4,7 +4,7 @@ from testing.assertions import *
 
 
 with cumulative():
-    with tested_function_name("is_binary"), all_or_nothing():
+    with tested_function_name("is_binary"), do_not_count():
         is_binary = reftest()
 
         is_binary('')
@@ -48,7 +48,7 @@ with cumulative():
         has_extension('baz.jpeg2', 'jpeg')
         has_extension('a', 'zip')
 
-    with tested_function_name('format_date'), all_or_nothing():
+    with tested_function_name('format_date'), do_not_count():
         format_date = reftest()
 
         format_date(1, 1, 2000)
