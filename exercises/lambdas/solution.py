@@ -20,6 +20,22 @@ def filter(xs, predicate):
     return [ x for x in xs if predicate(x) ]
 
 
+def all(xs, predicate):
+    for x in xs:
+        if not predicate(x):
+            return False
+
+    return True
+
+
+def any(xs, predicate):
+    for x in xs:
+        if predicate(x):
+            return True
+
+    return False
+
+
 def group_by_key(xs, key_function):
     result = {}
 

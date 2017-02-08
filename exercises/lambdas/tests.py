@@ -66,6 +66,40 @@ with cumulative():
         filter([1, 2, 3, 4, 5], is_odd)
         filter([1, 'x', {4}, 9], is_int)
 
+    with tested_function_name('all'), all_or_nothing():
+        all = reftest()
+
+        all([], always_true)
+        all([1], always_true)
+        all([1, 2], always_true)
+        all([1, 2, 3], always_true)
+        all([], always_false)
+        all([1], always_false)
+        all([1, 2], always_false)
+        all([1, 2, 3], always_false)
+        all([1, 2, 3, 4, 5], is_odd)
+        all([1, 3, 5], is_odd)
+        all([1, 'x', {4}, 9], is_int)
+        all([1, 4, 9], is_int)
+
+    with tested_function_name('any'), all_or_nothing():
+        any = reftest()
+
+        any([], always_true)
+        any([1], always_true)
+        any([1, 2], always_true)
+        any([1, 2, 3], always_true)
+        any([], always_false)
+        any([1], always_false)
+        any([1, 2], always_false)
+        any([1, 2, 3], always_false)
+        any([1, 2, 3, 4, 5], is_odd)
+        any([1, 3, 5], is_odd)
+        any([2, 4, 6], is_odd)
+        any([1, 'x', {4}, 9], is_int)
+        any(['x', {4}, '9'], is_int)
+        any([1, 4, 9], is_int)
+        
     with tested_function_name('memoize'), all_or_nothing():
         @test('memoize returns values of wrapped function')
         def _():
@@ -96,9 +130,9 @@ with cumulative():
             must_be_equal(2, wrapped(5))
             must_be_equal(2, x)
             must_be_equal(2, wrapped(5))
-            # must_be_equal(2, x)
-            # must_be_equal(1, wrapped(1))
-            # must_be_equal(1, wrapped(2))
+            must_be_equal(2, x)
+            must_be_equal(1, wrapped(1))
+            must_be_equal(3, wrapped(2))
 
 
     with tested_function_name('create_change_detector'), all_or_nothing():

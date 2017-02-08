@@ -4,7 +4,6 @@ def count(xs, predicate):
     telt het aantal elementen uit xs waarvoor
     predicate een truthy waarde teruggeeft.
     """
-    
     raise NotImplementedException()
 
 
@@ -17,7 +16,6 @@ def find_first(xs, predicate, default = None):
     Indien geen elementen gevonden
     kan worden, wordt default teruggegeven.
     """
-    
     raise NotImplementedException()
 
 
@@ -30,7 +28,30 @@ def filter(xs, predicate):
     Deze elementen dienen in dezelfde volgorde
     te staan als in xs.
     """    
-    
+    raise NotImplementedException()
+
+
+def all(xs, predicate):
+    """
+    Gegeven een lijst xs en een functie predicate,
+    geeft een truthy waarde terug indien
+    predicate een truthy waarde teruggeeft
+    voor elke x uit xs.
+    In het andere geval wordt een falsey waarde
+    teruggegeven.
+    """
+    raise NotImplementedException()
+
+
+def any(xs, predicate):
+    """
+    Gegeven een lijst xs en een functie predicate,
+    geeft een truthy waarde terug indien
+    predicate een truthy waarde teruggeeft
+    voor een x uit xs.
+    In het andere geval wordt een falsey waarde
+    teruggegeven.
+    """
     raise NotImplementedException()
 
 
@@ -52,7 +73,6 @@ def group_by_key(xs, key_function):
     de volgende dictionary:
       { 'even': [2, 4], 'odd': [1, 3] }
     """
-    
     raise NotImplementedException()
 
 
@@ -98,7 +118,6 @@ def memoize(function):
     M.a.w. je mag ervan uitgaan dat de functie F
     exact 1 argument heeft.
     """
-    
     raise NotImplementedException()
 
 
