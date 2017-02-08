@@ -132,6 +132,22 @@ def all_or_nothing(skip_after_fail = False):
     else:
         testing.environment.score_receiver(testing.score.Score(0, 1))
 
+
+@contextmanager
+def do_not_count():
+    """
+    Runs all child tests but does not pass along results to parent,
+    i.e. it looks as if there are no child tests.
+    Used for tests targetting example code.
+    """
+    received_score = testing.score.Score(0, 0)
+    
+    def score_receiver(score):
+        pass
+
+    with testing.environment.let(score_receiver=score_receiver):
+        yield
+        
     
 @contextmanager
 def context(context_string, *args, **kwargs):
