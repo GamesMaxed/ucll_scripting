@@ -4,7 +4,7 @@ from testing.assertions import *
 
 
 with cumulative():
-    with tested_function_name("create_interval"), all_or_nothing():
+    with tested_function_name("create_interval"), do_not_count():
         create_interval = reftest()
 
         create_interval(0, 0)
