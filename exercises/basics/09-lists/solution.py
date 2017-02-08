@@ -77,3 +77,18 @@ def longest_increasing_subsequence(xs):
             last = x
 
         return longest
+
+
+def largest_difference(ns):
+    return max(ns) - min(ns)
+
+
+def group(xs, n_groups):
+    result = [ [] for _ in range(0, n_groups) ]
+
+    for i in range(0, len(xs)):
+        result[i % n_groups].append(xs[i])
+
+    return result
+
+
