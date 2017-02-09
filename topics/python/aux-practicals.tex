@@ -1,0 +1,88 @@
+\section{Praktische Informatie}
+
+\frame{\tableofcontents[currentsection]}
+
+
+\begin{frame}
+  \frametitle{Python Versies}
+  \begin{center}
+    \begin{tikzpicture}[version/.style={drop shadow,fill=blue!50,minimum height=0.5cm,minimum width=1cm,font=\small},
+                        timeline/.style={gray!50,thick},
+                        scale=0.8,transform shape]
+      \tikzmath{
+        function yeary(\year) {
+          return -(\year - 2000)*0.375;
+        };
+      }
+      \foreach[count=\i,evaluate={yeary(\year)} as \y] \year in {2000,...,2016} {
+        \draw[timeline] (0,\y) -- ++(8,0) node[at start,font=\tiny,left,black] {\year};
+      }
+
+      \foreach[count=\i] \version/\year in {2.0/2000,2.1/2001,2.2/2002,2.3/2003,2.4/2005,2.5/2006,2.6/2008,2.7/2010} {
+        \tikzmath{
+          real \y;
+          \y = yeary(\year);
+        }
+        \node[version] at (3,\y) {\version};
+      }
+
+      \foreach[count=\i] \version/\year in {3.0/2008,3.1/2009,3.2/2011,3.3/2012,3.4/2014,3.5/2015,3.6/2016} {
+        \tikzmath{
+          real \y;
+          \y = yeary(\year);
+        }
+        \node[version] at (5,\y) {\version};
+      }
+    \end{tikzpicture}
+  \end{center}
+  \begin{itemize}
+    \item 3.0 voerde breaking changes in
+    \item 2.x wordt nog in leven gehouden (legacy code)
+    \item Dit vak: Python 3.5 (of beter)
+  \end{itemize}
+\end{frame}
+
+\begin{frame}
+  \frametitle{Benodigde Software}
+  \begin{itemize}
+    \item \link{https://www.python.org/downloads/release/python-360/}{Python 3.5 of beter}
+    \item \link{https://git-scm.com/downloads}{Git}
+          \begin{itemize}
+            \item Windowsgebruikers: Git Bash!
+          \end{itemize}
+    \item Editor naar keuze
+          \begin{itemize}
+            \item \link{https://www.gnu.org/software/emacs/download.html}{Emacs} (voor de durvers)
+            \item \link{https://vim.sourceforge.io/download.php}{VIM} (voor de masochisten)
+            \item Notepad (voor de minimalisten)
+            \item \link{https://notepad-plus-plus.org/}{Notepad++}
+            \item \link{https://www.sublimetext.com/}{Sublime Text}
+            \item Liefst niet MS Office
+            \item \dots
+          \end{itemize}
+    \item Editor maakt weinig uit: we werken via command line
+  \end{itemize}
+\end{frame}
+
+\begin{frame}
+  \frametitle{Afhalen Cursusmateriaal}
+  \begin{itemize}
+    \item Cursusmateriaal staat op git repository
+    \item Kies een locatie op je PC (bv. \texttt{d:\textbackslash git-repos})
+          \begin{itemize}
+            \item NIET onder Dropbox/OneDrive/\dots
+          \end{itemize}
+    \item Open Git Bash in deze directory
+    \item Voer in:
+          \begin{center} \ttfamily\scriptsize
+            git clone https://bitbucket.org/fvogels/ucll-scripting1617.git
+          \end{center}
+  \end{itemize}
+\end{frame}
+
+
+
+%%% Local Variables:
+%%% mode: latex
+%%% TeX-master: "python"
+%%% End:

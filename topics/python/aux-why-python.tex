@@ -1,0 +1,235 @@
+\section{Waarom Python?}
+
+\subsection{Wie Gebruikt Python?}
+
+\frame{\tableofcontents[currentsubsection]}
+
+
+\begin{frame}
+  \frametitle{Rankings}
+  \begin{columns}
+    \column{5cm}
+    \begin{center}
+      \begin{tabular}{cc}
+        \textbf{Ranking} & \textbf{Taal} \\
+        \toprule
+        1 & Java \\
+        2 & C \\
+        3 & C++ \\
+        4 & C$^\sharp$ \\
+        5 & Python \\
+      \end{tabular}
+      \vskip5mm
+      \link{http://www.tiobe.com/tiobe-index/}{\tiny TIOBE Index for January 2017}
+    \end{center}
+    \column{5cm}
+    \begin{center}
+      \begin{tabular}{cc}
+        \textbf{Ranking} & \textbf{Taal} \\
+        \toprule
+        1 & JavaScript \\
+        2 & Java \\
+        3 & Python \\
+        4 & CSS \\
+        5 & PHP \\
+      \end{tabular}
+      \vskip5mm
+      \link{http://githut.info/}{\tiny githut.info}
+    \end{center}
+  \end{columns}
+  \vskip5mm
+  \begin{quote}
+    Eight out of the top 10 universities now use Python to introduce programming --- \link{http://www.javaworld.com/article/2452940/learn-java/python-bumps-off-java-as-top-learning-language.html}{Javaworld}
+  \end{quote}
+\end{frame}
+
+
+\begin{frame}
+  \frametitle{Gebruik}
+  \begin{center}
+    \begin{tikzpicture}
+      \node at (2, 3) {\includegraphics[width=2cm]{google.png}};
+      \node at (-2, 0) {\includegraphics[width=3cm]{dropbox.png}};
+      \node at (4, -1) {\includegraphics[width=1cm]{facebook.png}};
+      \node at (-1, 2) {\includegraphics[width=2cm]{quora.png}};
+      \node at (3, 1) {\includegraphics[width=3cm]{reddit.png}};
+      \node at (-2, -2) {\includegraphics[width=2cm]{pinterest.png}};
+      \node at (1, -2) {\includegraphics[width=2cm]{youtube.png}};
+    \end{tikzpicture}
+  \end{center}
+\end{frame}
+
+\subsection{Eenvoud}
+
+\frame{\tableofcontents[currentsubsection]}
+
+\begin{frame}
+  \frametitle{Hello World!}
+  \begin{itemize}
+    \item Traditie gebiedt dat het eerste programma dat je schrijft
+          in een nieuwe taal ``Hello World'' is
+    \item Dit programma moet ``Hello World'' afprinten
+  \end{itemize}
+\end{frame}
+
+\begin{frame}
+  \frametitle{Java}
+  \code[language=java,font=\small,width=.9\linewidth]{hello-world.java}
+  \begin{tikzpicture}[overlay,remember picture,
+                      message/.style={opacity=0.75,text opacity=1.0,drop shadow,fill=blue!50,font=\small},
+                      link/.style={-latex}]
+
+    \onslide<2->{
+      \codeoverlinex{class}
+      \node[message] (message) at ($ (class) + (0,1) $) {Klassedeclaratie};
+      \draw[link] (message) -- (class);
+    }
+    \onslide<3->{
+      \codeoverlinex{public}
+      \node[message] (message) at ($ (public) + (-1,1) $) {Access modifier};
+      \draw[link] (message) -- (public);
+    }
+    \onslide<4->{
+      \codeoverlinex{static}
+      \node[message] (message) at ($ (static) + (1,1) $) {Klassemethodes};
+      \draw[link] (message) -- (static);
+    }
+    \onslide<5->{
+      \codeoverlinex{void}
+      \node[message] (message) at ($ (void) + (1,2) $) {Returntypes};
+      \draw[link] (message) -- (void);
+    }
+    \onslide<6->{
+      \codeoverlinex{main}
+      \node[message] (message) at ($ (main) + (1.5,1) $) {Entry point};
+      \draw[link] (message) -- (main);
+    }
+    \onslide<7->{
+      \codeoverlinex{array}
+      \node[message] (message) at ($ (array) + (2,2) $) {Parametertypes, arrays};
+      \draw[link] (message) -- (array);
+    }
+    \onslide<8->{
+      \codeunderlinex{println}
+      \node[message] (message) at ($ (println) + (0,-1) $) {Member access (onzuiver wegens static), methodeoproep};
+      \draw[link] (message) -- (println);
+    }
+    \onslide<9->{
+      \codeunderlinex{string}
+      \node[message] (message) at ($ (string) + (0,-2) $) {String literals};
+      \draw[link] (message) -- (string);
+    } 
+    \onslide<10->{
+      \codeoverlinex{semicolon}
+      \node[message] (message) at ($ (semicolon) + (0,1) $) {Random syntax};
+      \draw[link] (message) -- (semicolon);
+    } 
+ \end{tikzpicture}
+\end{frame}
+
+\begin{frame}
+  \frametitle{Python}
+  \code[language=python,font=\small,width=.4\linewidth]{hello-world.py}
+  \begin{tikzpicture}[overlay,remember picture,
+                      message/.style={opacity=0.75,text opacity=1.0,drop shadow,fill=blue!50,font=\small},
+                      link/.style={-latex}]
+
+    \onslide<2->{
+      \codeoverlinex{py print}
+      \node[message] (message) at ($ (py print) + (0,1) $) {Functies};
+      \draw[link] (message) -- (py print);
+    }
+    \onslide<3->{
+      \codeunderlinex{py string}
+      \node[message] (message) at ($ (py string) + (0,-1) $) {String literals};
+      \draw[link] (message) -- (py string);
+    }
+ \end{tikzpicture}
+\end{frame}
+
+\begin{frame}
+  \frametitle{Eenvoud}
+  \begin{itemize}
+    \item Python is ``gelaagder''
+    \item Enkel gebruiken wat je nodig hebt
+    \item Nieuwe concepten komen geleidelijk aan bod
+    \item Kleine initi\"ele leerdrempel
+  \end{itemize}
+\end{frame}
+
+\subsection{REPL}
+
+\frame{\tableofcontents[currentsubsection]}
+
+\begin{frame}
+  \frametitle{REPL}
+  \begin{center}
+    \begin{tabular}{l}
+      \textbf{R}ead \\
+      \textbf{E}val \\
+      \textbf{P}rint \\
+      \textbf{L}oop
+    \end{tabular}
+  \end{center}
+  \begin{itemize}
+    \item Laat interactief programmeren toe
+    \item Gemakkelijk om code uit te testen
+    \item Geen \texttt{main} methode nodig met sysouts
+  \end{itemize}
+\end{frame}
+
+
+\subsection{Toepassingen}
+
+\frame{\tableofcontents[currentsubsection]}
+
+\begin{frame}
+  \frametitle{Toepassingen: Java}
+  \begin{itemize}
+    \item Elke taal heeft zijn specialiteit en doelbpubliel
+    \item Java bedoeld voor ``programming in the large''
+          \begin{itemize}
+            \item Grote teams
+            \item 100k+ lijnen code
+          \end{itemize}
+    \item Statische typering als contracten tussen teamleden
+          \begin{itemize}
+            \item Als u mij 2 integers geeft, beloof ik u een double terug, tenzij ik u een
+                  \texttt{WrongIntegerException} toewerp
+          \end{itemize}
+    \item Klassen om voor structuur te zorgen
+    \item Relatief weinig taalfeatures om kloof tussen goede en slechte programmeurs te vermijden
+    \item Heeft veel weg van logge bureaucratie
+  \end{itemize}
+\end{frame}
+
+\begin{frame}
+  \frametitle{Toepassingen: Python}
+  \begin{itemize}
+    \item Python is ``lean and mean''
+    \item Code doorgaans korter dan equivalente Javacode
+    \item Speelt vaak ondersteunende rol
+    \item Python goed voor kleine en middelgrote projecten
+          \begin{itemize}
+            \item Wegwerpprogramma's
+            \item Automatisatie simpele taken
+            \item Editors (bv.~leveleditor voor spel)
+          \end{itemize}
+    \item Python als scripting taal
+          \begin{itemize}
+            \item Plugins voor grote apps in Python
+            \item Bv.~Gimp, Inkscape
+          \end{itemize}
+    \item Python niet aangeraden voor grote projecten
+          \begin{itemize}
+            \item Te weinig taalondersteuning
+          \end{itemize}
+  \end{itemize}
+\end{frame}
+
+
+
+%%% Local Variables:
+%%% mode: latex
+%%% TeX-master: "python"
+%%% End:
