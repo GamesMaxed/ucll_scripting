@@ -8,7 +8,7 @@
   \begin{center}
     \begin{tikzpicture}[version/.style={drop shadow,fill=blue!50,minimum height=0.5cm,minimum width=1cm,font=\small},
                         timeline/.style={gray!50,thick},
-                        scale=0.8,transform shape]
+                        scale=0.7,transform shape]
       \tikzmath{
         function yeary(\year) {
           return -(\year - 2000)*0.375;
@@ -65,20 +65,106 @@
 \end{frame}
 
 \begin{frame}
-  \frametitle{Afhalen Cursusmateriaal}
+  \frametitle{Eerste Stappen}
   \begin{itemize}
     \item Cursusmateriaal staat op git repository
-    \item Kies een locatie op je PC (bv. \texttt{d:\textbackslash git-repos})
+    \item Kies een locatie op je PC (bv. \texttt{c:\textbackslash git-repos})
           \begin{itemize}
             \item NIET onder Dropbox/OneDrive/\dots
           \end{itemize}
     \item Open Git Bash in deze directory
-    \item Voer in:
-          \begin{center} \ttfamily\scriptsize
-            git clone https://bitbucket.org/fvogels/ucll-scripting1617.git
+    \item Voer in (allemaal op \'e\'en lijn, \textvisiblespace\ staat voor spatie)
+          \begin{center} \ttfamily\small
+            git\textvisiblespace clone\textvisiblespace \\
+            https://bitbucket.org/fvogels/ucll-scripting1617.git\textvisiblespace \\
+            scripting
+          \end{center}
+          Of copy paste onderstaande lijn:
+          \begin{center} \ttfamily\tiny
+            git clone https://bitbucket.org/fvogels/ucll-scripting1617.git scripting
+          \end{center}
+    \item Enkel onder MacOS/Linux, in \texttt{scripts} subdirectory
+          \begin{center} \ttfamily
+            chmod u+x prepare run-tests show-help
           \end{center}
   \end{itemize}
 \end{frame}
+
+\begin{frame}
+  \frametitle{Testen Configuratie}
+  \begin{itemize}
+    \item Python versie moet minimum 3.5 tonen
+          \begin{center} \ttfamily
+            python --version
+          \end{center}
+    \item Ga in repo-directory
+          \begin{center} \ttfamily
+            cd scripting
+          \end{center}
+    \item Ga naar de \texttt{scripts} subdirectory
+          \begin{center} \ttfamily
+            cd scripts
+          \end{center}
+    \item Voer in
+          \begin{center} \ttfamily
+            source setup
+          \end{center}
+    \item Ga naar \texttt{exercises/basics}
+          \begin{center} \ttfamily
+            cd ../exercises/basics
+          \end{center}
+    \item Run de tests
+          \begin{center} \ttfamily
+            rt
+          \end{center}
+  \end{itemize}
+\end{frame}
+
+\begin{frame}
+  \frametitle{Algemeen Gebruik Cursusmateriaal}
+  \begin{itemize}
+    \item Altijd via Git Bash
+    \item Altijd eerst \texttt{source setup} uitvoeren
+          \begin{itemize}
+            \item Instructies komen later over hoe dit te automatiseren
+          \end{itemize}
+    \item Tests runnen met \texttt{rt}
+          \begin{itemize}
+            \item Dit runt de tests in alle subdirectories
+          \end{itemize}
+    \item Oefeningen staan in directories onder \texttt{exercises}
+    \item Oefeningen volgen zelfde patroon
+          \begin{itemize}
+            \item \texttt{tests.py} bevat de tests
+            \item \texttt{solution.py} bevat de oplossingen
+            \item \texttt{student.py} is het bestand waarin je zelf moet werken
+            \item \texttt{readme.txt} bevat uitleg
+          \end{itemize}
+  \end{itemize}
+\end{frame}
+
+\begin{frame}
+  \frametitle{Demo}
+  \begin{itemize}
+    \item Ga naar \texttt{exercises/basics/00-demo}
+    \item Vraag om extra uitleg
+          \begin{center} \ttfamily
+            h
+          \end{center}
+    \item Run de tests
+          \begin{center} \ttfamily
+            rt
+          \end{center}
+    \item Bekijk de output
+    \item Extra output te verkrijgen met \texttt{rt -c}
+    \item Pas \texttt{student.py} aan
+    \item Run de tests opnieuw
+          \begin{center} \ttfamily
+            rt
+          \end{center}
+  \end{itemize}
+\end{frame}
+
 
 
 
