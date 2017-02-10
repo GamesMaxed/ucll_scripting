@@ -60,4 +60,3 @@ def reverse_digits(n):
             n = n // 10
 
         return result
-

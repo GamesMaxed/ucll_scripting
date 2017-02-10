@@ -4,7 +4,7 @@ from testing.assertions import *
 
 
 with cumulative(skip_after_fail=True):
-    with tested_function_name("is_prime"), all_or_nothing():
+    with tested_function_name("is_prime"), do_not_count():
         is_prime = reftest()
 
         for i in range(0,100):
