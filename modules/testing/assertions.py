@@ -115,8 +115,12 @@ def must_contain_same_elements(expected, actual, same_order=True):
                         fail()
                     else:
                         actual.remove(x)
-                
-                
+
+def must_be_element(permissible_values, value):
+    with testing.tests.context('{} must be member of {}', value, permissible_values):
+        if value not in permissible_values:
+            fail()
+                        
 def ignore(*args, **kwargs):
     """
     Does nothing.
