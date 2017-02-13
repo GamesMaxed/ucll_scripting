@@ -1,0 +1,2 @@
+$ java Echo hello
+hello

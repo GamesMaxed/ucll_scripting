@@ -15,6 +15,18 @@ public class Code
         return total;
     }
 
+    public ArrayList<Integer> interval(int a, int b)
+    {
+        ArrayList<Integer> result = new ArrayList<>();
+
+        for ( int i = a; i <= b; ++i )
+        {
+            result.add(i);
+        }
+
+        return result;
+    }
+
     public int maximum(ArrayList<Integer> ns)
     {
         // Python: gebruik -math.inf

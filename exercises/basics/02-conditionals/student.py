@@ -10,5 +10,5 @@ def abs(x):
 def sign(x):
     raise NotImplementedError()
 
-def are_ordered(x, y, z):
-    raise NotImplementedError()
+
+# factorial

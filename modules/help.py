@@ -7,7 +7,7 @@ def print_file(filename):
     if os.path.isfile(filename):
         with open(filename, 'r') as file:
             for line in file:
-                print(line.strip())
+                print(line.rstrip())
                 
 
 def find_readme():

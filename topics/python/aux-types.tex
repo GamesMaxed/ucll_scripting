@@ -1,0 +1,291 @@
+\section{Types}
+
+\frame{\tableofcontents[currentsection]}
+
+\begin{frame}
+  \frametitle{Op CPU Niveau}
+  \begin{center} \ttfamily
+    10010101 11001111 11000110 00010110 \\
+    10110110 10010101 11000101 11010110 \\
+    01100011 10110101 00101011 00101011 \\
+    10010101 10111010 01000011 10101111 \\
+    01011101 00110110 11101111 01010110 \\
+    10111010 01010010 11001010 10110101 \\
+    10010101 10100111 01010011 01110100 \\
+    01110111 01101010 10110101 01011110 \\
+  \end{center}
+  \begin{itemize}
+    \item Wat stellen deze bits voor?
+  \end{itemize}
+\end{frame}
+
+\begin{frame}
+  \frametitle{Interpretatie van Bits}
+  \begin{itemize}
+    \item Neem een png bestand
+    \item Verander de extensie naar mp3
+          \begin{itemize}
+            \item Wat gebeurt er bij het afspelen ervan?
+          \end{itemize}
+    \item Verander de extensie naar txt
+          \begin{itemize}
+            \item Wat toont notepad?
+          \end{itemize}
+    \item Verander de extensie naar zip
+          \begin{itemize}
+            \item Welke bestanden steken erin?
+          \end{itemize}
+    \item Extensie geeft informatie over inhoud bestand
+          \begin{itemize}
+            \item Geeft betekenis aan bits
+          \end{itemize}
+  \end{itemize}
+\end{frame}
+
+\begin{frame}
+  \frametitle{Types in Assembly}
+  \begin{itemize}
+    \item Assembly kent geen types
+    \item Alles is bits
+  \end{itemize}
+  \code[language=java,font=\small,extra keywords={bits},title=Als Java Assembly was]{bits.java}
+\end{frame}
+
+\begin{frame}
+  \frametitle{Typefouten}
+  \begin{itemize}
+    \item Programmeertalen willen extra ondersteuning bieden
+    \item Willen betekenis (= type) toekennen aan bits
+          \begin{itemize}
+            \item Deze bits vormen een integer
+            \item Deze bits vormen een kleur
+            \item \dots
+          \end{itemize}
+    \item Toegelaten operaties hangt af van type
+          \begin{itemize}
+            \item Men kan een tv niet laten remmen
+            \item Men kan een auto niet van zender veranderen
+          \end{itemize}
+    \item Taal checkt dat operaties enkel uitgevoerd worden op objecten met juist type
+  \end{itemize}
+\end{frame}
+
+\begin{frame}
+  \frametitle{Typesystemen}
+  \begin{center}
+    \begin{tikzpicture}[node/.style={drop shadow,draw,font=\small,fill=white},
+                        static/.style={node,fill=green!50},
+                        dynamic/.style={node,fill=red!50},
+                        link/.style={-latex}]
+      \node[node,font=\bfseries] (root) at (0,5) {Typesystemen};
+      \visible<2->{
+        \node[static] (static) at ($ (root) + (-3,-1) $) {Statisch};
+        \node[dynamic] (dynamic) at ($ (root) + (3,-1) $) {Dynamisch};
+        \draw[link] (root) -- (static);
+        \draw[link] (root) -- (dynamic);
+      }
+
+      \visible<3->{
+        \node[static] (java) at ($ (static) + (-90:2) $) {Java};
+        \node[static] (cpp) at ($ (static) + (-135:2) $) {C++};
+        \node[static] (csharp) at ($ (static) + (-180:2) $) {C$^\sharp$};
+        \node[static] (haskell) at ($ (static) + (-225:2) $) {Haskell};
+        \node[static] (typescript) at ($ (static) + (-40:2) $) {TypeScript};
+        \node[static] (fsharp) at ($ (static) + (90:2) $) {F$\sharp$};
+
+        \draw[link] (static) -- (java);
+        \draw[link] (static) -- (cpp);
+        \draw[link] (static) -- (csharp);
+        \draw[link] (static) -- (haskell);
+        \draw[link] (static) -- (typescript);
+        \draw[link] (static) -- (fsharp);
+
+        \node[dynamic] (smalltalk) at ($ (dynamic) + (90:2) $) {Smalltalk};
+        \node[dynamic] (javascript) at ($ (dynamic) + (45:2) $) {JavaScript};
+        \node[dynamic] (ruby) at ($ (dynamic) + (0:2) $) {Ruby};
+        \node[dynamic] (lisp) at ($ (dynamic) + (-45:2) $) {Lisp};
+        \node[dynamic] (python) at ($ (dynamic) + (-90:2) $) {Python};
+        \node[dynamic] (erlang) at ($ (dynamic) + (-135:2) $) {Erlang};
+
+        \draw[link] (dynamic) -- (smalltalk);
+        \draw[link] (dynamic) -- (javascript);
+        \draw[link] (dynamic) -- (ruby);
+        \draw[link] (dynamic) -- (lisp);
+        \draw[link] (dynamic) -- (python);
+        \draw[link] (dynamic) -- (erlang);
+      }
+    \end{tikzpicture}
+  \end{center}
+\end{frame}
+
+\subsection{Statisch Getypeerd}
+
+\frame{\tableofcontents[currentsubsection]}
+
+\begin{frame}
+  \frametitle{Statisch Getypeerde Talen}
+  \begin{itemize}
+    \item Analyseren de code
+    \item Weigeren te compileren bij typefouten
+    \item Code moet meestal type-annotaties bevatten
+  \end{itemize}
+  \begin{center}
+    \begin{tikzpicture}[every node/.style={fill=blue!50,drop shadow,draw,minimum width=2cm,minimum height=1cm},link/.style={-latex}]
+      \node (static analysis) at (0,0) {Type checks};
+      \node[anchor=west] (compilation) at ($ (static analysis.east) + (1,0) $) {Vertaling};
+      \node[anchor=west] (runtime) at ($ (compilation.east) + (1,0) $) {Uitvoering};
+
+      \draw[link] (static analysis) -- (compilation);
+      \draw[link] (compilation) -- (runtime);
+    \end{tikzpicture}
+  \end{center}
+\end{frame}
+
+\begin{frame}
+  \frametitle{Voorbeeld}
+  \code[language=java,width=.6\linewidth]{Min.java}
+  \begin{tikzpicture}[remember picture,overlay,
+                      message/.style={opacity=0.75,text opacity=1,fill=red!50,draw,drop shadow},
+                      link/.style={-latex}]
+    \only<2>{
+      \codeunderlinex{return}
+      \codeunderlinex{x type}
+      \codeunderlinex{y type}
+      \node[message] (type annotations) at ($ (x type) + (0,-1) $) {Type annotaties};
+      \draw[link] (type annotations.north) -- (x type);
+      \draw[link] (type annotations) -| (y type);
+      \draw[link] (type annotations) -| (return);
+    }
+
+    \only<3>{
+     \codeunderlinex{comparison}
+      \node[message] (comparable) at ($ (comparison) + (2,-1) $) {Kunnen \texttt{x} en \texttt{y} vergeleken worden?};
+      \draw[link] let \p1=(comparison), \p2=(comparable.north) in (\x1,\y2) -- (\p1);
+    }
+
+    \only<4>{
+      \codeunderlinex{x type}
+      \codeunderlinex{y type}
+      \node[message] (comparable) at ($ (y type) + (0,-1) $) {Ja, het zijn beide \texttt{int}s};
+      \draw[link] let \p1=(x type), \p2=(comparable.north) in (\x1,\y2) -- (\p1);
+      \draw[link] let \p1=(y type), \p2=(comparable.north) in (\x1,\y2) -- (\p1);
+    }
+
+    \only<5>{
+     \codeunderlinex{comparison}
+      \node[message] (boolean) at ($ (comparison) + (2,-1) $) {\texttt{if} verwacht \texttt{boolean}, dit is ok};
+      \draw[link] let \p1=(comparison), \p2=(boolean.north) in (\x1,\y2) -- (\p1);
+    }
+
+    \only<6>{
+      \codeunderlinex{return x}
+      \node[message] (returnable) at ($ (return x) + (2,-1) $) {Mag \texttt{x} gereturnd worden?};
+      \draw[link] let \p1=(return x), \p2=(returnable.north) in (\x1,\y2) -- (\p1);
+    }
+
+    \only<7>{
+      \codeunderlinex{return}
+      \codeunderlinex{x type}
+      \node[message] (returnable) at ($ (x type) + (0,-1) $) {Ja, type \texttt{x} en returntype komen overeen};
+      \draw[link] let \p1=(return), \p2=(returnable.north) in (\x1,\y2) -- (\p1);
+      \draw[link] let \p1=(x type), \p2=(returnable.north) in (\x1,\y2) -- (\p1);
+    }
+
+    \only<8>{
+      \codeoverlinex{return y}
+      \node[message] (returnable) at ($ (return y) + (2,1) $) {Mag \texttt{y} gereturnd worden?};
+      \draw[link] let \p1=(return y), \p2=(returnable.south) in (\x1,\y2) -- (\p1);
+    }
+
+    \only<9>{
+      \codeunderlinex{return}
+      \codeunderlinex{y type}
+      \node[message] (returnable) at ($ (x type) + (0,-1) $) {Ja, type \texttt{y} en returntype komen overeen};
+      \draw[link] let \p1=(return), \p2=(returnable.north) in (\x1,\y2) -- (\p1);
+      \draw[link] let \p1=(y type), \p2=(returnable.north) in (\x1,\y2) -- (\p1);
+    }
+  \end{tikzpicture}
+\end{frame}
+
+\begin{frame}
+  \frametitle{Statische Typering}
+  \structure{Voordelen}
+  \begin{itemize}
+    \item Fouten worden op voorhand gedetecteerd
+    \item Leidt tot snellere code
+    \item Garantie op ontbreken van typefouten
+    \item H\'e\'el nuttig voor grote teams
+  \end{itemize}
+  \vskip5mm
+  \structure{Nadelen}
+  \begin{itemize}
+    \item Legt strikte beperkingen op
+    \item Leidt vaak tot veel boilerplate code
+  \end{itemize}
+\end{frame}
+
+\subsection{Dynamisch Getypeerd}
+
+\frame{\tableofcontents[currentsubsection]}
+
+\begin{frame}
+  \frametitle{Dynamisch Getypeerde Talen}
+  \begin{itemize}
+    \item Geen code analyse
+    \item Tijdens uitvoering krijgen alle objecten een ``type tag''
+    \item Type tag identificeert type
+    \item Alle type checks gebeuren tijdens uitvoering
+  \end{itemize}
+  \begin{center}
+    \begin{tikzpicture}[every node/.style={fill=blue!50,drop shadow,draw,minimum width=2cm,minimum height=1cm},link/.style={-latex}]
+      \node (translation) at (0,0) {Vertaling};
+      \node[anchor=west] (type checks) at ($ (translation.east) + (1,0) $) {Type checks};
+      \node[anchor=west] (runtime) at ($ (type checks.east) + (1,0) $) {Uitvoering};
+
+      \draw[link] (translation) -- (type checks);
+      \draw[link] (type checks) -- (runtime);
+    \end{tikzpicture}
+  \end{center}
+\end{frame}
+
+\begin{frame}
+  \frametitle{Dynamische Typering}
+  \structure{Voordelen}
+  \begin{itemize}
+    \item Geeft veel meer vrijheid
+    \item Code herbruikbaarder
+    \item Kortere code
+    \item Eenvoudiger te begrijpen
+  \end{itemize}
+  \vskip5mm
+  \structure{Nadelen}
+  \begin{itemize}
+    \item Trager
+    \item Fouten pas ontdekt tijdens uitvoering
+    \item Afgeraden voor grote projecten
+  \end{itemize}
+\end{frame}
+
+\subsection{Effici\"entie}
+
+\frame{\tableofcontents[currentsubsection]}
+
+\begin{frame}
+  \frametitle{Statisch Getypeerde Talen}
+  \code[language=java]{add.java}
+  Vertaling:
+  \code{add.asm}
+\end{frame}
+
+\begin{frame}
+  \frametitle{Dynamisch Getypeerde Talen}
+  \code[language=python]{add.py}
+  Mogelijke vertaling (pseudoassembly):
+  \code[font=\tiny,width=.4\linewidth]{add-dynamic.asm}
+\end{frame}
+
+
+%%% Local Variables:
+%%% mode: latex
+%%% TeX-master: "python"
+%%% End:

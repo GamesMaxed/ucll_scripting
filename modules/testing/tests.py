@@ -6,6 +6,7 @@ import testing.assertions
 import copy
 import traceback
 import sys
+import re
 
 
 class TestError(Exception):
@@ -131,6 +132,22 @@ def all_or_nothing(skip_after_fail = False):
     else:
         testing.environment.score_receiver(testing.score.Score(0, 1))
 
+
+@contextmanager
+def do_not_count():
+    """
+    Runs all child tests but does not pass along results to parent,
+    i.e. it looks as if there are no child tests.
+    Used for tests targetting example code.
+    """
+    received_score = testing.score.Score(0, 0)
+    
+    def score_receiver(score):
+        pass
+
+    with testing.environment.let(score_receiver=score_receiver):
+        yield
+        
     
 @contextmanager
 def context(context_string, *args, **kwargs):
@@ -206,11 +223,11 @@ def _get_reference_function():
     Fetches the test function.
     """
     if 'reference_module' not in testing.environment:
-        raise RuntimeError('No tested module set; use reference_module')
+        raise RuntimeError('No reference module set; use reference_module')
     elif 'tested_function_name' not in testing.environment:
         raise RuntimeError('No tested function set; use tested_function_name')
-    elif testing.environment.tested_function_name not in dir(testing.environment.tested_module):
-        raise RuntimeError('Tested module does not contain a function named {}'.format(testing.environment.tested_function_name))
+    elif testing.environment.tested_function_name not in dir(testing.environment.reference_module):
+        raise RuntimeError('Reference module does not contain a function named {}'.format(testing.environment.tested_function_name))
     else:
         return getattr(testing.environment.reference_module, testing.environment.tested_function_name)
 
@@ -280,7 +297,7 @@ def reftest(result = None, arguments = None):
     compare_arguments = arguments or testing.assertions.ignore
     
     def test_function(*args, **kwargs):
-        argument_strings = [ repr(arg) for arg in args ] + [ "{} = {}".format(key, repr(val)) for key, val in kwargs ]
+        argument_strings = [ _limit_string_length(repr(arg)) for arg in args ] + [ "{} = {}".format(key, repr(val)) for key, val in kwargs ]
         argument_string = "{}".format(", ".join(argument_strings))
 
         # Call reference function
@@ -288,8 +305,10 @@ def reftest(result = None, arguments = None):
         refkwargs = copy.deepcopy(kwargs)
         refretval = reference_function(*refargs, **refkwargs)
 
-        name = "{}({}), refimpl returned {}".format(tested_function_name(), argument_string, _limit_string_length(str(refretval)))
-        
+        name = "{}({}) should return {} according to reference implementation".format(tested_function_name(), argument_string, _limit_string_length(str(refretval)))
+        name = re.sub(r'\{', '{{', name)
+        name = re.sub(r'\}', '}}', name)
+
         @test(name)
         def reference_implementation_test():
             with context('Comparing {}({}) with reference solution', tested_function_name(), argument_string):

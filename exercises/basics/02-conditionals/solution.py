@@ -14,5 +14,10 @@ def sign(x):
         return 1
 
 
-def are_ordered(x, y, z):
-    return (x <= y and y <= z) or (x >= y and y >= z)
+def factorial(n):
+    if n < 0:
+        return -factorial(-n)
+    elif n == 0:
+        return 1
+    else:
+        return n * factorial(n - 1)

@@ -20,7 +20,6 @@ class Code
       wel "losse" functies toe. Implementeer
       square als zulk een functie.
      */
-    
     public int square(int x)
     {
         return x * x;
@@ -29,5 +28,17 @@ class Code
     public double square(double x)
     {
         return x * x;
+    }
+
+    
+    public boolean areOrdered(int x, int y, int z)
+    {
+        return (x <= y && y <= z) || (x >= y && y >= z);
+    }
+
+
+    public boolean isDivisibleBy(int x, int y)
+    {        
+        return y != 0 && x % y == 0;
     }
 }

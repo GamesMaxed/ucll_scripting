@@ -11,6 +11,20 @@ def sum(ns):
     return total
 
 
+def interval(a, b):
+    result = []
+
+    for i in range(a, b + 1):
+        result.append(i)
+
+    return result
+
+
+# Kortere oplossing
+def interval(a, b):
+    return list(range(a, b+1))
+
+
 def maximum(ns):
     result = -math.inf
 
@@ -35,9 +49,46 @@ def factors(n):
 
     return result
 
+
 def remove_short_strings(strings, minimum_length):
     for i in range(len(strings), 0, -1):
         j = i-1
         if len(strings[j]) < minimum_length:
             del strings[j]
+
+
+def longest_increasing_subsequence(xs):
+    if len(xs) == 0:
+        return []
+    else:
+        longest = []
+        current = []
+        last = math.inf
+    
+        for x in xs:
+            if x < last:
+                current = []
+                
+            current.append(x)
+
+            if len(current) > len(longest):
+                longest = current
+
+            last = x
+
+        return longest
+
+
+def largest_difference(ns):
+    return max(ns) - min(ns)
+
+
+def group(xs, n_groups):
+    result = [ [] for _ in range(0, n_groups) ]
+
+    for i in range(0, len(xs)):
+        result[i % n_groups].append(xs[i])
+
+    return result
+
 

@@ -16,7 +16,7 @@ class Counter
 
     public void increment()
     {
-        // Opgelet: Python heeft geen postincrement operator
+        // Opgelet: Python heeft geen increment operator
         x++;
     }
 

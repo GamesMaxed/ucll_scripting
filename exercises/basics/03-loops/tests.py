@@ -4,7 +4,7 @@ from testing.assertions import *
 
 
 with cumulative(skip_after_fail=True):
-    with tested_function_name("is_prime"), all_or_nothing():
+    with tested_function_name("is_prime"), do_not_count():
         is_prime = reftest()
 
         for i in range(0,100):
@@ -30,3 +30,34 @@ with cumulative(skip_after_fail=True):
         for i in [-1500, -80, -17, 0, 16, 41, 5000]:
             for j in [-2000, -10, -3, 0, 16, 59, 4000]:
                 gcd(i, j)
+
+    with tested_function_name("fibonacci"), all_or_nothing():
+        fibonacci = reftest()
+
+        for i in range(0, 20):
+            fibonacci(i)
+        
+    with tested_function_name("sum_digits"), all_or_nothing():
+        sum_digits = reftest()
+
+        sum_digits(0)
+        sum_digits(1)
+        sum_digits(2)
+        sum_digits(10)
+        sum_digits(11)
+        sum_digits(123)
+        sum_digits(797546)
+        sum_digits(-55)
+
+    with tested_function_name("reverse_digits"), all_or_nothing():
+        reverse_digits = reftest()
+
+        reverse_digits(0)
+        reverse_digits(1)
+        reverse_digits(12)
+        reverse_digits(123)
+        reverse_digits(10)
+        reverse_digits(-1)
+        reverse_digits(-12)
+        reverse_digits(123456789)
+        

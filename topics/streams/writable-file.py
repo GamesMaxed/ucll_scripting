@@ -1,0 +1,6 @@
+class FileWriter:
+    def __init__(self, filename):
+        # ...
+
+    def write_byte(self, byte):
+        # ...

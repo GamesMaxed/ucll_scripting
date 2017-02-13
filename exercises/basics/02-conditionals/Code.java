@@ -16,8 +16,10 @@ class Code
         else return 1;
     }
 
-    public boolean areOrdered(int x, int y, int z)
+    public double factorial(int x)
     {
-        return (x <= y && y <= z) || (x >= y && y >= z);
+        if ( n < 0 ) return -factorial(-n);
+        if ( n == 0 ) return 1;
+        else return n * factorial(n - 1);
     }
 }

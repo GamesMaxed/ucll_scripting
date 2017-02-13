@@ -11,22 +11,32 @@ def fail():
 
     raise testing.tests.TestFailure()
 
-def must_be_equal(expected, actual, epsilon = None):
-    """
-    Assert that the given values must be equal to each other.
-    If they are not, failure ensues.
-    """
-    if epsilon:
-        with testing.tests.context("Expected value: {}", expected), \
-             testing.tests.context("Actual value: {}", actual), \
-             testing.tests.context("Epsilon: {}", epsilon):
-            if abs(expected - actual) > epsilon:
-                fail()
-    else:
+
+class MustBeEqualAssertion:
+    def with_epsilon(self, epsilon):
+        return MustBeEqualWithEpsilonAssertion(epsilon)
+
+    def __call__(self, expected, actual):
         with testing.tests.context("Expected value: {}", expected), \
              testing.tests.context("Actual value: {}", actual):
             if (not expected == actual) or (expected != actual):
                 fail()
+        
+
+class MustBeEqualWithEpsilonAssertion:        
+    def __init__(self, epsilon):
+        self._epsilon = epsilon
+
+    def __call__(self, expected, actual):
+        with testing.tests.context("Expected value: {}", expected), \
+             testing.tests.context("Actual value: {}", actual), \
+             testing.tests.context("Epsilon: {}", self._epsilon):
+            if abs(expected - actual) > epsilon:
+                fail()
+
+
+must_be_equal = MustBeEqualAssertion()
+
 
 def must_not_be_equal(forbidden, actual):
     """
@@ -105,8 +115,12 @@ def must_contain_same_elements(expected, actual, same_order=True):
                         fail()
                     else:
                         actual.remove(x)
-                
-                
+
+def must_be_element(permissible_values, value):
+    with testing.tests.context('{} must be member of {}', value, permissible_values):
+        if value not in permissible_values:
+            fail()
+                        
 def ignore(*args, **kwargs):
     """
     Does nothing.
