@@ -7,3 +7,4 @@ export PYTHONPATH="$UCLL_SCRIPTING_ROOT/modules"
 # Shortcuts
 alias rt=run-tests
 alias h=show-help
+alias python=py
