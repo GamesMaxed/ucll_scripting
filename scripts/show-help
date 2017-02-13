@@ -1,1 +1,1 @@
-python -c 'from help import main; main()' $@ | less
+py -c 'from help import main; main()' $@ | less
