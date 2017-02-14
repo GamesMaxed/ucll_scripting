@@ -31,7 +31,7 @@ class MustBeEqualWithEpsilonAssertion:
         with testing.tests.context("Expected value: {}", expected), \
              testing.tests.context("Actual value: {}", actual), \
              testing.tests.context("Epsilon: {}", self._epsilon):
-            if abs(expected - actual) > epsilon:
+            if abs(expected - actual) > self._epsilon:
                 fail()
 
 
