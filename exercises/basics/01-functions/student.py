@@ -4,12 +4,12 @@ def increment(x):
 
 
 def square(x):
-    # Vervang onderstaande lijn door de vertaling van de Java-code
-    raise NotImplementedError()
+    return x * x
 
 
 def are_ordered(x, y, z):
-    raise NotImplementedError()
+    return x < y < z or x > y > z
 
 
-# is_divisible_by
+def is_divisible_by(x, y):
+    return x % y is 0

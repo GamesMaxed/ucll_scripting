@@ -1,1 +1,1 @@
-py -c 'from testing.shell import main; main()' $@
+python3 -c 'from testing.shell import main; main()' $@

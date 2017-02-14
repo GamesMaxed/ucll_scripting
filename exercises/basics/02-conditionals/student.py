@@ -8,7 +8,11 @@ def abs(x):
 # Merk op dat 'else if' in Python een speciale syntax heeft
 # Zoek deze zelf op online
 def sign(x):
-    raise NotImplementedError()
+    if x < 0: return -1
+    if x is 0: return 0
+    return 1
 
-
-# factorial
+def factorial(n):
+    if n in (0,1):
+        return 1
+    return n * factorial(n-1)
