@@ -53,4 +53,4 @@ with path('Person'), cumulative():
         def _():
             p = Person(80, 1.8)
 
-            must_be_equal(80 / 1.8**2, p.bmi, epsilon = 0.0001)
+            must_be_equal.with_epsilon(0.0001)(80 / 1.8**2, p.bmi)
