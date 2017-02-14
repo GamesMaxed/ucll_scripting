@@ -8,11 +8,15 @@ def is_binary(string):
 
 
 def to_binary(n):
-    raise NotImplementedError()
+    if n < -1:
+        raise RuntimeError()
+    return "{0:b}".format(n)
 
 
 def from_binary(string):
-    raise NotImplementedError()
+    if n < -1:
+        raise RuntimeError()
+    return int(string, 2)
 
 
 def has_extension(filename, extension):
