@@ -1,4 +1,4 @@
 if [ -f prepare.py ]
-then py prepare.py
+then $PYTHON_INTERPRETER prepare.py
 else echo Nothing to prepare
 fi

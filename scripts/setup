@@ -1,3 +1,13 @@
+# Dit is commentaar
+# PYTHON_INTERPRETER moet gelijk gesteld worden aan de naam van de Python interpreter
+# Standaard is de eerste lijn actief, maar naargelang het platform kan het zijn dat je
+# de andere lijnen uit commentaar zal moeten halen.
+
+export PYTHON_INTERPRETER=py
+# export PYTHON_INTERPRETER=python3
+# export PYTHON_INTERPRETER=python
+
+
 UCLL_SCRIPTING_ROOT=`git rev-parse --show-toplevel`
 UCLL_SCRIPTING_ROOT="/${UCLL_SCRIPTING_ROOT/:/}"
 

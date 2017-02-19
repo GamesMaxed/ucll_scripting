@@ -1,1 +1,5 @@
-py -c 'from help import main; main()' $@ | less
+if [ -f readme.txt ] ; then
+  $PYTHON_INTERPRETER -c 'from help import main; main()' $@ | less
+else
+  echo No readme.txt found!
+fi
