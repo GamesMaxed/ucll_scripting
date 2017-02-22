@@ -86,6 +86,7 @@ with cumulative():
         check('')
         check('(')
         check(')')
+        check(')(')
         check('())')
         check('(()')
         check('()()()()()')
@@ -94,3 +95,4 @@ with cumulative():
         check('x(x)x')
         check('1(24)3((7)4)')
         check('1(24)3(7)4)')
+        check('ff(afgf))eq(')
