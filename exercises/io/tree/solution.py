@@ -1,3 +1,4 @@
+import sys
 import os
 
 
@@ -16,3 +17,7 @@ def tree(path = '.'):
 
     return "\n".join(aux(path))
 
+
+
+if __name__ == '__main__':
+    print(tree(sys.argv[1]))
