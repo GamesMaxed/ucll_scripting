@@ -5,7 +5,9 @@ from functools import reduce
 
 def decode_morse(code):
     """
-    Decodes the given code to plaintext.
+    Decodeert de gegeven morsecode.
+    Steunt op het bestand morse.txt om
+    de morsecodes in te lezen.
     """
 
     raise NotImplementedError()
@@ -13,7 +15,9 @@ def decode_morse(code):
 
 def encode_morse(plaintext):
     """
-    Translates given plaintext to morse.
+    Zet de gegeven string om naar plaintext.
+    Steunt op het bestand morse.txt om
+    de morsecodes in te lezen.
     """
 
     raise NotImplementedError()
