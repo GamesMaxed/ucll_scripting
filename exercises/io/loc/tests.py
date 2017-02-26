@@ -35,10 +35,7 @@ with cumulative(skip_after_fail=True):
 
     with all_or_nothing(), tested_function_name('loc_in_directory'):
         loc_in_directory = reftest()
-        current_directory = os.getcwd()
 
-        try:
-            os.chdir('testdata')
-            loc_in_directory()
-        finally:
-            os.chdir(current_directory)
+        loc_in_directory("testdata")
+        loc_in_directory("testdata/testing")
+

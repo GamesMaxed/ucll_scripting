@@ -17,15 +17,13 @@ def loc_in_file(filename):
     return count
 
 
-def loc_in_directory():
+def loc_in_directory(path):
     count = 0
     
-    for entry in os.listdir():
-        if os.path.isdir(entry):
-            os.chdir(entry)
-            count += loc_in_directory()
-            os.chdir('..')
-        elif re.search(r'\.py$', entry):
-            count += loc_in_file(entry)
+    for entry in os.scandir(path):
+        if entry.is_dir():
+            count += loc_in_directory(entry.path)
+        elif re.search(r'\.py$', entry.name):
+            count += loc_in_file(entry.path)
 
     return count
