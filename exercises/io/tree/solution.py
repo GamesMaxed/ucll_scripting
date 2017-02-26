@@ -16,5 +16,3 @@ def tree(path = '.'):
 
     return "\n".join(aux(path))
 
-
-print(tree('testdir/qux'))
