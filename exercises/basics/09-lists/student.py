@@ -66,7 +66,7 @@ def group(xs, n_groups):
       de groepen mogen maximum 1 element van elkaar verschillen
       in grootte.
 
-    Bijvoorbeeld, [1, 2, 3, 5, 6] verdelen in 3 groepen kan
+    Bijvoorbeeld, [1, 2, 3, 4, 5, 6] verdelen in 3 groepen kan
     als volgt:
       [ [1, 2], [3, 4], [5, 6] ]
       [ [1, 4], [2, 6], [3, 5] ]
