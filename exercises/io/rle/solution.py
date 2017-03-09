@@ -1,4 +1,5 @@
 import re
+import sys
 
 
 def compress(string):
@@ -35,3 +36,10 @@ def decompress(string):
 
     return re.sub(r'(\d+)(\w)', aux, string)
 
+
+
+if __name__ == '__main__':
+    if sys.argv[1] == 'compress':
+        print(compress(sys.stdin.read()))
+    else:
+        print(decompress(sys.stdin.read()))
