@@ -1,0 +1,147 @@
+\section{Input Streams}
+
+\frame{\tableofcontents[currentsection]}
+
+\begin{frame}
+  \frametitle{Bestand Inlezen}
+  \begin{itemize}
+    \item Bestand is opeenvolging van bytes
+    \item We kunnen bestand byte per byte uitlezen
+  \end{itemize}
+  \code[language=python]{readable-file.py}
+\end{frame}
+
+\begin{frame}
+  \frametitle{Netwerkdata Ontvangen}
+  \begin{itemize}
+    \item Via een netwerkconnectie ontvangen we data
+    \item Deze data is een reeks van bytes
+    \item We kunnen deze bytes om beurt opvragen
+  \end{itemize}
+  \code[language=python]{readable-network.py}
+\end{frame}
+
+\begin{frame}
+  \frametitle{Toetsenbordinvoer}
+  \begin{itemize}
+    \item Elke toetsaanslag genereert data
+    \item We kunnen deze data opvragen
+  \end{itemize}
+  \code[language=python]{readable-keyboard.py}
+\end{frame}
+
+\begin{frame}
+  \frametitle{Patroon}
+  \begin{itemize}
+    \item Drie klassen met methodes
+          \begin{itemize}
+            \item \texttt{read\_byte} op \texttt{FileReader}
+            \item \texttt{receive\_byte} op \texttt{NetworkDataReceiver}
+            \item \texttt{wait\_for\_input} op \texttt{KeyboardInput}
+          \end{itemize}
+    \item Lijken veel op elkaar
+    \item Telkens methode om byte op te vragen
+  \end{itemize}
+\end{frame}
+
+\begin{frame}
+  \frametitle{Abstraheren tot Input Stream}
+  \begin{itemize}
+    \item Bron (bestand/netwerk/toetsenbord) maakt niet uit
+    \item Bytes kunnen uitlezen is belangrijkst
+    \item We kunnen de bronnen abstraheren tot ``bytegenerators''
+  \end{itemize}
+  \begin{center}
+    \begin{tikzpicture}
+      \node[rotate=90,file] at (-1,0) {%
+        \only<1>{bestand}%
+        \only<2>{netwerk}%
+        \only<3>{toetsenbord}%
+        \only<4>{muis}%
+        \only<5>{micro}%
+        \only<6>{scanner}%
+        \only<7>{kinect}%
+      };
+
+      \foreach[count=\i] \b in {41, F1, 90, AD, 19} {
+        \node[draw,minimum size=0.75cm,drop shadow,fill=red!50] at (\i, 0) {\b};
+      }
+      \node at (6,0) {\tiny\dots};
+
+      \draw[ultra thick,-latex] (1,-1) -- (6,-1) node[below,midway] {\ttfamily get\_next\_byte()};
+
+      \node[rotate=-90,process] at (8,0) {programma};
+    \end{tikzpicture}
+  \end{center}
+\end{frame}
+
+\begin{frame}
+  \frametitle{Voordelen}
+  \code[language=python,font=\small,width=.9\linewidth]{abstract-reading.py}
+  \begin{itemize}
+    \item \texttt{process\_input} kan werken met alle drie types input
+    \item Enige voorwaarde: \texttt{stream} heeft \texttt{get\_next\_byte()}
+  \end{itemize}
+\end{frame}
+
+\begin{frame}
+  \frametitle{Voorbeeld}
+  \begin{center}
+    \begin{tikzpicture}[player/.style={minimum width=3cm,minimum height=1.5cm,drop shadow,font=\scshape},
+                        local human player/.style={player,fill=red!50},
+                        remote human player/.style={player,fill=green!50},
+                        ai player/.style={player,fill=blue!50},
+                        game/.style={drop shadow,fill=black!40,minimum width=10cm,minimum height=1.5cm},
+                        communication/.style={ultra thick,-latex}]
+      \node[local human player] (local) at (-4,0) {
+        \begin{tabular}{c}
+          speler \\
+          \tiny (toetsenbord)
+        \end{tabular}
+      };
+      \node[remote human player] (remote) at (0,0) {
+        \begin{tabular}{c}
+          tegenspeler \\
+          \tiny (netwerk)
+        \end{tabular}
+      };
+      \node[ai player] (ai) at (4,0) {
+        \begin{tabular}{c}
+          ai \\
+          \tiny (berekende data)
+        \end{tabular}
+      };
+
+      \node[game] (game) at (0,-4) {Spel};
+
+      \draw[communication] let \p1=(local.south), \p2=(game.north) in
+                           ($ (\x1,\y2) + (-0.2,0) $) -- ($ (\x1,\y1) + (-0.2,0) $)
+                           node[midway,above,font=\tiny\ttfamily,sloped] {get\_next\_byte()};
+
+      \draw[communication] let \p1=(local.south), \p2=(game.north) in (\x1,\y1) -- (\x1,\y2)
+                           node[midway,above,font=\tiny,sloped] {shoot};
+
+      \draw[communication] let \p1=(remote.south), \p2=(game.north) in
+                           ($ (\x1,\y2) + (-0.2,0) $) -- ($ (\x1,\y1) + (-0.2,0) $)
+                           node[midway,above,font=\tiny\ttfamily,sloped] {get\_next\_byte()};
+
+      \draw[communication] let \p1=(remote.south), \p2=(game.north) in (\x1,\y1) -- (\x1,\y2)
+                           node[midway,above,font=\tiny,sloped] {forward};
+
+      \draw[communication] let \p1=(ai.south), \p2=(game.north) in
+                           ($ (\x1,\y2) + (-0.2,0) $) -- ($ (\x1,\y1) + (-0.2,0) $)
+                           node[midway,above,font=\tiny\ttfamily,sloped] {get\_next\_byte()};
+
+      \draw[communication] let \p1=(ai.south), \p2=(game.north) in (ai) -- (\x1,\y2)
+                           node[midway,above,font=\tiny,sloped] {jump};
+    \end{tikzpicture}
+  \end{center}
+  \begin{itemize}
+    \item Spel enkel ge\"interesseerd in data, bron maakt niets uit
+  \end{itemize}
+\end{frame}
+
+%%% Local Variables:
+%%% mode: latex
+%%% TeX-master: "io"
+%%% End:

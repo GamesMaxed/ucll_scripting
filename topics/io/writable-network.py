@@ -1,4 +1,4 @@
-class NetworkDataReceiver:
+class NetworkDataSender:
     def __init__(self, ip, port):
         # ...
 
