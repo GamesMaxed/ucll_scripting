@@ -43,6 +43,10 @@ def main():
     """
 
 
+# Checkt of dit python bestand rechtstreeks wordt
+# opgeroepen of wordt ingeladen als library
 if __name__ == '__main__':
+    # Voer main() uit indien dit script
+    # rechtstreeks uitgevoerd wordt
     main()
     
