@@ -4,10 +4,10 @@
 
 \begin{frame}
   \frametitle{Voorbeeld: Code}
-  \code[language=python]{processes.py}
+  \code[language=python3]{processes.py}
   \begin{itemize}
-    \item \texttt{increment} leest bytes, incrementeert ze, en schrijft ze weg
-    \item \texttt{double} leest bytes, verdubbelt ze, en schrijft ze weg
+    \item \texttt{increment} leest ints, incrementeert ze, en schrijft ze weg
+    \item \texttt{double} leest ints, verdubbelt ze, en schrijft ze weg
   \end{itemize}
 \end{frame}
 
@@ -19,7 +19,7 @@
       \node[process] (double) at (0,-1) {double};
 
       \draw[stream] (-4,1) -- (increment.west);
-      \foreach[count=\i,evaluate={\i*0.55-4} as \j] \x in {01, 2F, 77} {
+      \foreach[count=\i,evaluate={\i*0.55-4} as \j] \x in {1, 7, 25} {
         \node[datum] at (\j,1.5) {\x};
       }
 
@@ -28,7 +28,7 @@
       }
 
       \visible<2->{
-        \foreach[count=\i,evaluate={\i*0.55} as \j] \x in {02, 30, 78} {
+        \foreach[count=\i,evaluate={\i*0.55} as \j] \x in {2, 8, 26} {
           \node[datum] at ($ (increment.east) + (\j,0.5) $) {\x};
         }
       }
@@ -38,7 +38,7 @@
       }
 
       \visible<4>{
-        \foreach[count=\i,evaluate={\i*0.55} as \j] \x in {04, 60, F0} {
+        \foreach[count=\i,evaluate={\i*0.55} as \j] \x in {4, 16, 52} {
           \node[datum] at ($ (double.east) + (\j,0.5) $) {\x};
         }
         \draw[stream] (double.east) -- (4,-1);
@@ -78,7 +78,7 @@
             \item Linux: \link{https://en.wikipedia.org/wiki/Bash_(Unix_shell)}{Bash}
             \item Windows: \link{https://en.wikipedia.org/wiki/PowerShell}{PowerShell}
           \end{itemize}
-    \item Werken eerder met strings dan met bytes
+    \item Werken in op regels tekst
     \item Veel hulptools ter beschikking
           \begin{itemize}
             \item grep
@@ -106,6 +106,7 @@
   \vskip4mm
   \begin{itemize}
     \item Een nieuw proces krijgen bij aanvang \link{https://en.wikipedia.org/wiki/Standard_streams}{3 streams}
+    \item Vergelijkbaar met ``voorgeopende bestanden''
   \end{itemize}
   \begin{center}
     \begin{tikzpicture}
@@ -174,7 +175,7 @@
 
 \begin{frame}
   \frametitle{Voorbeeld: upper}
-  \code[language=python,title=upper.py]{upper.py}
+  \code[language=python,title=upper.py,width=.95\linewidth]{upper.py}
   \begin{itemize}
     \item Opstarten in shell met \texttt{python upper.py}
     \item Herhaalt alles in uppercase
@@ -183,7 +184,7 @@
 
 \begin{frame}
   \frametitle{Voorbeeld: filter}
-  \code[language=python]{filter.py}
+  \code[language=python3,width=.9\linewidth]{filter.py}
   \begin{itemize}
     \item Opstarten in shell met \texttt{python filter.py}
     \item Herhaalt enkel lijnen die niet beginnen met \#
@@ -251,6 +252,7 @@
 \begin{frame}
   \frametitle{Implementatie Slimmere Filter}
   \code[language=python,font=\small]{filter2.py}
+  \codeunderlinex{sysargv}
   \begin{itemize}
     \item \texttt{sys.argv} is een lijst argumenten
     \item Opgelet: het eerste argument zit in \texttt{sys.argv[1]}!
@@ -327,17 +329,6 @@
   \end{itemize}
 \end{frame}
 
-\begin{frame}
-  \frametitle{Voorbeelden}
-  \begin{itemize}
-    \item Recursief verwijderen \texttt{.class} files \\[2mm]
-          \code[language=bash,width=.9\linewidth,width=.95\linewidth]{remove-class.sh}
-    \item Tellen aantal lines of code in \texttt{.java} bestanden
-          \code[language=bash,width=.9\linewidth,width=.95\linewidth]{count-loc.sh}
-    \item Png's omzetten naar 2x kleinere jpg's
-          \code[language=bash,width=.9\linewidth,font=\small,width=.95\linewidth]{resize-pngs.sh}
-  \end{itemize}
-\end{frame}
 
 
 %%% Local Variables:

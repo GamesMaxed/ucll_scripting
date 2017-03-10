@@ -1,9 +1,9 @@
 def increment(input, output):
     while not input.end_reached():
-        x = input.read()
-        output.write(x + 1)
+        x = int(input.readline())
+        output.write(str(x + 1))
 
 def double(input, output):
     while not input.end_reached():
-        x = input.read()
-        output.write(x * 2)
+        x = int(input.readline())
+        output.write(str(x * 2))

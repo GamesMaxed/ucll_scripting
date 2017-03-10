@@ -1,0 +1,42 @@
+\section{Python IO}
+
+\frame{\tableofcontents[currentsection]}
+
+\begin{frame}
+  \frametitle{Bestanden Openen Met Read Access}
+  \begin{overprint}
+    \onslide<1>
+    \code[language=python3,width=.95\linewidth]{open-file.py}
+
+    \onslide<2>
+    \code[language=python3,width=.95\linewidth]{open-file2.py}
+  \end{overprint}
+  \begin{itemize}
+    \item Bestand moet eerst geopend worden
+          \begin{itemize}
+            \item Zegt tegen OS ``ik ben bezig met bestand''
+            \item OS zal geen ander proces toegang geven
+          \end{itemize}
+    \item Bestand moet weer gesloten worden
+          \begin{itemize}
+            \item Zoniet kunnen andere processen er niet meer aan
+          \end{itemize}
+  \end{itemize}
+\end{frame}
+
+\begin{frame}
+  \frametitle{Uitlezen Bestand}
+  \code[language=python3,width=.75\linewidth]{read-file.py}
+\end{frame}
+
+\begin{frame}
+  \frametitle{Bestanden Met Write Access}
+  \code[language=python3]{open-file-write.py}
+\end{frame}
+
+
+
+%%% Local Variables:
+%%% mode: latex
+%%% TeX-master: "io"
+%%% End:
