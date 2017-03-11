@@ -3,7 +3,7 @@ from testing.tests import *
 from testing.assertions import *
 import os
 
-with cumulative(skip_after_fail=False):
+with cumulative(skip_after_fail=True):
     with all_or_nothing(), tested_function_name('is_loc'):
         def is_loc(line, delimiter):
             @test('is_loc({}, {}) should return a truthy value', repr(line), repr(delimiter))
