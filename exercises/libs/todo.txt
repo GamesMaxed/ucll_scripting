@@ -1,0 +1,11 @@
+https://pythontips.com/2013/07/30/20-python-libraries-you-cant-live-without/
+
+optparse
+matplotlib
+pygame
+sqlite3
+django
+nump
+BeautifulSoup
+Scapy
+Pyglet
