@@ -2,7 +2,7 @@ import sys
 import os
 
 
-def tree(path = '.'):
+def tree(path):
     def aux(path):
         lines = []
         
@@ -20,4 +20,9 @@ def tree(path = '.'):
 
 
 if __name__ == '__main__':
-    print(tree(sys.argv[1]))
+    if len(sys.argv) == 2:
+        path = sys.argv[1]
+    else:
+        path = '.'
+        
+    print(tree(path))

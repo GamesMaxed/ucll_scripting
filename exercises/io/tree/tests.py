@@ -8,3 +8,5 @@ with all_or_nothing():
         tree = reftest()
         
         tree('.')
+        tree('testdata')
+        tree('..')
