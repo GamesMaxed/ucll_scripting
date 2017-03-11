@@ -38,4 +38,4 @@ def plagiarism(files):
 
 
 if __name__ == '__main__':
-    raise NotSupportedException()
+    raise NotImplementedError()
