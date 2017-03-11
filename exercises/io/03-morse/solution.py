@@ -1,5 +1,4 @@
-import re
-from functools import reduce
+import sys
 
 
 def read_morse_to_plaintext_dictionary():
@@ -12,7 +11,15 @@ def read_plaintext_to_morse_dictionary():
 
 def decode_morse(code):
     """
-    Decodes the given code to plaintext.
+    Decodeert de gegeven morsecode.
+    De morsecode bestaan uit '.' en '-'
+    en de groepjes tekens die overeenkomen
+    met een enkele letter of getal
+    worden gescheiden door een spatie.
+    Bv. '... --- ...' voor SOS (en niet '...---...')
+
+    Steunt op het bestand morse.txt om
+    de morsecodes in te lezen.
     """
     morse = read_morse_to_plaintext_dictionary()
 
@@ -21,7 +28,10 @@ def decode_morse(code):
 
 def encode_morse(plaintext):
     """
-    Translates given plaintext to morse.
+    Zet de gegeven string om naar plaintext.
+    De string bestaat uitsluitend uit
+    tekens die ook voortkomen in morse.txt,
+    m.a.w. er komen geen spaties in voor.
     """
     morse = read_plaintext_to_morse_dictionary()
     

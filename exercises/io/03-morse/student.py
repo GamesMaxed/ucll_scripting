@@ -1,8 +1,3 @@
-import re
-from functools import reduce
-
-
-
 def decode_morse(code):
     """
     Decodeert de gegeven morsecode.
