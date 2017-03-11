@@ -29,3 +29,15 @@ def decompress(string):
     """
 
     raise NotImplementedError()
+
+
+# Het script ontvangt de te verwerken data
+# via stdin en voert het uit via stdout.
+# Een command line argument geeft
+# aan of er moet gecomprimeerd of
+# gedecomprimeerd moet worden:
+#    cat plaintext.txt | python student.py compress
+# of
+#    cat compressed.txt | python student.py decompress
+if __name__ == '__main__':
+    raise NotImplementedError()
