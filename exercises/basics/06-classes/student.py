@@ -1,14 +1,13 @@
 class Counter:
     # Constructor
     def __init__(self):
-        raise NotImplementedError()
+        self.__x = 0
 
     def current(self):
-        raise NotImplementedError()
+        return self.__x
 
     def increment(self):
-        raise NotImplementedError()
+        self.__x += 1
 
     def reset(self):
-        raise NotImplementedError()
-        
+        self.__x = 0
