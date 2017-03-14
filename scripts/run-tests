@@ -1,1 +1,1 @@
-python3 -c 'from testing.shell import main; main()' $@
+$PYTHON_INTERPRETER -c 'from testing.shell import main; main()' $@

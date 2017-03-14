@@ -1,0 +1,39 @@
+\documentclass[dutch]{ucll-slides}
+\usepackage{pxfonts}
+\usepackage{tikz}
+\usepackage{calc}
+\usepackage{ucll-code}
+\usepackage{hyperref}
+
+
+\usetikzlibrary{calc,shadows,tikzmark,shapes.multipart,arrows.meta}
+
+\coursename{Scripttalen}
+\title{IO}
+
+
+\tikzset{
+  file/.style={draw,fill=green!50,drop shadow,minimum width=3cm,minimum height=1cm},
+  process/.style={draw,fill=blue!50,drop shadow,minimum width=3cm,minimum height=1cm},
+  datum/.style={draw,fill=red!50,minimum width=.5cm,minimum height=.5cm,font=\tiny\ttfamily},
+  stream/.style={ultra thick,-latex}
+}
+
+\begin{document}
+
+\maketitle
+
+\input{aux-intro.tex}
+\input{aux-input-streams.tex}
+\input{aux-output-streams.tex}
+\input{aux-python-io.tex}
+\input{aux-pipelines.tex}
+
+\end{document}
+
+
+
+%%% Local Variables: 
+%%% mode: latex
+%%% TeX-master: t
+%%% End: 

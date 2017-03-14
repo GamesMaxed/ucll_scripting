@@ -1,0 +1,6 @@
+class NetworkDataSender:
+    def __init__(self, ip, port):
+        # ...
+
+    def send_byte(self):
+        # ...

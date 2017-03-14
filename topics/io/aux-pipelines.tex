@@ -1,0 +1,337 @@
+\section{Pipelines}
+
+\frame{\tableofcontents[currentsection]}
+
+\begin{frame}
+  \frametitle{Voorbeeld: Code}
+  \code[language=python3]{processes.py}
+  \begin{itemize}
+    \item \texttt{increment} leest ints, incrementeert ze, en schrijft ze weg
+    \item \texttt{double} leest ints, verdubbelt ze, en schrijft ze weg
+  \end{itemize}
+\end{frame}
+
+\begin{frame}
+  \frametitle{Voorbeeld: Visualisatie}
+  \begin{center}
+    \begin{tikzpicture}
+      \node[process] (increment) at (0,1) {increment};
+      \node[process] (double) at (0,-1) {double};
+
+      \draw[stream] (-4,1) -- (increment.west);
+      \foreach[count=\i,evaluate={\i*0.55-4} as \j] \x in {1, 7, 25} {
+        \node[datum] at (\j,1.5) {\x};
+      }
+
+      \visible<2>{
+        \draw[stream] (increment.east) -- (4,1);
+      }
+
+      \visible<2->{
+        \foreach[count=\i,evaluate={\i*0.55} as \j] \x in {2, 8, 26} {
+          \node[datum] at ($ (increment.east) + (\j,0.5) $) {\x};
+        }
+      }
+
+      \visible<3->{
+        \draw[stream] (increment.east) -- (4,1) -- (4,0) -- (-4,0) -- (-4,-1) -- (double.west);
+      }
+
+      \visible<4>{
+        \foreach[count=\i,evaluate={\i*0.55} as \j] \x in {4, 16, 52} {
+          \node[datum] at ($ (double.east) + (\j,0.5) $) {\x};
+        }
+        \draw[stream] (double.east) -- (4,-1);
+      }
+    \end{tikzpicture}
+  \end{center}
+\end{frame}
+
+\begin{frame}
+  \frametitle{Pipelines}
+  \begin{itemize}
+    \item Output kan verbonden worden met andermans input
+    \item Ketting opbouwen van ``processors''
+    \item Ketting heet \emph{pipeline}
+  \end{itemize}
+  \vskip5mm
+  \structure{Vb: Downloaden, Comprimeren, Encrypteren en Bewaren}
+  \begin{center}
+    \begin{tikzpicture}[rotate=90,transform shape]
+      \node[file] (input) at (0,6) {Internet};
+      \node[process] (process 1) at (0,4) {zip};
+      \node[process] (process 2) at (0,2) {encryptie};
+      \node[file] (output) at (0,0) {bestand};
+
+      \draw[stream] (input) -- (process 1);
+      \draw[stream] (process 1) -- (process 2);
+      \draw[stream] (process 2) -- (output);
+    \end{tikzpicture}
+  \end{center}
+\end{frame}
+
+\begin{frame}
+  \frametitle{Shells}
+  \begin{itemize}
+    \item Piping vaak gebruikt in shells
+          \begin{itemize}
+            \item Linux: \link{https://en.wikipedia.org/wiki/Bash_(Unix_shell)}{Bash}
+            \item Windows: \link{https://en.wikipedia.org/wiki/PowerShell}{PowerShell}
+          \end{itemize}
+    \item Werken in op regels tekst
+    \item Veel hulptools ter beschikking
+          \begin{itemize}
+            \item grep
+            \item awk
+            \item sed
+            \item cat
+            \item find
+            \item \dots
+          \end{itemize}
+  \end{itemize}
+\end{frame}
+
+\begin{frame}
+  \frametitle{Standaard Streams}
+  \begin{center}
+    \begin{tabular}{ll}
+      \bfseries Naam & \bfseries Beschrijving \\
+      \toprule
+      \ttfamily stdin  & Standaard invoerstream \\
+      \ttfamily stdout & Standaard uitvoerstream \\
+      \ttfamily stderr & Standaard foutmeldingstream \\
+      \bottomrule
+    \end{tabular}
+  \end{center}
+  \vskip4mm
+  \begin{itemize}
+    \item Een nieuw proces krijgen bij aanvang \link{https://en.wikipedia.org/wiki/Standard_streams}{3 streams}
+    \item Vergelijkbaar met ``voorgeopende bestanden''
+  \end{itemize}
+  \begin{center}
+    \begin{tikzpicture}
+      \node[process] (process) at (0,0) {proces};
+      \draw[stream] ($ (process.west) + (-2,0) $) -- (process.west) node[above,midway] {\ttfamily\small stdin};
+      \draw[stream] ($ (process.east) + (0,0.25) $) -- ++(2,0) node[above,midway] {\ttfamily\small stdout};
+      \draw[stream] ($ (process.east) + (0,-0.25) $) -- ++(2,0) node[below,midway] {\ttfamily\small stderr};
+    \end{tikzpicture}
+  \end{center}
+\end{frame}
+
+\begin{frame}
+  \frametitle{Standaardstreams in Verschillende Talen}
+  \begin{center}
+    \begin{tabular}{llll}
+      \bfseries Taal & \bfseries stdin & \bfseries stdout & \bfseries stderr \\
+      \toprule
+      Java & \texttt{System.in} & \texttt{System.out} & \texttt{System.err} \\
+      C++ & \texttt{std::cin} & \texttt{std::cout} & \texttt{std::cerr} \\
+      Python & \texttt{sys.stdin} & \texttt{sys.stdout} & \texttt{sys.stderr} \\
+      C$^\sharp$ & \texttt{Console.In} & \texttt{Console.Out} & \texttt{Console.Error} \\
+      Ruby & \texttt{STDIN} & \texttt{STDOUT} & \texttt{STDERR} \\
+      \bottomrule
+    \end{tabular}
+  \end{center}
+\end{frame}
+
+\begin{frame}
+  \frametitle{Standaard Streams}
+  \begin{center}
+    \begin{tikzpicture}
+      \node[process] (process) at (0,0) {proces};
+      \node[file,rotate=90] (keyboard) at (-4,0) {toetsenbord};
+      \node[file,rotate=90] (screen) at (4,0) {scherm};
+
+      \draw[stream] ($ (process.west) + (-2,0) $) -- (process.west) node[above,midway] {\ttfamily\small stdin};
+      \draw[stream] ($ (process.east) + (0,0.25) $) -- ++(2,0) node[above,midway] {\ttfamily\small stdout};
+      \draw[stream] ($ (process.east) + (0,-0.25) $) -- ++(2,0) node[below,midway] {\ttfamily\small stderr};
+    \end{tikzpicture}
+  \end{center}
+  \structure{Bij opstarten proces in shell}
+  \begin{itemize}
+    \item stdin wordt verbonden met toetsenbord
+    \item stdout en stderr worden verbonden met scherm
+  \end{itemize}
+\end{frame}
+
+\begin{frame}
+  \frametitle{Voorbeeld: cat}
+  \begin{overprint}
+    \onslide<1>
+    \code[language=python,title=cat.py]{cat.py}
+    \onslide<2>
+    \code[language=python,title=cat.py]{cat2.py}
+    \onslide<3>
+    \code[language=python,title=cat.py]{cat3.py}
+  \end{overprint}
+  \begin{itemize}
+    \item Opstarten in shell met \texttt{python cat.py}
+    \item Leest stdin en schrijft naar stdout
+    \item Alles wat je intypt, wordt herhaald
+    \item<2-> \texttt{print} is een shortcut voor \texttt{sys.stdout.write}
+    \item<2-> \texttt{input} is een shortcut voor \texttt{sys.stdin.readline()}
+  \end{itemize}
+\end{frame}
+
+\begin{frame}
+  \frametitle{Voorbeeld: upper}
+  \code[language=python,title=upper.py,width=.95\linewidth]{upper.py}
+  \begin{itemize}
+    \item Opstarten in shell met \texttt{python upper.py}
+    \item Herhaalt alles in uppercase
+  \end{itemize}
+\end{frame}
+
+\begin{frame}
+  \frametitle{Voorbeeld: filter}
+  \code[language=python3,width=.9\linewidth]{filter.py}
+  \begin{itemize}
+    \item Opstarten in shell met \texttt{python filter.py}
+    \item Herhaalt enkel lijnen die niet beginnen met \#
+  \end{itemize}
+\end{frame}
+
+\begin{frame}
+  \frametitle{Voorbeeld: Combinatie}
+  \code[language=bash]{pipe-filter-upper.sh}
+  \begin{center}
+    \begin{tikzpicture}[rotate=90,transform shape]
+      \visible<4->{
+        \node[file] (keyboard) at (0,6) {toetsenbord};
+      }
+
+      \visible<1->{
+        \node[process] (filter) at (0,4) {filter};
+      }
+      \visible<2->{
+        \node[process] (upper) at (0,2) {upper};
+      }
+
+      \visible<5->{
+        \node[file] (screen) at (0,0) {scherm};
+      }
+
+      \visible<4->{
+        \draw[stream] (keyboard) -- (filter);
+      }
+
+      \visible<3->{
+        \draw[stream] (filter) -- (upper);
+      }
+
+      \visible<5->{
+        \draw[stream] (upper) -- (screen);
+      }
+    \end{tikzpicture}
+  \end{center}
+  \begin{overprint}
+    \onslide<1> \centering
+    \texttt{filter} wordt opgestart
+    \onslide<2> \centering
+    \texttt{upper} wordt opgestart
+    \onslide<3> \centering
+    stdout van \texttt{filter} wordt verbonden met stdin van \texttt{upper}
+    \onslide<4> \centering
+    stdin van \texttt{filter} wordt verbonden met toetsenbord
+    \onslide<5> \centering
+    stdout van \texttt{upper} wordt verbonden met scherm
+  \end{overprint}
+\end{frame}
+
+\begin{frame}
+  \frametitle{Command Line Arguments}
+  \begin{itemize}
+    \item \texttt{filter.py} verwijdert strings beginnend met \texttt{\#}
+    \item Wat als we lijnen beginnend met \texttt{//} weg willen?
+    \item We kunnen een nieuw script schrijven
+    \item We kunnen ook gebruik maken van parameters
+  \end{itemize}
+  \code[language=bash]{filter2.sh}
+\end{frame}
+
+\begin{frame}
+  \frametitle{Implementatie Slimmere Filter}
+  \code[language=python,font=\small]{filter2.py}
+  \codeunderlinex{sysargv}
+  \begin{itemize}
+    \item \texttt{sys.argv} is een lijst argumenten
+    \item Opgelet: het eerste argument zit in \texttt{sys.argv[1]}!
+  \end{itemize}
+\end{frame}
+
+\begin{frame}
+  \frametitle{Command-Line Arguments in Java}
+  \code[language=java,font=\small,width=.9\linewidth]{Echo.java}
+  \code[language=bash,width=.9\linewidth]{cla.sh}
+\end{frame}
+
+\begin{frame}
+  \frametitle{Shell}
+  \begin{center}
+    \begin{tikzpicture}[app/.style={rectangle split,rectangle split parts=2,fill=blue!50,drop shadow}]
+      \node[minimum width=10cm,minimum height=1cm,fill=red!50,drop shadow] at (0,2) {shell};
+
+      \node[app] at (-2.5,0.25) {
+        cat
+        \nodepart{two}
+        \tiny C
+      };
+      \node[app] at (-4,0.15) {
+        sed
+        \nodepart{two}
+        \tiny C
+      };
+      \node[app] at (-2.75,-1.25) {
+        awk
+        \nodepart{two}
+        \tiny C
+      };
+      \node[app] at (-1,0.5) {
+        grep
+        \nodepart{two}
+        \tiny C
+      };
+      \node[app] at (2.5,0.5) {
+        java
+        \nodepart{two}
+        \tiny C
+      };
+      \node[app] at (4,0.5) {
+        javac
+        \nodepart{two}
+        \tiny Java
+      };
+      \node[app] at (4,-0.75) {
+        javadoc
+        \nodepart{two}
+        \tiny Java
+      };
+      \node[app] at (0.75,0.25) {
+        tool X
+        \nodepart{two}
+        \tiny Python
+      };
+      \node[app] at (-1,-1.25) {
+        tool Y
+        \nodepart{two}
+        \tiny Haskell
+      };
+      \node[app] at (1,-1.1) {
+        tool Z
+        \nodepart{two}
+        \tiny C$^\sharp$
+      };
+    \end{tikzpicture}
+  \end{center}
+  \begin{itemize}
+    \item Elk programma kan aanzien worden als een functie
+    \item In de shell kan men deze functies oproepen
+  \end{itemize}
+\end{frame}
+
+
+
+%%% Local Variables:
+%%% mode: latex
+%%% TeX-master: "io"
+%%% End:

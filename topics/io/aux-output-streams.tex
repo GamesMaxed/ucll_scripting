@@ -1,0 +1,68 @@
+\section{Output Streams}
+
+\frame{\tableofcontents[currentsection]}
+
+\begin{frame}
+  \frametitle{Naar Bestand Schrijven}
+  \begin{itemize}
+    \item Bestand is in feite lijst van bytes
+    \item We kunnen bytes toevoegen aan deze lijst
+  \end{itemize}
+  \code[language=python]{writable-file.py}
+\end{frame}
+
+\begin{frame}
+  \frametitle{Netwerkdata Sturen}
+  \begin{itemize}
+    \item Via een netwerkconnectie sturen we data
+    \item Deze data is een reeks van bytes
+    \item We kunnen deze bytes na elkaar versturen
+  \end{itemize}
+  \code[language=python]{writable-network.py}
+\end{frame}
+
+\begin{frame}
+  \frametitle{Abstraheren tot Output Stream}
+  \begin{itemize}
+    \item Ontvanger (bestand/netwerk) maakt niet uit
+    \item Bytes kunnen schrijven is belangrijkst
+    \item Abstractie ``byte ontvangers''
+  \end{itemize}
+  \begin{center}
+    \begin{tikzpicture}
+      \node[rotate=90,file] at (-1,0) {%
+        \only<1>{bestand}%
+        \only<2>{netwerk}%
+        \only<3>{speakers}%
+        \only<4>{scherm}%
+      };
+
+      \foreach[count=\i] \b in {41, F1, 90, AD, 19} {
+        \node[draw,minimum size=0.75cm,drop shadow,fill=red!50] at (\i, 0) {\b};
+      }
+      \node at (6,0) {\tiny\dots};
+
+      \draw[ultra thick,latex-] (1,-1) -- (6,-1) node[below,midway] {\ttfamily write\_byte()};
+
+      \node[rotate=-90,process] at (8,0) {programma};
+    \end{tikzpicture}
+  \end{center}
+\end{frame}
+
+\begin{frame}
+  \frametitle{Streams zijn niet Python-specifiek}
+  \begin{itemize}
+    \item Java: \link{https://docs.oracle.com/javase/7/docs/api/java/io/InputStream.html}{InputStream}, 
+          \link{http://docs.oracle.com/javase/7/docs/api/java/io/OutputStream.html}{OutputStream},
+          \link{https://docs.oracle.com/javase/7/docs/api/java/nio/channels/Channel.html}{channels}
+    \item C++: \link{http://www.cplusplus.com/reference/iostream/}{iostream header file}
+    \item Python: \link{https://docs.python.org/3/library/io.html}{io module}
+    \item Ruby: \link{http://ruby-doc.org/core-2.0.0/IO.html}{IO klasse}
+    \item C$^\sharp$: \link{https://msdn.microsoft.com/en-us/library/system.io.stream(v=vs.110).aspx}{Stream klasse}
+  \end{itemize}
+\end{frame}
+
+%%% Local Variables:
+%%% mode: latex
+%%% TeX-master: "io"
+%%% End:
