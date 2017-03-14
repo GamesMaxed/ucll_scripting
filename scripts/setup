@@ -3,8 +3,8 @@
 # Standaard is de eerste lijn actief, maar naargelang het platform kan het zijn dat je
 # de andere lijnen uit commentaar zal moeten halen.
 
-export PYTHON_INTERPRETER=py
-# export PYTHON_INTERPRETER=python3
+# export PYTHON_INTERPRETER=py
+export PYTHON_INTERPRETER=python3
 # export PYTHON_INTERPRETER=python
 
 
