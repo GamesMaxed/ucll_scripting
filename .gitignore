@@ -3,3 +3,7 @@ __pycache__
 *.class
 *.db
 .idea
+bin
+include
+lib
+pip-selfcheck.json
