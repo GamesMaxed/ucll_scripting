@@ -88,3 +88,16 @@ with cumulative(skip_after_fail=True):
          find_matching_strings = reftest()
 
          find_matching_strings(['', 'a', 'b', 'ab'], r'[a-z]')
+         find_matching_strings(['', 'a', 'b', 'ab', 'abc', '123'], r'[a-z]+')
+         find_matching_strings(['', 'a', 'b', 'ab', 'abc', '123'], r'\d')
+
+    with tested_function_name('minimum'), all_or_nothing():
+         minimum = reftest()
+
+         minimum([1])
+         minimum([1, 2])
+         minimum([1, 2, 3])
+         minimum([3, 2, 1])
+         minimum(['a', 'b', 'c'])
+         minimum(['g', 'e', 'h', 'a', 'b'])
+         

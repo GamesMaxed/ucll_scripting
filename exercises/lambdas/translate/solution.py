@@ -34,3 +34,7 @@ def all_in_range(ns, min, max):
 
 def find_matching_strings(strings, regex):
     return [ string for string in strings if re.fullmatch(regex, string) ]
+
+
+def minimum(ns):
+    return min(ns)

@@ -67,7 +67,6 @@ def square_odd(ns):
     return result
 
 
-
 def all_even(ns):
     for n in ns:
         if n % 2 == 1:
@@ -92,3 +91,15 @@ def find_matching_strings(strings, regex):
             result.append(string)
 
     return result
+
+
+def minimum(ns):
+    result = ns[0]
+
+    for n in ns[1:]:
+        if n < result:
+            result = n
+
+    return result
+
+# max, min, sorted, any, find
