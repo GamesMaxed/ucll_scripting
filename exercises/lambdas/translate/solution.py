@@ -78,3 +78,15 @@ def sum_of_n_lists(xss):
 
 def transpose(matrix):
     return [ list(xs) for xs in zip(*matrix) ]
+
+
+def matrix_row(matrix, row):
+    return matrix[row]
+
+
+def matrix_column(matrix, col):
+    return [ matrix[row][col] for row in range(0, len(matrix)) ]
+
+
+def matrix_product(a, b):
+    return [ [ sum( a[row][k] * b[k][col] for k in range(len(b)) ) for col in range(0, len(b[0])) ] for row in range(0, len(a)) ]

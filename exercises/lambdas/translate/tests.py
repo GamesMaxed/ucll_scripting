@@ -198,3 +198,20 @@ with cumulative(skip_after_fail=True):
         transpose( [[1, 2], [3, 4]] )
         transpose( [[1, 2, 3], [4, 5, 6]] )
         transpose( [[1, 2, 3], [4, 5, 6], [7, 8, 9]] )
+
+    with tested_function_name('matrix_column'), all_or_nothing():
+        matrix_column = reftest()
+
+        matrix_column( [ [1, 2], [3, 4] ], 0 )
+        matrix_column( [ [1, 2], [3, 4] ], 1 )
+
+    with tested_function_name('matrix_product'), all_or_nothing():
+        matrix_product = reftest()
+
+        matrix_product( [[1,0],[0,1]], [[1,2],[3,4]] )
+        matrix_product( [[1,2],[3,4]], [[1,0],[0,1]] )
+        matrix_product( [[1,2],[3,4]], [[4,1],[7,4]] )
+        matrix_product( [[1,2],[3,4],[5,6]], [[4,1,7],[7,4,1]] )
+        matrix_product( [[1,2],[3,4],[5,6],[7,8]], [[4,1,7,2],[7,4,1,8]] )
+
+        

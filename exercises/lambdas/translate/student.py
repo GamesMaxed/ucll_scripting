@@ -240,4 +240,34 @@ def transpose(matrix):
     return result
 
 
-# max, sorted, any, find
+# Hulpfunctie; hoeft niet vertaald te worden
+def matrix_row(a, row):
+    return a[row]
+
+
+# Deze wel vertalen
+def matrix_column(a, col):
+    result = []
+
+    for row in range(0, len(a)):
+        result.append(a[row][col])
+
+    return result
+
+
+# Uitdaging
+def matrix_product(a, b):
+    rows = len(a)
+    cols = len(b[0])
+    result = zero_matrix(rows, cols)
+
+    for row in range(0, rows):
+        for col in range(0, cols):
+            total = 0
+            
+            for k in range(len(b)):
+                total += a[row][k] * b[k][col]
+
+            result[row][col] = total
+
+    return result
