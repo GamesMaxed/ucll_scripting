@@ -1,5 +1,7 @@
 import re
 
+# Voer eerst "prepare" uit in de shell in deze directory
+# Dit downloadt de nodige bestanden voor deze opgave
 
 def find_episode_titles(series):
     raise NotImplementedError()
