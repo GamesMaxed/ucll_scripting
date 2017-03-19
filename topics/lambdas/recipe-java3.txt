@@ -1,0 +1,11 @@
+Plaats kom B op weegschaal
+Zolang weegschaal < 175 g
+  Voeg 1g boter toe
+Meng inhoud kom B
+Voeg inhoud kom B toe aan kom A
+Meng inhoud kom A
+Giet inhoud kom A over naar bakvorm V
+Plaats V in oven
+Start chronometer M
+Zolang M < 10 minuten
+  Wacht een minuut

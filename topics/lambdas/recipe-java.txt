@@ -1,0 +1,10 @@
+Neem een kom A
+Neem een kom B
+Plaats kom B op weegschaal
+Zolang weegschaal < 75g toont
+  Voeg 1g bloem toe aan kom B
+Giet bloem over van kom B naar kom A
+Plaats kom B op weegschaal
+Zolang weegschaal < 125g toont
+  Voeg 1g suiker toe aan kom A
+Giet suiker over van kom B naar kom A
