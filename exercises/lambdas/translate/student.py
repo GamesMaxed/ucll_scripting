@@ -15,7 +15,7 @@ def double_all(ns):
     return result
 
 
-def square_list(ns):
+def square_all(ns):
     result = []
 
     for n in ns:
@@ -24,3 +24,21 @@ def square_list(ns):
     return result
 
 
+def select_odd(ns):
+    result = []
+
+    for n in ns:
+        if n % 2 == 1:
+            result.append(n)
+
+    return result
+    
+
+def select_and_square_odd(ns):
+    result = []
+
+    for n in ns:
+        if n % 2 == 1:
+            result.append(n ** 2)
+
+    return result
