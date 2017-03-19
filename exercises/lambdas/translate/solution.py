@@ -9,6 +9,9 @@ def square_all(ns):
     return [ n**2 for n in ns ]
 
 
+def sum_of_squares(ns):
+    return sum( n**2 for n in ns )
+
 def select_odd(ns):
     return [ n for n in ns if n % 2 == 1 ]
 

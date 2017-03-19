@@ -28,6 +28,17 @@ with cumulative(skip_after_fail=True):
         square_all([1, 1])
         square_all([0, 8, 100])
 
+    with tested_function_name('sum_of_squares'), all_or_nothing():
+        sum_of_squares = reftest()
+
+        sum_of_squares([])
+        sum_of_squares([1])
+        sum_of_squares([1, 2])
+        sum_of_squares([1, 2, 3])
+        sum_of_squares([1, 2, 3, 4])
+        sum_of_squares([1, 1])
+        sum_of_squares([0, 8, 100])
+        
     with tested_function_name('select_odd'), all_or_nothing():
         select_odd = reftest()
 

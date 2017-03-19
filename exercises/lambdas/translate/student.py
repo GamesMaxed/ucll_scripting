@@ -25,6 +25,15 @@ def square_all(ns):
     return result
 
 
+def sum_of_squares(ns):
+    result = 0
+
+    for n in ns:
+        result += n
+
+    return result
+
+
 def select_odd(ns):
     result = []
 
