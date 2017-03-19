@@ -29,7 +29,7 @@ def sum_of_squares(ns):
     result = 0
 
     for n in ns:
-        result += n
+        result += n ** 2
 
     return result
 
