@@ -1,3 +1,5 @@
+[Verlaat dit scherm met q]
+
 Voor deze oefeningen krijg je een lijst van strings die voldoen aan een bepaald patroon.
 Je moet zelf ontdekken welk patroon dit is en hiervoor een regular expression opstellen.
 

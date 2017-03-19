@@ -1,5 +1,8 @@
 import re
 
+# Voer 'show-help' (of 'h') uit in de shell in deze directory
+# (Dit toont de inhoud van readme.txt)
+
 def riddle1():
     raise NotImplementedError()
 
