@@ -3,14 +3,15 @@ import re
 
 def is_valid_password(password):
     """
-    Returns True if the given password is valid,
-    False otherwise.
+    Geeft een truthy waarde terug indien het paswoord geldig is,
+    een falsey waarde in het andere geval.
 
-    A password is valid if it is at least
-    8 characters long, contains a lowercase letter,
-    an uppercase letter, a digit and
-    a special character.
-    Special characters are !?.()-*+
+    Een paswoord is geldig indien 
+    * het minstens 8 tekens lang is
+    * een kleine letter bevat
+    * een hoofdletter bevat
+    * een cijfer bevat
+    * een speciaal teken bevat: !?.()-*+
     """
 
     raise NotImplementedError()
