@@ -2,6 +2,10 @@
 Onderstaande code steunt op lussen. Herschrijf het
 zodat het gebruik maakt van hulpfuncties,
 list comprehensions, lambda's, ...
+
+Merk op dat de tests meteen slagen omdat je reeds
+werkende implementaties hebt gekregen. Gebruik de tests
+om na te gaan of je vertaling nog steeds correct is.
 '''
 
 import re
@@ -94,9 +98,9 @@ def find_matching_strings(strings, regex):
 
 
 def minimum(ns):
-    result = ns[0]
+    result = float('inf')
 
-    for n in ns[1:]:
+    for n in ns:
         if n < result:
             result = n
 
@@ -121,5 +125,24 @@ def longest(xs):
             result = x
 
     return result
+
+
+def is_prime(n):
+    for k in range(2, n):
+        if n % k == 0:
+            return False
+
+    return n >= 2
+
+
+def primes_up_to(n):
+    result = []
+    
+    for k in range(0, n+1):
+        if is_prime(k):
+            result.append(k)
+
+    return result
+
 
 # max, sorted, any, find

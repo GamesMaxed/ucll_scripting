@@ -98,8 +98,8 @@ with cumulative(skip_after_fail=True):
          minimum([1, 2])
          minimum([1, 2, 3])
          minimum([3, 2, 1])
-         minimum(['a', 'b', 'c'])
-         minimum(['g', 'e', 'h', 'a', 'b'])
+         minimum([4, 7, 4, -1])
+         minimum([])
          
     with tested_function_name('shortest'), all_or_nothing():
          shortest = reftest()
@@ -120,3 +120,15 @@ with cumulative(skip_after_fail=True):
          longest([ [], [1], [1, 2] ])
          longest([ [1, 2, 3], [1], [1, 2] ])
          longest([ [1, 2, 3], [1], [1, 2], [2] ])
+
+    with tested_function_name('is_prime'), all_or_nothing():
+         is_prime = reftest()
+
+         for i in range(0, 100):
+             is_prime(i)
+                        
+    with tested_function_name('primes_up_to'), all_or_nothing():
+         primes_up_to = reftest()
+
+         for i in range(0, 100):
+             primes_up_to(i)

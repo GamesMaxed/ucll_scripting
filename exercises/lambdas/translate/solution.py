@@ -37,7 +37,7 @@ def find_matching_strings(strings, regex):
 
 
 def minimum(ns):
-    return min(ns)
+    return min(ns + [float('inf')])
 
 
 def shortest(ns):
@@ -46,3 +46,11 @@ def shortest(ns):
 
 def longest(ns):
     return max(ns, key=lambda x: len(x))
+
+
+def is_prime(n):
+    return n >= 2 and all( n % k != 0 for k in range(2, n) )
+
+
+def primes_up_to(n):
+    return [ k for k in range(0, n+1) if is_prime(k) ]
