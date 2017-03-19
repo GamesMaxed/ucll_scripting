@@ -3,9 +3,10 @@ import re
 
 def contains_twice(text, fragment):
     """
-    Returns True if text contains fragment twice.
+    Geeft truthy waarde indien text het fragment twee maal bevat,
+    anders falsey waarde.
 
-    For example, "abcxyzabc" contains "abc" twice.
+    Bijvoorbeeld, "abcxyzabc" bevat "abc" twee maal.
     """
 
     raise NotImplementedError()
