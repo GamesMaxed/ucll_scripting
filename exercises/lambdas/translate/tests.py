@@ -60,3 +60,16 @@ with cumulative(skip_after_fail=True):
         all_even([1, 1])
         all_even([0, 8, 100])
         
+    with tested_function_name('all_in_range'), all_or_nothing():
+        all_in_range = reftest()
+
+        all_in_range([], 1, 10)
+        all_in_range([1], 1, 10)
+        all_in_range([1], 2, 10)
+        all_in_range([1, 2], 1, 5)
+        all_in_range([1, 2, 3], -5, 2)
+        all_in_range([1, 2, 3, 4], 1, 10)
+        all_in_range([0, 2, 4], 1, 100)
+        all_in_range([1, 1], 1, 5)
+        all_in_range([0, 8, 100], 1, 5)
+        

@@ -63,3 +63,11 @@ def all_even(ns):
             return False
 
     return True
+
+
+def all_in_range(ns, min, max):
+    for n in ns:
+        if n < min or n > max:
+            return False
+
+    return True

@@ -22,3 +22,6 @@ def all_even(ns):
     return all( n % 2 == 0 for n in ns )
 
 
+def all_in_range(ns, min, max):
+    return all( min <= n and n <= max for n in ns )
+
