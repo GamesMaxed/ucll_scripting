@@ -72,5 +72,9 @@ def sum_of_2_lists(xs, ys):
     return [ x + y for x, y in zip(xs, ys) ]
 
 
+def sum_of_n_lists(xss):
+    return [ sum(xs) for xs in zip(*xss) ]
+
+
 def transpose(matrix):
     return [ list(xs) for xs in zip(*matrix) ]

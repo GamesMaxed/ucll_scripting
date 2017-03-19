@@ -200,6 +200,28 @@ def sum_of_2_lists(xs, ys):
     return result
 
 
+def sum_of_n_lists(xss):
+    if len(xss) == 0:
+        return []
+    else:
+        result = []
+        size_of_smallest = float('inf')
+
+        for xs in xss:
+            if len(xs) < size_of_smallest:
+                size_of_smallest = len(xs)
+
+        for i in range(0, size_of_smallest):
+            total = 0
+            
+            for j in range(0, len(xss)):
+                total += xss[j][i]
+
+            result.append(total)
+
+        return result
+
+
 # Uitdaging
 def transpose(matrix):
     result = []

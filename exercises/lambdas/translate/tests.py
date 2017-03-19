@@ -178,6 +178,19 @@ with cumulative(skip_after_fail=True):
         sum_of_2_lists([1, 5, 7, 2], [5, 1, 3, 7, 4])
         sum_of_2_lists([0,0,0], [1,1])
 
+    with tested_function_name('sum_of_n_lists'), all_or_nothing():
+        sum_of_n_lists = reftest()
+
+        sum_of_n_lists([])
+        sum_of_n_lists([[], []])
+        sum_of_n_lists([[1], []])
+        sum_of_n_lists([[], [1]])
+        sum_of_n_lists([[1], [1]])
+        sum_of_n_lists([[1, 2, 3], [1, 2, 3]])
+        sum_of_n_lists([[3, 2, 1], [1, 2, 3]])
+        sum_of_n_lists([[1, 5, 7, 2], [5, 1, 3, 7, 4]])
+        sum_of_n_lists([[0,0,0], [1,1]])
+        
     with tested_function_name('transpose'), all_or_nothing():
         transpose = reftest()
 
