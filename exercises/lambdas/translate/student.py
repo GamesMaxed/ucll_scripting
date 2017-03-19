@@ -112,4 +112,14 @@ def shortest(xs):
 
     return result
 
-# max, min, sorted, any, find
+
+def longest(xs):
+    result = xs[0]
+
+    for x in xs[1:]:
+        if len(x) > len(result):
+            result = x
+
+    return result
+
+# max, sorted, any, find

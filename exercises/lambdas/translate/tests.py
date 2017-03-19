@@ -111,3 +111,12 @@ with cumulative(skip_after_fail=True):
          shortest([ [1, 2, 3], [1], [1, 2] ])
          shortest([ [1, 2, 3], [1], [1, 2], [2] ])
          
+    with tested_function_name('longest'), all_or_nothing():
+         longest = reftest()
+
+         longest([ 'a', 'aa', 'aaa' ])
+         longest([ 'aa', 'aaa', 'a' ])
+         longest([ 'aa', 'aaa', 'a', '' ])
+         longest([ [], [1], [1, 2] ])
+         longest([ [1, 2, 3], [1], [1, 2] ])
+         longest([ [1, 2, 3], [1], [1, 2], [2] ])

@@ -42,3 +42,7 @@ def minimum(ns):
 
 def shortest(ns):
     return min(ns, key=lambda x: len(x))
+
+
+def longest(ns):
+    return max(ns, key=lambda x: len(x))
