@@ -3,12 +3,13 @@ import re
 
 def find_repetition(string):
     """
-    Returns a substring of at least 4 characters
-    that is repeated in the given string.
-    If multiple such substrings exist, the leftmost
-    is returned.
+    Zoekt naar een deelstring van minstens 4 tekens
+    lang die herhaald wordt in de gegeven string.
 
-    For example, "abcd,abcd" contains "abcd" twice.
+    Bijvoorbeeld, "abcdxxxabcd" bevat "abcd" dubbel.
+
+    Indien er meerdere herhaalde deelstrings bestaan,
+    wordt de meest linkse teruggegeven.
     """
 
     match = re.search(r'(.{4,}).*\1', string)
