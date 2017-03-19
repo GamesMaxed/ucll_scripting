@@ -172,4 +172,22 @@ def matrix(nrows, ncols, function):
 
     return result
 
+
+# Maak gebruik van matrix
+def identity_matrix(size):
+    result = []
+
+    for row in range(0, size):
+        acc = []
+        
+        for col in range(0, size):
+            if row == col:
+                acc.append(1)
+            else:
+                acc.append(0)
+
+        result.append(acc)
+
+    return result
+                
 # max, sorted, any, find

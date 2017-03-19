@@ -142,14 +142,13 @@ with cumulative(skip_after_fail=True):
 
         @test('zero_matrix does not use shared rows or columns')
         def _():
-            # m = tested_function(2, 2)
+            m = tested_function(2, 2)
 
-            # m[0][0] = 1
+            m[0][0] = 1
 
-            # must_be_equal(0, m[0][1])
-            # must_be_equal(0, m[1][0])
-            # must_be_equal(0, m[1][1])
-            pass
+            must_be_equal(0, m[0][1])
+            must_be_equal(0, m[1][0])
+            must_be_equal(0, m[1][1])
             
     with tested_function_name('matrix'), all_or_nothing():
         matrix = reftest()
@@ -160,3 +159,10 @@ with cumulative(skip_after_fail=True):
         matrix(2, 2, lambda y, x: y)
         matrix(2, 2, lambda y, x: x + y)
         matrix(4, 4, lambda y, x: x * y)
+
+    with tested_function_name('identity_matrix'), all_or_nothing():
+        identity_matrix = reftest()
+
+        for size in range(0, 10):
+            identity_matrix(size)
+        
