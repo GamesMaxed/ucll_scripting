@@ -77,6 +77,9 @@ def group_by_key(xs, key_function):
 
 
 
+#
+# UITDAGING
+#
 def memoize(function):
     """
     Memoization is een algemeen toepasbare techniek
@@ -121,6 +124,9 @@ def memoize(function):
     raise NotImplementedException()
 
 
+#
+# UITDAGING
+#
 def create_change_detector():
     """
     Geeft een functie F terug die zich als volgt gedraagt:
