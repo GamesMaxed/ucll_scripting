@@ -15,14 +15,10 @@ with all_or_nothing(), tested_function_name("find_episode_titles"):
 with all_or_nothing(), tested_function_name("best_movie_from_year"):
     check = reftest()
 
-    check(1968)
-    check(2000)
-    check(2016)
+    check(1968, 10000)
+    check(2000, 10000)
+    check(2016, 10000)
 
-    
-with all_or_nothing(), tested_function_name("episode_count"):
-    reftest()()
-    
     
 with all_or_nothing(), tested_function_name("series_average_ratings"):
     reftest()()

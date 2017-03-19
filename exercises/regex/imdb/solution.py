@@ -44,26 +44,6 @@ def best_movie_from_year(year, minimum_count = 10000):
     return (best_title, best_score)
 
 
-def episode_count():
-    regex = re.compile( r'^\s+[0-9.]+\s+\d+\s+\d{1,2}\.\d\s+"([^"]+)"' )
-    results = {}
-
-    with open("ratings.txt", "r") as file:
-        for line in file:
-            match = regex.search(line)
-
-            if match:
-                title = match.group(1)
-
-                if not title in results:
-                    results[title] = 0
-
-                results[title] += 1
-
-    return sorted(results.items(), key=lambda pair: pair[1])
-
-
-
 def series_average_ratings():
     regex = re.compile( r'^\s+[0-9.]+\s+\d+\s+(\d{1,2}\.\d)\s+"([^"]+)"' )
     results = {}
