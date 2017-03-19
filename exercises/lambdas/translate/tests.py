@@ -133,7 +133,6 @@ with cumulative(skip_after_fail=True):
          for i in range(0, 100):
              primes_up_to(i)
 
-
     with tested_function_name('zero_matrix'), all_or_nothing():
         zero_matrix = reftest()
 
@@ -152,5 +151,12 @@ with cumulative(skip_after_fail=True):
             # must_be_equal(0, m[1][1])
             pass
             
-            
-             
+    with tested_function_name('matrix'), all_or_nothing():
+        matrix = reftest()
+
+        matrix(1, 1, lambda y, x: 0)
+        matrix(2, 2, lambda y, x: 0)
+        matrix(2, 2, lambda y, x: x)
+        matrix(2, 2, lambda y, x: y)
+        matrix(2, 2, lambda y, x: x + y)
+        matrix(4, 4, lambda y, x: x * y)

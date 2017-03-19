@@ -158,4 +158,18 @@ def zero_matrix(nrows, ncols):
 
     return result
 
+
+def matrix(nrows, ncols, function):
+    result = []
+
+    for row in range(0, nrows):
+        acc = []
+
+        for col in range(0, ncols):
+            acc.append(function(row, col))
+
+        result.append(acc)
+
+    return result
+
 # max, sorted, any, find
