@@ -101,3 +101,13 @@ with cumulative(skip_after_fail=True):
          minimum(['a', 'b', 'c'])
          minimum(['g', 'e', 'h', 'a', 'b'])
          
+    with tested_function_name('shortest'), all_or_nothing():
+         shortest = reftest()
+
+         shortest([ 'a', 'aa', 'aaa' ])
+         shortest([ 'aa', 'aaa', 'a' ])
+         shortest([ 'aa', 'aaa', 'a', '' ])
+         shortest([ [], [1], [1, 2] ])
+         shortest([ [1, 2, 3], [1], [1, 2] ])
+         shortest([ [1, 2, 3], [1], [1, 2], [2] ])
+         

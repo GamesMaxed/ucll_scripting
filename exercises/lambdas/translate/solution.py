@@ -38,3 +38,7 @@ def find_matching_strings(strings, regex):
 
 def minimum(ns):
     return min(ns)
+
+
+def shortest(ns):
+    return min(ns, key=lambda x: len(x))

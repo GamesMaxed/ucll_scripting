@@ -102,4 +102,14 @@ def minimum(ns):
 
     return result
 
+
+def shortest(xs):
+    result = xs[0]
+
+    for x in xs[1:]:
+        if len(x) < len(result):
+            result = x
+
+    return result
+
 # max, min, sorted, any, find
