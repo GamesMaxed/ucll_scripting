@@ -73,3 +73,7 @@ with cumulative(skip_after_fail=True):
         all_in_range([1, 1], 1, 5)
         all_in_range([0, 8, 100], 1, 5)
         
+    with tested_function_name('find_matching_strings'), all_or_nothing():
+         find_matching_strings = reftest()
+
+         find_matching_strings(['', 'a', 'b', 'ab'], r'[a-z]')

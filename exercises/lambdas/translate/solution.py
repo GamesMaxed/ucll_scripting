@@ -1,3 +1,6 @@
+import re
+
+
 def double_all(ns):
     return [ 2 * n for n in ns ]
 
@@ -27,4 +30,4 @@ def all_in_range(ns, min, max):
 
 
 def find_matching_strings(strings, regex):
-    return [ string for string in strings for re.fullmatch(string, regex) ]
+    return [ string for string in strings if re.fullmatch(regex, string) ]

@@ -76,7 +76,7 @@ def all_in_range(ns, min, max):
 
 
 def find_matching_strings(strings, regex):
-    result = 0
+    result = []
 
     for string in strings:
         if re.fullmatch(regex, string):
