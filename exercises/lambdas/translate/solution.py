@@ -66,3 +66,11 @@ def matrix(nrows, ncols, function):
 
 def identity_matrix(size):
     return matrix(size, size, lambda y, x: 1 if x == y else 0)
+
+
+def sum_of_2_lists(xs, ys):
+    return [ x + y for x, y in zip(xs, ys) ]
+
+
+def transpose(matrix):
+    return [ list(xs) for xs in zip(*matrix) ]

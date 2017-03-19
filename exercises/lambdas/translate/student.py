@@ -189,5 +189,33 @@ def identity_matrix(size):
         result.append(acc)
 
     return result
-                
+
+
+def sum_of_2_lists(xs, ys):
+    result = []
+
+    for i in range(0, min(len(xs), len(ys))):
+        result.append(xs[i] + ys[i])
+
+    return result
+
+
+# Uitdaging
+def transpose(matrix):
+    result = []
+
+    nrows = len(matrix[0])
+    ncols = len(matrix)
+
+    for row in range(0, nrows):
+        acc = []
+
+        for col in range(0, ncols):
+            acc.append(matrix[col][row])
+
+        result.append(acc)
+
+    return result
+
+
 # max, sorted, any, find
