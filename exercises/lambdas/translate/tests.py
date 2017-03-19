@@ -132,3 +132,25 @@ with cumulative(skip_after_fail=True):
 
          for i in range(0, 100):
              primes_up_to(i)
+
+
+    with tested_function_name('zero_matrix'), all_or_nothing():
+        zero_matrix = reftest()
+
+        for nrows in range(0, 10):
+            for ncols in range(0, 10):
+                zero_matrix(nrows, ncols)
+
+        @test('zero_matrix does not use shared rows or columns')
+        def _():
+            # m = tested_function(2, 2)
+
+            # m[0][0] = 1
+
+            # must_be_equal(0, m[0][1])
+            # must_be_equal(0, m[1][0])
+            # must_be_equal(0, m[1][1])
+            pass
+            
+            
+             

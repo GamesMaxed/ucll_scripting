@@ -145,4 +145,17 @@ def primes_up_to(n):
     return result
 
 
+def zero_matrix(nrows, ncols):
+    result = []
+
+    for i in range(0, nrows):
+        row = []
+
+        for j in range(0, ncols):
+            row.append(0)
+
+        result.append(row)
+
+    return result
+
 # max, sorted, any, find

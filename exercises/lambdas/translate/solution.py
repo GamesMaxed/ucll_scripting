@@ -54,3 +54,7 @@ def is_prime(n):
 
 def primes_up_to(n):
     return [ k for k in range(0, n+1) if is_prime(k) ]
+
+
+def zero_matrix(nrows, ncols):
+    return [ [0] * ncols ] * nrows
