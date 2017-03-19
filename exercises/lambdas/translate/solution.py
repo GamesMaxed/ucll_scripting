@@ -25,3 +25,6 @@ def all_even(ns):
 def all_in_range(ns, min, max):
     return all( min <= n and n <= max for n in ns )
 
+
+def find_matching_strings(strings, regex):
+    return [ string for string in strings for re.fullmatch(string, regex) ]

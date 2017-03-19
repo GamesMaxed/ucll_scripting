@@ -4,6 +4,7 @@ zodat het gebruik maakt van hulpfuncties,
 list comprehensions, lambda's, ...
 '''
 
+import re
 
 
 def double_all(ns):
@@ -57,6 +58,7 @@ def square_odd(ns):
     return result
 
 
+
 def all_even(ns):
     for n in ns:
         if n % 2 == 1:
@@ -71,3 +73,13 @@ def all_in_range(ns, min, max):
             return False
 
     return True
+
+
+def find_matching_strings(strings, regex):
+    result = 0
+
+    for string in strings:
+        if re.fullmatch(regex, string):
+            result.append(string)
+
+    return result
