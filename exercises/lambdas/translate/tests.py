@@ -47,3 +47,16 @@ with cumulative(skip_after_fail=True):
         select_and_square_odd([1, 2, 3, 4])
         select_and_square_odd([1, 1])
         select_and_square_odd([0, 8, 100])
+
+    with tested_function_name('all_even'), all_or_nothing():
+        all_even = reftest()
+
+        all_even([])
+        all_even([1])
+        all_even([1, 2])
+        all_even([1, 2, 3])
+        all_even([1, 2, 3, 4])
+        all_even([0, 2, 4])
+        all_even([1, 1])
+        all_even([0, 8, 100])
+        

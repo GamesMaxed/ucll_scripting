@@ -42,3 +42,24 @@ def select_and_square_odd(ns):
             result.append(n ** 2)
 
     return result
+
+
+# Zoek naar 'ternary if'
+def square_odd(ns):
+    result = []
+
+    for n in ns:
+        if n % 2 == 1:
+            result.append(n ** 2)
+        else:
+            result.append(n)
+
+    return result
+
+
+def all_even(ns):
+    for n in ns:
+        if n % 2 == 1:
+            return False
+
+    return True
