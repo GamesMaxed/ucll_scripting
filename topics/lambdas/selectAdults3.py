@@ -1,11 +1,11 @@
 def is_adult(person):
-    return `\pgfmark{selectAdults2 start1}`person.age >= 18`\pgfmark{selectAdults2 end1}`
+    return `\pgfmark{selectAdults3 start}`person.age >= 18`\pgfmark{selectAdults3 end}`
 
 def select_adults(persons):
     result = []
 
     for person in persons:
-        if `\pgfmark{selectAdults2 start2}`is_adult(person)`\pgfmark{selectAdults2 end2}`:
+        if `\pgfmark{selectAdults3b start}`is_adult(person)`\pgfmark{selectAdults3b end}`:
             result.append(person)
 
     return result
