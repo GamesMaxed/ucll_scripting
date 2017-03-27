@@ -29,19 +29,22 @@
     \code[language=python3,font=\small]{selectAdults2.py}
     \codeunderlinex{selectAdults2}
 
-    \onslide<2>
-    \code[language=python3,font=\small]{selectAdults3.py}
-    \codeunderlinex{selectAdults3}
-    \codeoverlinex{selectAdults3b}
-    \tikz[remember picture,overlay] \draw[thick,red,-latex] let \p1=(selectAdults3b), \p2=(selectAdults3) in (\p1) -- ++(0,0.1) -- ++(2.5,0) |- ($ (\p2) + (0,-0.4) $) -- (\p2);
+    % \onslide<2>
+    % \code[language=python3,font=\small]{selectAdults3.py}
+    % \codeunderlinex{selectAdults3 age}
+    % \codeoverlinex{selectAdults3 isadult}
+    % \begin{tikzpicture}[remember picture,overlay] 
+    %   \draw[thick,red,-latex] let \p1=(selectAdults3 isadult), \p2=(selectAdults3 age) in (\p1) -- ++(0,0.1) -- ++(2.5,0) |- ($ (\p2) + (0,-0.4) $) -- (\p2);
+    %   \draw[thick,red,-latex] (selectAdults3 isadult) -- ++(0,1);
+    % \end{tikzpicture}
 
-    \onslide<3>
-    \code[language=python3,font=\small]{selectAdults4.py}
-    \codeunderlinex{selectAdults4}
-    \codeoverlinex{selectAdults4b}
-    \codeoverlinex{selectAdults4c}
-    \tikz[remember picture,overlay] \draw[thick,-latex,red] let \p1=(selectAdults4c), \p2=(selectAdults4) in (\p1) -- ++(3,1.5) |- ($ (\p2) + (0.25,-0.4) $) -- ($ (\p2) + (0.25,0) $);
-    \tikz[remember picture,overlay] \draw[thick,-latex,red] let \p1=(selectAdults4), \p2=(selectAdults4b) in (\p1) -- ++(0,-0.5) |- ($ (\p2) + (0,0.3) $) -- (\p2);
+    % \onslide<3>
+    % \code[language=python3,font=\small]{selectAdults4.py}
+    % \codeunderlinex{selectAdults4}
+    % \codeoverlinex{selectAdults4b}
+    % \codeoverlinex{selectAdults4c}
+    % \tikz[remember picture,overlay] \draw[thick,-latex,red] let \p1=(selectAdults4c), \p2=(selectAdults4) in (\p1) -- ++(3,1.5) |- ($ (\p2) + (0.25,-0.4) $) -- ($ (\p2) + (0.25,0) $);
+    % \tikz[remember picture,overlay] \draw[thick,-latex,red] let \p1=(selectAdults4), \p2=(selectAdults4b) in (\p1) -- ++(0,-0.5) |- ($ (\p2) + (0,0.3) $) -- (\p2);
   \end{overprint}
 \end{frame}
 
