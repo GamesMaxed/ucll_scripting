@@ -24,50 +24,53 @@
 
 \begin{frame}
   \frametitle{\texttt{filter} Als Functie: Stapsgewijze Opbouw}
-  \begin{overprint}
-    \onslide<1>
-    \code[language=python3,font=\small]{selectAdults2.py}
-    \codeunderline{selectAdults start}{selectAdults end}
+  \code[language=python3,font=\small]{selectAdults2.py}
+  \codeunderlinex{selectAdults2}
+\end{frame}
 
-    \onslide<2>
-    \code[language=python3,font=\small]{selectAdults3.py}
-    \codeunderline[name center=selectAdults2 center 1]{selectAdults2 start1}{selectAdults2 end1}
-    \codeoverline[name center=selectAdults2 center 2]{selectAdults2 start2}{selectAdults2 end2}
-    \tikz[remember picture,overlay] \draw[thick,red,-latex] let \p1=(selectAdults2 center 2), \p2=(selectAdults2 center 1) in (\p1) -- ++(0,0.1) -- ++(2.5,0) |- ($ (\p2) + (0,-0.4) $) -- (\p2);
+\begin{frame}
+  \frametitle{\texttt{filter} Als Functie: Stapsgewijze Opbouw}
+  \code[language=python3,font=\small]{selectAdults3.py}
+  \codeunderlinex{selectAdults3 age}
+  \codeoverlinex{selectAdults3 isadult}
+  \begin{tikzpicture}[remember picture,overlay] 
+    \draw[thick,red,-latex] let \p1=(selectAdults3 isadult), \p2=(selectAdults3 age) in (\p1) -- ++(0,0.1) -- ++(2.5,0) |- ($ (\p2) + (0,-0.4) $) -- (\p2);
+  \end{tikzpicture}
+\end{frame}
 
-    \onslide<3>
-    \code[language=python3,font=\small]{selectAdults4.py}
-    \codeunderline[name center=selectAdults3 center 1]{selectAdults3 start1}{selectAdults3 end1}
-    \codeoverline[name center=selectAdults3 center 1b,stroke/.style={thick,blue}]{selectAdults3 start1}{selectAdults3 end1}
-    \codeoverline[name center=selectAdults3 center 2]{selectAdults3 start2}{selectAdults3 end2}
-    \codeoverline[name center=selectAdults3 center 3,stroke/.style={thick,blue}]{selectAdults3 start3}{selectAdults3 end3}
-    \tikz[remember picture,overlay] \draw[thick,red,-latex] let \p1=(selectAdults3 center 2), \p2=(selectAdults3 center 1) in (\p1) -- ++(0,0.5) |- ($ (\p2) + (0,-0.4) $) -- (\p2);
-    \tikz[remember picture,overlay] \draw[thick,blue,-latex] let \p1=(selectAdults3 center 3), \p2=(selectAdults3 center 1b) in (\p1) -- ++(0,0.1) -- ++(3,0) |- ($ (\p2) + (0,0.3) $) -- (\p2);
-  \end{overprint}
+\begin{frame}
+  \frametitle{\texttt{filter} Als Functie: Stapsgewijze Opbouw}
+  \code[language=python3,font=\small]{selectAdults4.py}
+  \codeunderlinex{selectAdults4}
+  \codeoverlinex{selectAdults4b}
+  \codeoverlinex{selectAdults4c}
+  \tikz[remember picture,overlay] \draw[thick,-latex,red] let \p1=(selectAdults4c), \p2=(selectAdults4) in (\p1) -- ++(3,1.5) |- ($ (\p2) + (0.25,-0.4) $) -- ($ (\p2) + (0.25,0) $);
+  \tikz[remember picture,overlay] \draw[thick,-latex,red] let \p1=(selectAdults4), \p2=(selectAdults4b) in (\p1) -- ++(0,-.5) -| ($ (\p2) + (0,0.3) $) -- (\p2);
 \end{frame}
 
 \begin{frame}
   \frametitle{\texttt{map} Als Functie}
-  \begin{overprint}
-    \onslide<1>
-    \code[language=python3,font=\small]{getAges2.py}
-    \codeoverline{getAges2 start}{getAges2 end}
+  \code[language=python3,font=\small]{getAges2.py}
+  \codeoverline{getAges2 start}{getAges2 end}
+\end{frame}
 
-    \onslide<2>
-    \code[language=python3,font=\small]{getAges3.py}
-    \codeunderline[name center=getAges3 center 1]{getAges3 start1}{getAges3 end1}
-    \codeoverline[name center=getAges3 center 2]{getAges3 start2}{getAges3 end2}
-    \tikz[remember picture,overlay] \draw[thick,red,-latex] let \p1=(getAges3 center 2), \p2=(getAges3 center 1) in (\p1) -- ++(0,1) |- ($ (\p2) + (0,-0.4) $) -- (\p2);
+\begin{frame}
+  \frametitle{\texttt{map} Als Functie}
+  \code[language=python3,font=\small]{getAges3.py}
+  \codeunderline[name center=getAges3 center 1]{getAges3 start1}{getAges3 end1}
+  \codeoverline[name center=getAges3 center 2]{getAges3 start2}{getAges3 end2}
+  \tikz[remember picture,overlay] \draw[thick,red,-latex] let \p1=(getAges3 center 2), \p2=(getAges3 center 1) in (\p1) -- ++(0,1) |- ($ (\p2) + (0,-0.4) $) -- (\p2);
+\end{frame}
 
-    \onslide<3>
-    \code[language=python3,font=\small]{getAges4.py}
-    \codeunderline[name center=getAges4 center 1]{getAges4 start1}{getAges4 end1}
-    \codeoverline[name center=getAges4 center 1b,stroke/.style={thick,blue}]{getAges4 start1}{getAges4 end1}
-    \codeoverline[name center=getAges4 center 2]{getAges4 start2}{getAges4 end2}
-    \codeoverline[name center=getAges4 center 3,stroke/.style={thick,blue}]{getAges4 start3}{getAges4 end3}
-    \tikz[remember picture,overlay] \draw[thick,red,-latex] let \p1=(getAges4 center 2), \p2=(getAges4 center 1) in (\p1) |- ($ (\p2) + (0,-0.4) $) -- (\p2);
-    \tikz[remember picture,overlay] \draw[thick,blue,-latex] let \p1=(getAges4 center 3), \p2=(getAges4 center 1b) in (\p1) -- ++(0,0.1) -- ++(5,0) |- ($ (\p2) + (0,0.3) $) -- (\p2);
-  \end{overprint}
+\begin{frame}
+  \frametitle{\texttt{map} Als Functie}
+  \code[language=python3,font=\small]{getAges4.py}
+  \codeunderline[name center=getAges4 center 1]{getAges4 start1}{getAges4 end1}
+  \codeoverline[name center=getAges4 center 1b,stroke/.style={thick,blue}]{getAges4 start1}{getAges4 end1}
+  \codeoverline[name center=getAges4 center 2]{getAges4 start2}{getAges4 end2}
+  \codeoverline[name center=getAges4 center 3,stroke/.style={thick,blue}]{getAges4 start3}{getAges4 end3}
+  \tikz[remember picture,overlay] \draw[thick,red,-latex] let \p1=(getAges4 center 2), \p2=(getAges4 center 1) in (\p1) |- ($ (\p2) + (0,-0.4) $) -- (\p2);
+  \tikz[remember picture,overlay] \draw[thick,blue,-latex] let \p1=(getAges4 center 3), \p2=(getAges4 center 1b) in (\p1) -- ++(0,0.1) -- ++(5,0) |- ($ (\p2) + (0,0.3) $) -- (\p2);
 \end{frame}
 
 \begin{frame}
@@ -93,16 +96,6 @@
 \begin{frame}
   \frametitle{Bestaande Functies}
   \code[language=python]{filter.py}
-\end{frame}
-
-\begin{frame}
-  \frametitle{Bestaande Functies}
-  \code[language=python]{any.py}
-\end{frame}
-
-\begin{frame}
-  \frametitle{Bestaande Functies}
-  \code[language=python]{all.py}
 \end{frame}
 
 

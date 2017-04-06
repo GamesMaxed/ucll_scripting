@@ -10,3 +10,4 @@ def lookup(pages, name):
     second_letter = name[1]
     index = ord2(first_letter, second_letter)
     page = pages[index]
+    return page.find(name)

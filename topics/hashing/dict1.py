@@ -8,4 +8,4 @@ def lookup(pages, name):
     first_letter = name[0]
     index = ord(first_letter)
     page = pages[index]
-    
+    return page.find(name)

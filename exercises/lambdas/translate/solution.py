@@ -57,7 +57,7 @@ def primes_up_to(n):
 
 
 def zero_matrix(nrows, ncols):
-    return [ [0] * ncols ] * nrows
+    return [ [0] * ncols for _ in range(nrows) ]
 
 
 def matrix(nrows, ncols, function):
