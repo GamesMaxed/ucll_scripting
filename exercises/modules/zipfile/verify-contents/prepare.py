@@ -7,7 +7,7 @@ def create_test_data():
 
     expected_files = [ 'src/shapes/Shape.java', 'src/shapes/Circle.java', 'src/shapes/Square.java', 'src/App.java' ]
     
-    with open('testdata/expected-files.txt', 'w') as file:
+    with open('testdata/expected.txt', 'w') as file:
         for expected_file in expected_files:
             file.write("{}\n".format(expected_file))
     
