@@ -53,7 +53,6 @@ def inverse_horizontal_gradient(image):
       python solution.py inverse-horizontal
     '''
 
-
     
 def diagonal_gradient(image):
     '''
@@ -61,8 +60,6 @@ def diagonal_gradient(image):
       python solution.py diagonal
     '''
     raise NotImplementedError()
-
-
 
 
 if __name__ == '__main__':
