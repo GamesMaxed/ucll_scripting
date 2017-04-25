@@ -1,9 +1,7 @@
 class Person:
     def __init__(self, weight, length):
-        __weight = 0
-        __height = 0
-        self.weight = weight
-        self.height = length
+        self.__weight = weight
+        self.__height = length
 
     # Weight getter
     @property

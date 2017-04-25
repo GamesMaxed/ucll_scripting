@@ -4,7 +4,8 @@
 # de andere lijnen uit commentaar zal moeten halen.
 
 # export PYTHON_INTERPRETER=py
-export PYTHON_INTERPRETER=python3
+#export PYTHON_INTERPRETER=python3
+export PYTHON_INTERPRETER=python3.6
 # export PYTHON_INTERPRETER=python
 
 
