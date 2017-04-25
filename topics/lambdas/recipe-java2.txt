@@ -1,0 +1,13 @@
+Neem papier P en schrijf er 0 op
+Zolang er op papier P geen 5 staat
+  Breek 1 ei
+  Voeg eiwit en eidooier toe aan kom A
+  Verhoog getal op papier P
+Plaats kom B op weegschaal
+Zolang weegschaal < 250g toont
+  Breek een reep zwarte chocolade R
+  Voeg R toe aan kom B
+Plaats kom B boven kokend water
+Zolang inhoud kom C niet gesmolten is
+  Wacht een minuut
+

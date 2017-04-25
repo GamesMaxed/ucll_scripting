@@ -103,17 +103,17 @@
     \onslide<1-3>
     \code[language=python]{map-names-lambda.py}
     \only<2>{
-      \codeunderline[name center=getName p center,stroke/.style={thick,red}]{getName:p:start}{getName:p:end}
-      \codeoverline[name center=lambda p center,stroke/.style={thick,red}]{lambda:p:start}{lambda:p:end}
+      \codeunderlinex{getName p}
+      \codeoverlinex{lambda p}
       \begin{tikzpicture}[remember picture,overlay]
-        \draw[thick,red,latex-] (getName p center) -- ++(0,-1) -| (lambda p center);
+        \draw[thick,red,latex-] (getName p) -- ++(0,-1) -| (lambda p);
       \end{tikzpicture}
     }
     \only<3>{
-      \codeunderline[name center=getName body center,stroke/.style={thick,red}]{getName:body:start}{getName:body:end}
-      \codeoverline[name center=lambda body center,stroke/.style={thick,red}]{lambda:body:start}{lambda:body:end}
+      \codeunderlinex{getName body}
+      \codeoverlinex{lambda body}
       \begin{tikzpicture}[remember picture,overlay]
-        \draw[thick,red,latex-] (getName body center) -- ++(0,-1) -| (lambda body center);
+        \draw[thick,red,latex-] (getName body) -- ++(0,-1) -| (lambda body);
       \end{tikzpicture}
     }
 

@@ -1,0 +1,91 @@
+\begin{frame}
+  \frametitle{Recept: Versie 1}
+  \begin{overprint}
+    \onslide<1>
+    \code[width=.9\linewidth]{recipe-java.txt}
+    \onslide<2>
+    \code[width=.9\linewidth]{recipe-java2.txt}
+    \onslide<3>
+    \code[width=.9\linewidth]{recipe-java3.txt}
+  \end{overprint}
+\end{frame}
+
+\begin{frame}
+  \frametitle{Imperatieve Stijl}
+  \begin{itemize}
+    \item Imperatieve stijl
+    \item Algoritme = lijst van sequenti\"ele stappen
+    \item Volgorde uitvoering is van belang
+    \item CPU hanteert imperatieve stijl
+  \end{itemize}
+\end{frame}
+
+\begin{frame}
+  \frametitle{Recept: Versie 2}
+  \code[width=.9\linewidth]{recipe-haskell.txt}
+\end{frame}
+
+\begin{frame}
+  \frametitle{Functionele Stijl}
+  \begin{itemize}
+    \item Functionele stijl
+    \item Algoritme = \'e\'en grote uitdrukking
+    \item Volgorde uitvoering is niet van belang
+    \item Vergelijkbaar met wiskunde
+  \end{itemize}
+\end{frame}
+
+\begin{frame}
+  \frametitle{Gulden Middenweg}
+  \code[width=.9\linewidth]{recipe-python.txt}
+\end{frame}
+
+\begin{frame}
+  \frametitle{Evolutie}
+  \begin{itemize}
+    \item Evolutie naar combinatie van imperatief en functioneel
+    \item Functionele stijl biedt veel voordelen
+          \begin{itemize}
+            \item Sneller leesbaar
+            \item Doorgaans bugvrijer
+            \item Beter te multithreaden
+          \end{itemize}
+    \item Python heeft imperatieve roots met functionele invloeden
+  \end{itemize}
+\end{frame}
+
+\begin{frame}
+  \frametitle{Evolutie}
+  \begin{center}
+    \begin{tikzpicture}[language/.style={font=\tiny,draw,fill=white,opacity=.75,text opacity=1}]
+      \tikzmath{
+        real \minyear;
+        real \maxyear;
+        int \decades;
+        \minyear=1950;
+        \maxyear=2020;
+        \decades=int((\maxyear-\minyear)/10);
+        function yeartox(\year) {
+          return {(\year - \minyear)/(\maxyear - \minyear) * 10};
+        };
+      }
+      \path[top color=red,bottom color=green] (0,-2) rectangle (10,2);
+      \node[anchor=north,white,opacity=.5] at (5,2) {\scshape imperatief};
+      \node[anchor=south,white,opacity=.5] at (5,-2) {\scshape functioneel};
+      
+      \foreach[count=\i,evaluate={\x=10/\decades*(\i-1);}] \year in {\minyear,1960,...,\maxyear} {
+        \draw[thin,opacity=.5] (\x,-3) -- (\x,2) node[at start,below,font=\tiny] {\year};
+      }
+
+      \foreach[evaluate={\x=yeartox(\year)}] \language/\year/\y in {Fortran/1956/1.5,Haskell/1990/-1.5,C/1972/1.5,C++/1983/1.4,C++11/2011/0.5,Java/1995/1.5,Java8/2014/1.1,C$^\sharp$/2000/1.0,C$^\sharp$3/2007/0.25,Python/1991/0.8,Ruby/1995/0.5,F$^\sharp$/2005/-0.5,Swift/2014/0.2,Scala/2004/-1,Common Lisp/1984/-0.8} {
+        \node[language] at (\x,\y) {\language};
+      }
+      
+    \end{tikzpicture}
+  \end{center}
+\end{frame}
+
+%%% Local Variables:
+%%% mode: latex
+%%% TeX-master: "lambdas"
+%%% End:

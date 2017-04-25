@@ -4,7 +4,7 @@ from testing.assertions import *
 from testing.util import *
 
 
-with cumulative():
+with cumulative(skip_after_fail=True):
     always_true = named_lambda('always_true', lambda x: True)
     always_false = named_lambda('always_false', lambda x: False)
     is_odd = named_lambda('is_odd', lambda x: x % 2 != 0)

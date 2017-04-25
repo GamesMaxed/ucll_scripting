@@ -1,6 +1,9 @@
-def count_lines(filename):
+def count_lines(stream):
     """
     Telt het aantal regels in het bestand.
+    Nota: het argument stream is een reeds
+    geopend bestand. Je hoeft hier dus
+    niet open op te roepen.
     """
 
     raise NotImplementedError()
