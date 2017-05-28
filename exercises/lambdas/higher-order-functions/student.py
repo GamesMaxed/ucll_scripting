@@ -1,13 +1,17 @@
-def count(xs, predicate):
+def count(xs: list, predicate):
     """
     Gegeven een lijst xs en een functie predicate,
     telt het aantal elementen uit xs waarvoor
     predicate een truthy waarde teruggeeft.
     """
-    raise NotImplementedException()
+    count = 0
+    for x in xs:
+        if predicate(x):
+            count += 1
+    return count
 
 
-def find_first(xs, predicate, default = None):
+def find_first(xs: list, predicate, default = None):
     """
     Gegeven een lijst xs, een functie predicate
     en een waarde default, zoekt naar
@@ -16,10 +20,13 @@ def find_first(xs, predicate, default = None):
     Indien geen elementen gevonden
     kan worden, wordt default teruggegeven.
     """
-    raise NotImplementedException()
+    for x in xs:
+        if predicate(x):
+            return x
+    return default
 
 
-def filter(xs, predicate):
+def filter(xs: list, predicate):
     """
     Gegeven een lijst en een functie predicate,
     geeft een lijst van alle elementen van
@@ -27,11 +34,16 @@ def filter(xs, predicate):
     teruggeeft.
     Deze elementen dienen in dezelfde volgorde
     te staan als in xs.
-    """    
-    raise NotImplementedException()
+    """
+    filteredList = list()
+    for x in xs:
+        if predicate(x):
+            filteredList.append(x)
+
+    return filteredList
 
 
-def all(xs, predicate):
+def all(xs: list, predicate):
     """
     Gegeven een lijst xs en een functie predicate,
     geeft een truthy waarde terug indien
@@ -40,8 +52,10 @@ def all(xs, predicate):
     In het andere geval wordt een falsey waarde
     teruggegeven.
     """
-    raise NotImplementedException()
-
+    for x in xs:
+        if not predicate(x):
+            return False
+    return True
 
 def any(xs, predicate):
     """
@@ -52,10 +66,13 @@ def any(xs, predicate):
     In het andere geval wordt een falsey waarde
     teruggegeven.
     """
-    raise NotImplementedException()
+    for x in xs:
+        if predicate(x):
+            return True
+    return False
 
 
-def group_by_key(xs, key_function):
+def group_by_key(xs: list, key_function):
     """
     Gegeven een lijst xs en een functie key_function,
     groepeert alle elementen samen waarvoor
@@ -73,8 +90,15 @@ def group_by_key(xs, key_function):
     de volgende dictionary:
       { 'even': [2, 4], 'odd': [1, 3] }
     """
-    raise NotImplementedException()
+    result = dict()
 
+    for value in xs:
+        key = key_function(value)
+        if key not in result:
+            result[key] = list()
+        result[key].append(value)
+
+    return result
 
 
 #
@@ -86,6 +110,7 @@ def memoize(function):
     om aan snelheid te winnen in ruil voor extra geheugenverbruik.
     Stel dat je een 'stateless' functie hebt, d.i.
     een functie die gegeven dezelfde argumenten
+
     altijd dezelfde waarde teruggeeft.
     Bv. beschouw de volgende code:
            print(f(1))
@@ -121,7 +146,18 @@ def memoize(function):
     M.a.w. je mag ervan uitgaan dat de functie F
     exact 1 argument heeft.
     """
-    raise NotImplementedException()
+    cache = {}
+
+    def memoized(x):
+        nonlocal cache
+        if x in cache:
+            return cache[x]
+        else:
+            result = function(x)
+            cache[x] = result
+            return result
+
+    return memoized
 
 
 #
@@ -148,4 +184,18 @@ def create_change_detector():
     F(2)  # True
     F(2)  # False
     """
-    raise NotImplementedException()
+    last = None
+    is_first = True
+
+    def wrapper(x):
+        nonlocal last
+        nonlocal is_first
+
+        if is_first or x != last:
+            is_first = False
+            last = x
+            return True
+        else:
+            return False
+
+    return wrapper
