@@ -50,3 +50,16 @@ met veld 'to'. Bijvoorbeeld,
 zorgt ervoor dat args.to gelijk is aan 42. Lees de documentatie
 van argparse om te weten te komen hoe je optionele parameters kan instellen.
 '''
+
+import argparse
+
+if __name__ == '__main__':
+    parser = argparse.ArgumentParser()
+    parser.add_argument('--init', type=int)
+    parser.add_argument('--to', type=int)
+    parser.add_argument('--step', type=int)
+    args = parser.parse_args()
+
+    for i in range(args.init, args.to + 1, args.step):
+        print(i)
+

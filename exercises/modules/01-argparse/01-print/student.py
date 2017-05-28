@@ -23,5 +23,5 @@ import sys
 # Deze if gaat na of het script vanop de command line wordt uitgevoerd
 # sys.argv bevat de command line arguments
 if __name__ == '__main__':
-    # TODO
-    
+    for arg in sys.argv[1:]:
+        print(arg)
