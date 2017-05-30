@@ -5,8 +5,7 @@ def count_lines(stream):
     geopend bestand. Je hoeft hier dus
     niet open op te roepen.
     """
-
-    raise NotImplementedError()
+    return len(stream.readlines())
 
 
 def count_words(stream):
@@ -15,19 +14,17 @@ def count_words(stream):
     Woorden zijn tekenreeksen die gescheiden worden
     door whitespace.
     """
+    return sum(len(line.split()) for line in stream)
 
-    raise NotImplementedError()
-    
 
 def count_chars(stream):
     """
     Telt het aantal tekens in de input stream.
     """
+    return sum(len(line) for line in stream)
 
-    raise NotImplementedError()
 
-
-def main():
+if __name__ == '__main__':
     """
     Bekijkt command line arguments en roept
     de juiste functie op met de juiste stream.
@@ -44,12 +41,17 @@ def main():
         python student.py words -
     telt het aantal woorden uit stdin
     """
+    import argparse
 
+    parser = argparse.ArgumentParser()
+    parser.add_argument('option', type=str, help='What to count')
+    parser.add_argument('filename', type=str, help='File to be handled')
+    args = parser.parse_args()
 
-# Checkt of dit python bestand rechtstreeks wordt
-# opgeroepen of wordt ingeladen als library
-if __name__ == '__main__':
-    # Voer main() uit indien dit script
-    # rechtstreeks uitgevoerd wordt
-    main()
-    
+    with open(args.filename, 'r') as file:
+        if args.option == 'lines':
+            print(count_lines(file))
+        if args.option == 'words':
+            print(count_words(file))
+        if args.option == 'chars':
+            print(count_chars(file))
