@@ -34,8 +34,22 @@ def plagiarism(files):
     regels moet alfabetisch worden gesorteerd
     op de naam van de bestanden.
     """
-    
+    cache = {}
+
+    def get_all_unique_lines(path):
+        if path not in cache:
+            with open(path, 'r') as f:
+                cache[path] = set(f)
+        return cache[path]
+
+    return sorted([
+        (files[i], files[j], len(get_all_unique_lines(files[i]) & get_all_unique_lines(files[j])))
+        for i in range(0, len(files)) for j in range(0, len(files)) if i < j
+    ], key=lambda x: (-x[2], x[0], x[1]))
 
 
 if __name__ == '__main__':
-    raise NotImplementedError()
+    import sys
+
+    for (file1, file2, metric) in plagiarism(sys.argv[1:]):
+        print("{} vs {} : {} lines in common".format(file1, file2, metric))
