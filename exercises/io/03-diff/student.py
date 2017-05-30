@@ -8,7 +8,8 @@ def diff(file1, file2):
      * regel1 de regel uit file1,
      * regel2 de regel uit file2.
     """
-    raise NotImplementedException()
+    with open(file1, 'r') as file1, open(file2, 'r') as file2:
+        return [(index, line1.rstrip('\n'), line2.rstrip('\n')) for index, (line1, line2) in enumerate(zip(file1, file2)) if line1 != line2]
 
 
 
@@ -23,4 +24,14 @@ def diff(file1, file2):
 #   <lege lijn>
 # Index moet beginnen tellen bij 1.
 if __name__ == '__main__':
-    raise NotImplementedException
+    import argparse
+
+    parser = argparse.ArgumentParser()
+    parser.add_argument('file1', type=str)
+    parser.add_argument('file2', type=str)
+    args = parser.parse_args()
+
+    for (index, line1, line2) in diff(args.file1, args.file2):
+        print("Line {}\n"
+              "{}\n"
+              "{}\n".format(index + 1, line1.rstrip(), line2))
